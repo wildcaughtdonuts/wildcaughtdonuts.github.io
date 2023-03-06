@@ -1,27 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>주소 검색 예제</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./dkapp.js"></script>
+    <title>주소 검색</title>
   </head>
   <body>
-    <div class="container">
-      <div class="title">주소 검색</div>
-      <div class="search-box">
-        <input type="text" id="addressInput" placeholder="검색할 주소를 입력하세요" />
-        <button onclick="searchAddress()">검색</button>
-      </div>
-      <div class="result">
-        <div class="label">건물 코드:</div>
-        <div class="output" id="buildingCodeOutput"></div>
-        <div class="label">요청 코드:</div>
-        <div class="output" id="requestCodeOutput"></div>
-        <div class="label">건물 이름:</div>
-        <div class="output" id="buildingNameOutput"></div>
-        <div class="label">건물 주소:</div>
-        <div class="output" id="buildingAddrOutput"></div>
-      </div>
-    </div>
+    <h1>주소 검색</h1>
+    <label for="address-input">주소 입력:</label>
+    <input type="text" id="address-input">
+    <button id="search-button">검색</button>
+
+    <script src="search.js"></script>
   </body>
 </html>
