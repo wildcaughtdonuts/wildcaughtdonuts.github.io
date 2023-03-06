@@ -16,17 +16,20 @@ function openDaumPostcode() {
       xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status === 200) {
-            // API 응답 결과 처리
             const result = document.createElement('div');
             const responseXML = xhr.responseXML;
-            const platLoc = responseXML.getElementsByTagName('platLoc')[0].childNodes[0].nodeValue;
-            const bldNm = responseXML.getElementsByTagName('bldNm')[0].childNodes[0].nodeValue;
-            const mainPurpsCdNm = responseXML.getElementsByTagName('mainPurpsCdNm')[0].childNodes[0].nodeValue;
-
-            result.innerHTML = `주소: ${platLoc}<br>`;
-            result.innerHTML += `건물명: ${bldNm}<br>`;
-            result.innerHTML += `주용도: ${mainPurpsCdNm}`;
-
+            const platLoc = responseXML.getElementsByTagName('platLoc')[0]?.childNodes[0]?.nodeValue;
+            const bldNm = responseXML.getElementsByTagName('bldNm')[0]?.childNodes[0]?.nodeValue;
+            const mainPurpsCdNm = responseXML.getElementsByTagName('mainPurpsCdNm')[0]?.childNodes[0]?.nodeValue;
+            
+            if (platLoc && bldNm && mainPurpsCdNm) {
+              result.innerHTML = `주소: ${platLoc}<br>`;
+              result.innerHTML += `건물명: ${bldNm}<br>`;
+              result.innerHTML += `주용도: ${mainPurpsCdNm}`;
+            } else {
+              result.innerHTML = "건물 대장 정보가 없습니다.";
+            }
+            
             const target = document.getElementById('result');
             target.innerHTML = '';
             target.appendChild(result);
@@ -35,6 +38,8 @@ function openDaumPostcode() {
           }
         }
       };
+      
+      
       xhr.open('GET', url, true);
       xhr.send();
     }
