@@ -30,10 +30,12 @@ document.getElementById("search-btn").addEventListener("click", function() {
             "연면적": item.getElementsByTagName("totArea")[0].textContent + "㎡",
             "건축면적": item.getElementsByTagName("archArea")[0].textContent + "㎡",
             "세대수": item.getElementsByTagName("hhldCnt")[0].textContent,
-            "지상/지하층수": item.getElementsByTagName("grndFlrCnt")[0].textContent + " / " + item.getElementsByTagName("ugrndFlrCnt")[0].textContent,
+            "지상층수": item.getElementsByTagName("grndFlrCnt")[0].textContent,
+            "지하층수": item.getElementsByTagName("ugrndFlrCnt")[0].textContent,
             "건축물구조": item.getElementsByTagName("strctCdNm")[0].textContent,
             "지붕구조": item.getElementsByTagName("etcRoof")[0].textContent,
-            "승강기(승용/비상)": item.getElementsByTagName("rideUseElvtCnt")[0].textContent + " / " + item.getElementsByTagName("emgenUseElvtCnt")[0].textContent
+            "승용승강기": item.getElementsByTagName("rideUseElvtCnt")[0].textContent + "대",
+            "비상용승강기": item.getElementsByTagName("emgenUseElvtCnt")[0].textContent + "대"
           };
         } else {
           itemData = {
