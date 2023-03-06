@@ -21,12 +21,19 @@ document.getElementById("search-btn").addEventListener("click", function() {
           var item = xmlDoc.getElementsByTagName("item")[0];
           var itemData = {
             "건물명": item.getElementsByTagName("bldNm")[0].textContent,
-            "주소": item.getElementsByTagName("platPlc")[0].textContent,
             "용도": item.getElementsByTagName("etcPurps")[0].textContent,
-            "세대수": item.getElementsByTagName("hhldCnt")[0].textContent,
+            "주소": item.getElementsByTagName("platPlc")[0].textContent,
+            "건축허가일": item.getElementsByTagName("pmsDay")[0].textContent,
+            "사용승인일": item.getElementsByTagName("useAprDay")[0].textContent,
             "연면적": item.getElementsByTagName("totArea")[0].textContent + "㎡",
-            "허가일": item.getElementsByTagName("pmsDay")[0].textContent,
-            "사용승인일": item.getElementsByTagName("useAprDay")[0].textContent
+            "건축면적": item.getElementsByTagName("archArea")[0].textContent + "㎡",
+            "세대수": item.getElementsByTagName("hhldCnt")[0].textContent,
+            "지상/지하층수": item.getElementsByTagName("grndFlrCnt")[0].textContent + " / " + item.getElementsByTagName("ugrndFlrCnt")[0].textContent,
+            "건축물구조": item.getElementsByTagName("strctCdNm")[0].textContent,
+            "지붕구조": item.getElementsByTagName("etcRoof")[0].textContent,
+            "건축물구조": item.getElementsByTagName("strctCdNm")[0].textContent,
+            "승강기(승용/비상)": item.getElementsByTagName("rideUseElvtCnt")[0].textContent + " / " + item.getElementsByTagName("emgenUseElvtCnt")[0].textContent,
+            
           };
           var html = "<ul>";
           for (var key in itemData) {
