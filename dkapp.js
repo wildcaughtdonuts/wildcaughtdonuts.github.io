@@ -17,18 +17,16 @@ function openDaumPostcode() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status === 200) {
             const result = document.createElement('div');
-            const responseXML = xhr.responseXML;
+            const response = JSON.parse(xhr.responseText).response.body.items.item;
 
-            if (responseXML.getElementsByTagName('platLoc').length === 0) {
+            if (response.platLoc === '') {
               result.innerHTML = '건물 대장 정보가 없습니다. <br> API 요청 주소: ' + url;
             } else {
-              const platLoc = responseXML.getElementsByTagName('platLoc')[0].childNodes[0].nodeValue;
-              const bldNm = responseXML.getElementsByTagName('bldNm')[0].childNodes[0].nodeValue;
-              const mainPurpsCdNm = responseXML.getElementsByTagName('mainPurpsCdNm')[0].childNodes[0].nodeValue;
-
-              result.innerHTML = `주소: ${platLoc}<br>`;
-              result.innerHTML += `건물명: ${bldNm}<br>`;
-              result.innerHTML += `주용도: ${mainPurpsCdNm}`;
+              let text = '';
+              for (const key in response) {
+                text += `${key}: ${response[key]}<br>`;
+              }
+              result.innerHTML = text;
             }
 
             const target = document.getElementById('result');
