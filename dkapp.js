@@ -15,7 +15,7 @@ document.getElementById("search-btn").addEventListener("click", function() {
       document.getElementById("api-url").innerHTML = "API URL: " + apiUrl1;
       var apiUrl2 = "https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=" + siggCd + "&bjdongCd=" + bjdCd + "&platGbCd=0&bun=" + bunCd + "&ji=" + jiCd + "&ServiceKey=" + apiKey;
   
-      fetch(apiUrl)
+      fetch(apiUrl1)
         .then(response => response.text())
         .then(data => {
           var parser = new DOMParser();
