@@ -10,7 +10,7 @@ document.getElementById("search-btn").addEventListener("click", function() {
       var bjdCd = buildingCode.substr(5, 5);
       var bunCd = buildingCode.substr(11, 4);
       var jiCd = buildingCode.substr(15, 4);
-      var apiUrl = "https://apis.data.go.kr/1613000/BldRgstService_v2/getBrRecapTitleInfo?sigunguCd=" + siggCd + "&bjdongCd=" + bjdCd + "&platGbCd=0&bun=" + bunCd + "&ji=" + jiCd + "&ServiceKey=" + apiKey;
+      var apiUrl = "https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=" + siggCd + "&bjdongCd=" + bjdCd + "&platGbCd=0&bun=" + bunCd + "&ji=" + jiCd + "&ServiceKey=" + apiKey;
       document.getElementById("api-url").innerHTML = "API URL: " + apiUrl;
 
       fetch(apiUrl)
