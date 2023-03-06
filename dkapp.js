@@ -3,7 +3,7 @@ document.getElementById("search-btn").addEventListener("click", function() {
     oncomplete: function(data) {
       var buildingCode = data.buildingCode;
       document.getElementById("address-input").value = data.address;
-      document.getElementById("building-code").innerHTML = "건물 코2드: " + buildingCode;
+      document.getElementById("building-code").innerHTML = "건물 코드: " + buildingCode;
 
       var apiKey = "5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D";
       var siggCd = buildingCode.substr(0, 5);
