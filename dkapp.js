@@ -14,15 +14,17 @@ document.getElementById("search-btn").addEventListener("click", function() {
       document.getElementById("api-url").innerHTML = "API URL: " + apiUrl;
       
       fetch(apiUrl)
-        .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
-          var item = data.response.body.items[0];
+          var parser = new DOMParser();
+          var xmlDoc = parser.parseFromString(data, "text/xml");
+          var item = xmlDoc.getElementsByTagName("item")[0];
           var itemData = {
-            "주용도": item.mainPurpsCdNm,
-            "용도": item.purpsCdNm,
-            "구조": item.bcRgstKindCdNm,
-            "면적": item.archArea + "㎡",
-            "층수": item.hhldCnt + "층"
+            "주용도": item.getElementsByTagName("mainPurpsCdNm")[0].textContent,
+            "용도": item.getElementsByTagName("purpsCdNm")[0].textContent,
+            "구조": item.getElementsByTagName("bcRgstKindCdNm")[0].textContent,
+            "면적": item.getElementsByTagName("archArea")[0].textContent + "㎡",
+            "층수": item.getElementsByTagName("hhldCnt")[0].textContent + "층"
           };
           var html = "<ul>";
           for (var key in itemData) {
@@ -35,6 +37,7 @@ document.getElementById("search-btn").addEventListener("click", function() {
           console.error(error);
           document.getElementById("api-data").innerHTML = "API 정보를 가져오는 중 오류가 발생했습니다.";
         });
+
 
 
     }
