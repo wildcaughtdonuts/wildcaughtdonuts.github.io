@@ -1,49 +1,41 @@
-function openDaumPostcode() {
+// 국토교통부 OpenAPI 인증키
+const apiKey = "5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D";
+
+function searchAddress() {
   new daum.Postcode({
-    oncomplete: function(data) {
-      document.getElementById('address').value = data.roadAddress;
+    oncomplete: function (data) {
+      var address = data.address; // 검색된 주소
+      var buildingCode = data.buildingCode; // 검색된 건물 코드
+      $("#addressInput").val(address); // 검색된 주소를 input 요소에 표시
+      $("#buildingCodeOutput").text(buildingCode); // 검색된 건물 코드를 출력
 
-      // 건축물대장 API 요청
-      const buildingCode = data.buildingCode;
-      const sggCd = buildingCode.substring(0, 5);
-      const bjdCd = buildingCode.substring(5, 10);
-      const bunCd = buildingCode.substring(11, 15);
-      const jiCd = buildingCode.substring(15, 19);
+      // 건물 코드에서 필요한 정보 추출
+      const sigunguCd = buildingCode.slice(0, 5);
+      const bjdongCd = buildingCode.slice(5, 10);
+      const bun = buildingCode.slice(11, 15);
+      const ji = buildingCode.slice(15, 19);
 
-      const xhr = new XMLHttpRequest();
-      const url = `https://apis.data.go.kr/1613000/BldRgstService_v2/getBrBasisOulnInfo?sigunguCd=${sggCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&ServiceKey=5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D`;
+      // API 요청 URL 생성
+      const requestUrl = `https://apis.data.go.kr/1611000/AptBasisInfoService/getAphusBassInfo?serviceKey=${apiKey}&sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&bun=${bun}&ji=${ji}`;
 
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            const result = document.createElement('div');
-            const responseXML = xhr.responseXML;
+      // API 요청
+      $.get(requestUrl, function (data) {
+        const item = $(data).find("item")[0]; // 건물 정보 객체
 
-            if (responseXML.getElementsByTagName('platLoc').length === 0) {
-              result.innerHTML = '건물 대장 정보가 없습니다. <br> API 요청 주소: ' + url;
-            } else {
-              const platLoc = responseXML.getElementsByTagName('platLoc')[0].childNodes[0].nodeValue;
-              const bldNm = responseXML.getElementsByTagName('bldNm')[0].childNodes[0].nodeValue;
-              const mainPurpsCdNm = responseXML.getElementsByTagName('mainPurpsCdNm')[0].childNodes[0].nodeValue;
+        if (item) {
+          const name = $(item).find("aphusNm").text(); // 건물 이름
+          const addr = $(item).find("aphusAddr").text(); // 건물 주소
 
-              result.innerHTML = `주소: ${platLoc}<br>`;
-              result.innerHTML += `건물명: ${bldNm}<br>`;
-              result.innerHTML += `주용도: ${mainPurpsCdNm}`;
-              result.innerHTML = 'API 요청 주소: ' + url;
-            }
-
-            const target = document.getElementById('result');
-            target.innerHTML = '';
-            target.appendChild(result);
-          } else {
-            console.error(xhr.statusText);
-          }
+          // 검색된 건물 정보를 출력
+          $("#buildingNameOutput").text(name);
+          $("#buildingAddrOutput").text(addr);
+        } else {
+          console.log(`건물 정보를 찾을 수 없습니다. 요청 URL: ${requestUrl}`);
         }
-      };
-      
-      
-      xhr.open('GET', url, true);
-      xhr.send();
-    }
+      }).fail(function () {
+        console.log(`API 요청에 실패하였습니다. 요청 URL: ${requestUrl}`);
+      });
+
+    },
   }).open();
 }

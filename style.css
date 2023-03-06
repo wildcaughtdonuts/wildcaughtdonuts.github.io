@@ -1,0 +1,38 @@
+
+/* 버튼 스타일 */
+button {
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+  background-color: #007aff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* 입력창 스타일 */
+#addressInput {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #dcdcdc;
+  margin-right: 10px;
+  width: calc(100% - 150px);
+}
+
+/* 결과 텍스트 스타일 */
+.output-text {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* 결과 스타일 */
+.output {
+  margin-top: 20px;
+}
+
+/* 컨테이너 스타일 */
+.container {
+  margin: 20px;
+}

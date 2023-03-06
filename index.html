@@ -1,36 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>우편번호 검색</title>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="dkapp.js"></script>
+    <title>주소 검색 예제</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./dkapp.js"></script>
+    <script src="./style.js"></script>
     <style>
-      #address {
-        width: 80%;
-        height: 40px;
-        font-size: 16px;
-        margin: 0 auto;
-        display: block;
-      }
-      #search-btn {
-        display: block;
-        margin: 20px auto 0;
-        width: 60%;
-        height: 50px;
-        font-size: 16px;
-      }
-      #result {
-        text-align: center;
-        font-size: 16px;
-        margin-top: 20px;
-      }
+      /* 스타일 파일 적용 */
+      @import url("./style.js");
     </style>
   </head>
   <body>
-    <input type="text" id="address" placeholder="주소를 입력하세요.">
-    <button id="search-btn" onclick="openDaumPostcode()">주소 검색</button>
-    <div id="result"></div>
+    <div class="container">
+      <input type="text" id="addressInput" placeholder="검색할 주소를 입력하세요" />
+      <button onclick="searchAddress()">검색</button>
+      <div class="output">
+        <div class="output-text">건물 코드: <span id="buildingCodeOutput"></span></div>
+        
+    </div>
   </body>
 </html>
