@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>주소 검색</title>
+    <title>건축물대국</title>
+    <link rel="stylesheet" href="iphone.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   </head>
   <body>
-    <h1>주소 검색</h1>
+    <h1>건축물대국</h1>
     <form>
-      <label for="address-input">주소 입력:</label>
+      <label for="address-input"></label>
       <input type="text" id="address-input" name="address" required>
       <button type="button" id="search-btn">검색</button>
       <div id="building-code"></div>
       <div>
-        <button type="button" id="get-br-title-info-btn" data-type="title">표제부조회</button>
-        <button type="button" id="get-br-recap-title-info-btn" data-type="recap">총괄표제부조회</button>
+        <button type="button" id="get-br-title-info-btn" data-type="title">표제부조회(단독건물일때)</button>
+        <button type="button" id="get-br-recap-title-info-btn" data-type="recap">총괄표제부조회(여러동일때)</button>
       </div>
       <div id="api-url"></div>
       <div id="api-data"></div>

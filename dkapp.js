@@ -3,7 +3,7 @@ document.getElementById("search-btn").addEventListener("click", function () {
     oncomplete: function (data) {
       var buildingCode = data.buildingCode;
       document.getElementById("address-input").value = data.address;
-      document.getElementById("building-code").innerHTML = "건물 코드: " + buildingCode;
+      
 
       var apiKey = "5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D";
       var siggCd = buildingCode.substr(0, 5);
@@ -21,7 +21,7 @@ document.getElementById("search-btn").addEventListener("click", function () {
           } else if (type === "recap") {
             apiUrl = "https://apis.data.go.kr/1613000/BldRgstService_v2/getBrRecapTitleInfo?sigunguCd=" + siggCd + "&bjdongCd=" + bjdCd + "&platGbCd=0&bun=" + bunCd + "&ji=" + jiCd + "&ServiceKey=" + apiKey;
           }
-          document.getElementById("api-url").innerHTML = "API URL: " + apiUrl;
+          
           
           // API 호출 및 데이터 출력
           fetch(apiUrl)
