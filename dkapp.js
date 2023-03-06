@@ -11,9 +11,9 @@ document.getElementById("search-btn").addEventListener("click", function() {
       var bunCd = buildingCode.substr(11, 4);
       var jiCd = buildingCode.substr(15, 4);
 
-      var apiUrl1 = "https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=" + siggCd + "&bjdongCd=" + bjdCd + "&platGbCd=0&bun=" + bunCd + "&ji=" + jiCd + "&ServiceKey=" + apiKey;
+      var apiUrl1 = "https://apis.data.go.kr/1613000/BldRgstService_v2/getBrRecapTitleInfo?sigunguCd=" + siggCd + "&bjdongCd=" + bjdCd + "&platGbCd=0&bun=" + bunCd + "&ji=" + jiCd + "&ServiceKey=" + apiKey;
       document.getElementById("api-url").innerHTML = "API URL: " + apiUrl1;
-      var apiUrl2 = "https://apis.data.go.kr/1613000/BldRgstService_v2/getBrRecapTitleInfo?sigunguCd=" + siggCd + "&bjdongCd=" + bjdCd + "&platGbCd=0&bun=" + bunCd + "&ji=" + jiCd + "&ServiceKey=" + apiKey;
+      var apiUrl2 = "https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=" + siggCd + "&bjdongCd=" + bjdCd + "&platGbCd=0&bun=" + bunCd + "&ji=" + jiCd + "&ServiceKey=" + apiKey;
   
       fetch(apiUrl)
         .then(response => response.text())
