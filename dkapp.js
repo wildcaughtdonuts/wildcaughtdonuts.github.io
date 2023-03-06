@@ -7,8 +7,8 @@ function openDaumPostcode() {
       const buildingCode = data.buildingCode;
       const sggCd = buildingCode.substring(0, 5);
       const bjdCd = buildingCode.substring(5, 10);
-      const bunCd = buildingCode.substring(10, 15);
-      const jiCd = buildingCode.substring(15, 20);
+      const bunCd = buildingCode.substring(11, 15);
+      const jiCd = buildingCode.substring(16, 20);
 
       const xhr = new XMLHttpRequest();
       const url = `https://apis.data.go.kr/1613000/BldRgstService_v2/getBrBasisOulnInfo?sigunguCd=${sggCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&ServiceKey=5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D`;
