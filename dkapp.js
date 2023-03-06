@@ -3,7 +3,7 @@ document.getElementById("search-btn").addEventListener("click", function() {
     oncomplete: function(data) {
       var buildingCode = data.buildingCode;
       document.getElementById("address-input").value = data.address;
-      document.getElementById("building-code").innerHTML = "건물 코드: " + buildingCode;
+      document.getElementById("building-code").innerHTML = "건물 코2드: " + buildingCode;
 
       var apiKey = "5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D";
       var siggCd = buildingCode.substr(0, 5);
@@ -14,50 +14,32 @@ document.getElementById("search-btn").addEventListener("click", function() {
       document.getElementById("api-url").innerHTML = "API URL: " + apiUrl;
 
       fetch(apiUrl)
-  .then(response => response.text())
-  .then(data => {
-    try {
-      var parser = new DOMParser();
-      var xmlDoc = parser.parseFromString(data, "text/xml");
-      var item = xmlDoc.getElementsByTagName("item")[0];
-      var itemData = {};
-      if (item) {
-        itemData = {
-          "건물명": item.getElementsByTagName("bldNm")[0].textContent,
-          "용도": item.getElementsByTagName("etcPurps")[0].textContent,
-          "주소": item.getElementsByTagName("platPlc")[0].textContent,
-          "건축허가일": item.getElementsByTagName("pmsDay")[0].textContent,
-          "사용승인일": item.getElementsByTagName("useAprDay")[0].textContent,
-          "연면적": item.getElementsByTagName("totArea")[0].textContent + "㎡",
-          "건축면적": item.getElementsByTagName("archArea")[0].textContent + "㎡",
-          "세대수": item.getElementsByTagName("hhldCnt")[0].textContent,
-          "지상층수": item.getElementsByTagName("grndFlrCnt")[0].textContent,
-          "지하층수": item.getElementsByTagName("ugrndFlrCnt")[0].textContent,
-          "건축물구조": item.getElementsByTagName("strctCdNm")[0].textContent,
-          "지붕구조": item.getElementsByTagName("etcRoof")[0].textContent,
-          "승용승강기": item.getElementsByTagName("rideUseElvtCnt")[0].textContent + "대",
-          "비상용승강기": item.getElementsByTagName("emgenUseElvtCnt")[0].textContent + "대"
-        };
-      } else {
-        throw new Error("API에서 반환된 데이터에 item이 없습니다.");
-      }
-      var html = "<ul>";
-      for (var key in itemData) {
-        html += "<li>" + key + ": " + itemData[key] + "</li>";
-      }
-      html += "</ul>";
-      document.getElementById("api-data").innerHTML = "API 정보:" + html;
-    } catch (error) {
-      console.error(error);
-      document.getElementById("api-data").innerHTML = "API 정보를 가져오는 중 오류가 발생했습니다.";
-    }
-  })
-  .catch(error => {
-    console.error(error);
-    document.getElementById("api-data").innerHTML = "API 정보를 가져오는 중 오류가 발생했습니다.";
-  });
-
-
+        .then(response => response.text())
+        .then(data => {
+          var parser = new DOMParser();
+          var xmlDoc = parser.parseFromString(data, "text/xml");
+          var item = xmlDoc.getElementsByTagName("item")[0];
+          var itemData = {
+            "건물명": item.getElementsByTagName("bldNm")[0].textContent,
+            "용도": item.getElementsByTagName("etcPurps")[0].textContent,
+            "주소": item.getElementsByTagName("platPlc")[0].textContent,
+            "건축허가일": item.getElementsByTagName("pmsDay")[0].textContent,
+            "사용승인일": item.getElementsByTagName("useAprDay")[0].textContent,
+            "연면적": item.getElementsByTagName("totArea")[0].textContent + "㎡",
+            "건축면적": item.getElementsByTagName("archArea")[0].textContent + "㎡",
+            "세대수": item.getElementsByTagName("hhldCnt")[0].textContent,
+          };
+          var html = "<ul>";
+          for (var key in itemData) {
+            html += "<li>" + key + ": " + itemData[key] + "</li>";
+          }
+          html += "</ul>";
+          document.getElementById("api-data").innerHTML = "API 정보:" + html;
+        })
+        .catch(error => {
+          console.error(error);
+          document.getElementById("api-data").innerHTML = "API 정보를 가져오는 중 오류가 발생했습니다.";
+        });
 
 
 
