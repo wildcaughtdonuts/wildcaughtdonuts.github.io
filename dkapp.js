@@ -17,14 +17,14 @@ function openDaumPostcode() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status === 200) {
             const result = document.createElement('div');
-            const responseJSON = JSON.parse(xhr.responseText);
+            const responseXML = xhr.responseXML;
 
-            if (!responseJSON.response.body.items) {
+            if (responseXML.getElementsByTagName('platLoc').length === 0) {
               result.innerHTML = '건물 대장 정보가 없습니다. <br> API 요청 주소: ' + url;
             } else {
-              const platLoc = responseJSON.response.body.items.item.platLoc;
-              const bldNm = responseJSON.response.body.items.item.bldNm;
-              const mainPurpsCdNm = responseJSON.response.body.items.item.mainPurpsCdNm;
+              const platLoc = responseXML.getElementsByTagName('platLoc')[0].childNodes[0].nodeValue;
+              const bldNm = responseXML.getElementsByTagName('bldNm')[0].childNodes[0].nodeValue;
+              const mainPurpsCdNm = responseXML.getElementsByTagName('mainPurpsCdNm')[0].childNodes[0].nodeValue;
 
               result.innerHTML = `주소: ${platLoc}<br>`;
               result.innerHTML += `건물명: ${bldNm}<br>`;
@@ -39,7 +39,8 @@ function openDaumPostcode() {
           }
         }
       };
-
+      
+      
       xhr.open('GET', url, true);
       xhr.send();
     }
