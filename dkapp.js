@@ -59,31 +59,32 @@ document.getElementById("search-btn").addEventListener("click", function () {
       });
     }
   }).open();
-  // reset 버튼 이벤트 리스너 추가
-  const resetBtn = document.getElementById("reset-btn");
-  resetBtn.addEventListener("click", function () {
-    // 결과 출력 영역 초기화
-    const buildingCode = document.getElementById("building-code");
-    buildingCode.innerHTML = "";
+  
+  // reset 버튼 클릭 이벤트 리스너 등록
+const resetBtn = document.getElementById("reset-btn");
+resetBtn.addEventListener("click", function () {
+  // 결과 출력 영역 초기화
+  const buildingCode = document.getElementById("building-code");
+  buildingCode.innerHTML = "";
 
-    // API 응답 데이터 영역 초기화
-    const apiData = document.getElementById("api-data");
-    apiData.innerHTML = "";
+  // API 응답 데이터 영역 초기화
+  const apiData = document.getElementById("api-data");
+  apiData.innerHTML = "";
 
-    // 검색어 입력 폼 초기화
-    const addressInput = document.getElementById("address-input");
-    addressInput.value = "";
+  // 검색어 입력 폼 초기화
+  const addressInput = document.getElementById("address-input");
+  addressInput.value = "";
 
-    // 각 API 요청 URL 초기화
-    const titleApiUrl = document.getElementById("get-br-title-info-btn").setAttribute("data-url", "");
-    const recapApiUrl = document.getElementById("get-br-recap-title-info-btn").setAttribute("data-url", "");
+  // 각 API 요청 URL 초기화
+  const titleApiUrl = document.getElementById("get-br-title-info-btn").setAttribute("data-url", "");
+  const recapApiUrl = document.getElementById("get-br-recap-title-info-btn").setAttribute("data-url", "");
+});
+
+// 각 API 요청 버튼 클릭 시, 각 API 요청 URL 초기화
+document.querySelectorAll('[data-type]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    btn.setAttribute("data-url", "");
   });
-
-  // API 요청 버튼 클릭 시, 각 API 요청 URL 초기화
-  document.querySelectorAll('[data-type]').forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      btn.setAttribute("data-url", "");
-    });
   });
 
   
