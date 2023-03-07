@@ -61,11 +61,16 @@ input[type="text"] {
 #search-btn {
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+  width: 90%;
+  height: 15%;
+  
 }
 
 #copy-btn {
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+  width: 90%;
+  height: 15%;
 }
 
 .button-row {
@@ -75,6 +80,7 @@ input[type="text"] {
   margin-top: 1rem;
   gap: 1rem;
   width: 90%;
+  height: 15%;
 }
 
 .button-row button {
