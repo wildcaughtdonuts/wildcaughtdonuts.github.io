@@ -10,6 +10,27 @@ body {
   body {
     font-size: 1.2rem;
   }
+
+  #search-btn {
+    font-size: 1.5rem;
+    height: 50px;
+    width: 50%;
+  }
+
+  #copy-btn {
+    font-size: 1.5rem;
+    height: 50px;
+    width: 30%;
+  }
+
+  #address-input {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .button-row button {
+    font-size: 1.5rem;
+  }
 }
 
 h1 {
@@ -38,18 +59,13 @@ input[type="text"] {
 }
 
 #search-btn {
-  width: 50%;
-  height: 10%;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
-  font-size: 1rem;
 }
 
 #copy-btn {
-  width: 30%;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
-  font-size: 1rem;
 }
 
 .button-row {
