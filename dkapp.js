@@ -1,9 +1,11 @@
+
 document.getElementById("search-btn").addEventListener("click", function () {
+
   new daum.Postcode({
     oncomplete: function (data) {
       var buildingCode = data.buildingCode;
       document.getElementById("address-input").value = data.address;
-      
+
 
       var apiKey = "5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D";
       var siggCd = buildingCode.substr(0, 5);
@@ -21,8 +23,8 @@ document.getElementById("search-btn").addEventListener("click", function () {
           } else if (type === "recap") {
             apiUrl = "https://apis.data.go.kr/1613000/BldRgstService_v2/getBrRecapTitleInfo?sigunguCd=" + siggCd + "&bjdongCd=" + bjdCd + "&platGbCd=0&bun=" + bunCd + "&ji=" + jiCd + "&ServiceKey=" + apiKey;
           }
-          
-          
+
+
           // API 호출 및 데이터 출력
           fetch(apiUrl)
             .then(response => response.text())
@@ -57,4 +59,34 @@ document.getElementById("search-btn").addEventListener("click", function () {
       });
     }
   }).open();
+  // reset 버튼 이벤트 리스너 추가
+  const resetBtn = document.getElementById("reset-btn");
+  resetBtn.addEventListener("click", function () {
+    // 결과 출력 영역 초기화
+    const buildingCode = document.getElementById("building-code");
+    buildingCode.innerHTML = "";
+
+    // API 응답 데이터 영역 초기화
+    const apiData = document.getElementById("api-data");
+    apiData.innerHTML = "";
+
+    // 검색어 입력 폼 초기화
+    const addressInput = document.getElementById("address-input");
+    addressInput.value = "";
+
+    // 각 API 요청 URL 초기화
+    const titleApiUrl = document.getElementById("get-br-title-info-btn").setAttribute("data-url", "");
+    const recapApiUrl = document.getElementById("get-br-recap-title-info-btn").setAttribute("data-url", "");
+  });
+
+  // API 요청 버튼 클릭 시, 각 API 요청 URL 초기화
+  document.querySelectorAll('[data-type]').forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      btn.setAttribute("data-url", "");
+    });
+  });
+
+  
 });
+
+

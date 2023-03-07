@@ -1,0 +1,61 @@
+/* 전체 폰트 스타일 */
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* 제목 스타일 */
+h1 {
+  font-size: 2rem;
+  margin: 0 auto; /* 가로 중앙 정렬을 위해 margin-left와 margin-right를 auto로 지정 */
+  text-align: center; /* 내용물을 가운데로 정렬 */
+}
+
+
+/* 입력 폼 스타일 */
+form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+label {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"] {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+button {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  color: #fff;
+  background-color: #007bff;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+button:hover {
+  background-color: #0069d9;
+}
+
+/* 결과 출력 영역 스타일 */
+#building-code {
+  margin-top: 1rem;
+}
+
+#api-url {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+#api-data {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
