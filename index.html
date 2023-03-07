@@ -16,13 +16,14 @@
 <input type="text" id="address-input" name="address" required>
 <button type="button" id="search-btn">검색</button>
 <div id="search-history-list"></div>
-<div>
-  <button type="button" id="get-br-title-info-btn" data-type="title">단독건물일때</button>
-  <button type="button" id="get-br-recap-title-info-btn" data-type="recap">여러동일때</button>
-  <button type="button" id="reset-btn">초기화</button>
+<div class="button-row">
+  <button id="get-br-title-info-btn" class="api-request-btn" data-type="title">단독건물</button>
+  <button id="get-br-recap-title-info-btn" class="api-request-btn" data-type="recap">여러 동 건물 </button>
+  <button id="reset-btn" class="api-request-btn" data-type="reset">초기화</button>
 </div>
 
 
+<div id="building-code"></div>
 <div id="api-data"></div>
 
 
