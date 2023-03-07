@@ -90,4 +90,26 @@ document.querySelectorAll('[data-type]').forEach(function (btn) {
   
 });
 
+// 주소 복사하기 버튼에 이벤트 리스너 추가
+document.getElementById("copy-btn").addEventListener("click", function() {
+// 주소 복사하기 버튼 클릭시 주소 복사
+const addressInput = document.getElementById("address-input");
+if (addressInput.value) { // 입력된 주소가 있는 경우
+addressInput.select();
+document.execCommand("copy");
+alert("복사되었습니다.");
+} else { // 입력된 주소가 없는 경우
+alert("주소 검색을 먼저 하세요.");
+}
+});
 
+
+
+
+
+
+
+// 주소 입력란 클릭 시 입력란 선택
+document.getElementById("address-input").addEventListener("click", function() {
+  this.select();
+});
