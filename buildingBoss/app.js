@@ -61,8 +61,8 @@ submitBtn.addEventListener('click', () => {
         
         for (const info of items) {
           resultHTML += '<ul>';
+          resultHTML += `<h4>${dongNm}</h4>`;
           for (const [key, value] of Object.entries(info)) {
-            resultHTML += `<h4>${dongNm}</h4>`;
             resultHTML += `<li><strong>${key}:</strong> ${value}</li>`;
           }
           resultHTML += '</ul>';
