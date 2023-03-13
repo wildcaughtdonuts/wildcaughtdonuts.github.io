@@ -1,5 +1,3 @@
-// script.js
-
 const submitBtn = document.getElementById('submit-btn');
 const resultDiv = document.getElementById('result');
 const urlInput = document.getElementById('url-input');
