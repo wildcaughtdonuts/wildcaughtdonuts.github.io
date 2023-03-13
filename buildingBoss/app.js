@@ -13,13 +13,14 @@ submitBtn.addEventListener('click', () => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, 'text/xml');
       const items = xmlDoc.getElementsByTagName('item');
-      let itemInfo = {};
+      let itemInfo = [];
 
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         const bldNm = item.getElementsByTagName('bldNm')[0]?.textContent || '건축물명 없음';
         const archArea = parseInt(item.getElementsByTagName('archArea')[0]?.textContent || 0);
-        itemInfo[bldNm] = {
+
+        const info = {
           '주용도': item.getElementsByTagName('mainPurpsCdNm')[0]?.textContent || '정보없음',
           '기타용도': item.getElementsByTagName('etcPurps')[0]?.textContent || '정보없음',
           '주소': item.getElementsByTagName('platPlc')[0]?.textContent || '정보없음',
@@ -37,21 +38,32 @@ submitBtn.addEventListener('click', () => {
           '높이': item.getElementsByTagName('heit')[0]?.textContent || '정보없음', 
 
           '건축물구조': item.getElementsByTagName('strctCdNm')[0]?.textContent || '정보없음', 
-          '지붕구조': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음',                
+          '지붕구조': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음',   
         };
+
+        // itemInfo에 동일한 bldNm이 존재하는지 검사 후 추가 또는 업데이트
+        const index = itemInfo.findIndex(building => building.bldNm === bldNm);
+        if (index === -1) {
+          itemInfo.push({ bldNm, items: [info] });
+        } else {
+          itemInfo[index].items.push(info);
+        }
       }
 
-      // 객체를 배열로 변환 후 건축물명을 기준으로 정렬
-      const sortedItems = Object.entries(itemInfo).sort((a, b) => a[0].localeCompare(b[0]));
+      // 건축물명을 기준으로 정렬
+      itemInfo.sort((a, b) => a.bldNm.localeCompare(b.bldNm));
       const numItems = items.length;
 
       let resultHTML = `<li><p><strong>해당 주소의 건축물은 ${numItems}개 입니다.</strong></p></li>`;
-      for (const [bldNm, info] of sortedItems) {
-        resultHTML += `<h3>${bldNm}</h3><ul>`;
-        for (const [key, value] of Object.entries(info)) {
-          resultHTML += `<li><strong>${key}:</strong> ${value}</li>`;
+      for (const { bldNm, items } of itemInfo) {
+        resultHTML += `<h3>${bldNm}</h3>`;
+        for (const info of items) {
+          resultHTML += '<ul>';
+          for (const [key, value] of Object.entries(info)) {
+            resultHTML += `<li><strong>${key}:</strong> ${value}</li>`;
+          }
+          resultHTML += '</ul>';
         }
-        resultHTML += '</ul>';
       }
 
       resultDiv.innerHTML = resultHTML;
@@ -61,3 +73,4 @@ submitBtn.addEventListener('click', () => {
       console.error(error);
     });
 });
+
