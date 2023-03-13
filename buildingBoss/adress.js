@@ -1,11 +1,13 @@
+//adress.js
+
 const searchBtn = document.getElementById('search-btn');
-const resultDiv = document.getElementById('mapResult');
+const mapResultDiv = document.getElementById('mapResult');
 
 searchBtn.addEventListener('click', () => {
   new daum.Postcode({
     oncomplete: function (data) {
       const buildingCode = data.buildingCode;
-      resultDiv.innerHTML = `<p>buildingCode: ${buildingCode}</p>`;
+      mapResultDiv.innerHTML = `<p>buildingCode: ${buildingCode}</p>`;
     }
   }).open();
 });
