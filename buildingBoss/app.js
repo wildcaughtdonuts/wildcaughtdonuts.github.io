@@ -28,8 +28,9 @@ submitBtn.addEventListener('click', () => {
           '사용승인일': item.getElementsByTagName('useAprDay')[0]?.textContent || '정보없음',
 
           '연면적(㎡)': item.getElementsByTagName('totArea')[0]?.textContent || '정보없음',
-          '건축면적(㎡)': item.getElementsByTagName('archArea')[0]?.textContent || '정보없음',
           '세대수': item.getElementsByTagName('hhldCnt')[0]?.textContent || '정보없음',
+          '건축면적(㎡)': item.getElementsByTagName('archArea')[0]?.textContent || '정보없음',
+          
 
           '지상층수': item.getElementsByTagName('grndFlrCnt')[0]?.textContent || '정보없음', 
           '지하층수': item.getElementsByTagName('ugrndFlrCnt')[0]?.textContent || '정보없음', 
@@ -38,7 +39,7 @@ submitBtn.addEventListener('click', () => {
           '건축물구조': item.getElementsByTagName('strctCdNm')[0]?.textContent || '정보없음', 
           '지붕구조': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음', 
 
-          '승용승강기': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음', 
+          '승용승강기': item.getElementsByTagName('rideUseElvtCnt')[0]?.textContent || '정보없음', 
           '비상승강기': item.getElementsByTagName('emgenUseElvtCnt')[0]?.textContent || '정보없음', 
                
         };
@@ -46,8 +47,9 @@ submitBtn.addEventListener('click', () => {
 
       // 객체를 배열로 변환 후 건축물명을 기준으로 정렬
       const sortedItems = Object.entries(itemInfo).sort((a, b) => a[0].localeCompare(b[0]));
+      const numItems = items.length;
 
-      let resultHTML = '';
+      let resultHTML = `<p>건축물 수는 ${numItems}개 입니다.</p>`;
       for (const [bldNm, info] of sortedItems) {
         resultHTML += `<h3>${bldNm}</h3><ul>`;
         for (const [key, value] of Object.entries(info)) {
@@ -59,7 +61,7 @@ submitBtn.addEventListener('click', () => {
       resultDiv.innerHTML = resultHTML;
     })
     .catch(error => {
-      resultDiv.innerHTML = '오류가 발생했습니다. URL을 확인해주세요.';
+      resultDiv.innerHTML = '오류가 발생했습니다. 대국에게 문의해주세요';
       console.error(error);
     });
 });
