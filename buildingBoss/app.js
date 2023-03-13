@@ -1,13 +1,20 @@
 //app.js
 
-const submitBtn = document.getElementById('submit-btn');
 const resultDiv = document.getElementById('result');
-const urlInput = document.getElementById('url-input');
 
-submitBtn.addEventListener('click', () => {
-  const url = urlInput.value;
+document.getElementById('search-btn').addEventListener('click', () => {
+  new daum.Postcode({
+    oncomplete: (data) => {
+      const buildingCode = data.buildingCode;
+      const apiKey = '5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D';
+      const siggCd = buildingCode.substr(0, 5);
+      const bjdCd = buildingCode.substr(5, 5);
+      const bunCd = buildingCode.substr(11, 4);
+      const jiCd = buildingCode.substr(15, 4);
+      const apiUrl = `https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=${siggCd}&bjdongCd=${bjdCd}&bun=${bunCd}&ji=${jiCd}&ServiceKey=${apiKey}`;
+      
 
-  fetch(url)
+  fetch(apiUrl)
     .then(response => response.text())
     .then(data => {
       const parser = new DOMParser();
@@ -37,11 +44,7 @@ submitBtn.addEventListener('click', () => {
           '높이': item.getElementsByTagName('heit')[0]?.textContent || '정보없음', 
 
           '건축물구조': item.getElementsByTagName('strctCdNm')[0]?.textContent || '정보없음', 
-          '지붕구조': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음', 
-
-          '승용승강기': item.getElementsByTagName('rideUseElvtCnt')[0]?.textContent || '정보없음', 
-          '비상승강기': item.getElementsByTagName('emgenUseElvtCnt')[0]?.textContent || '정보없음', 
-               
+          '지붕구조': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음',                
         };
       }
 
@@ -63,5 +66,5 @@ submitBtn.addEventListener('click', () => {
     .catch(error => {
       resultDiv.innerHTML = '오류가 발생했습니다. 대국에게 문의해주세요';
       console.error(error);
-    });
+    }); }});
 });
