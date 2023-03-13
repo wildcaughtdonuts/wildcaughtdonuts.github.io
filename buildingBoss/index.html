@@ -1,23 +1,26 @@
-//adress.js
-
-const searchBtn = document.getElementById('search-btn');
-const mapResultDiv = document.getElementById('mapResult');
-
-searchBtn.addEventListener('click', () => {
-  new daum.Postcode({
-    oncomplete: function (data) {
-      const buildingCode = data.buildingCode;
-      const apiKey = "5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D";
-      const siggCd = buildingCode.substr(0, 5);
-      const bjdCd = buildingCode.substr(5, 5);
-      const bunCd = buildingCode.substr(11, 4);
-      const jiCd = buildingCode.substr(15, 4);
-      const apiUrl = `https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=${siggCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&ServiceKey=${apiKey}`;
-      mapResultDiv.innerHTML = `<p>주소 불러오기에 성공했습니다. 아래 버튼을 눌러주세요.
-      건물이 한개 또는 규모가 작은 경우 표제부,
-      규모가 크거나 대단지인 경우 총괄표제부를 조회하세요.</p>`;
-      // apiUrl을 저장하고 있는 urlInput 엘리먼트에 apiUrl 저장
-      document.getElementById('url-input').value = apiUrl;
-    }
-  }).open();
-});
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>건축물대국</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  </head>
+  <body>
+    <h1>건축물대장 검색기</h1>
+    
+    <button id="search-btn">주소검색</button>
+    <div id="mapResult"></div>
+    
+    <!-- type 속성을 hidden으로 변경하여 숨김 -->
+    <input type="hidden" id="url-input" value="https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=11680&bjdongCd=10300&bun=0012&ji=0000&ServiceKey=5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D">
+    
+    <button id="submit-btn">데이터 가져오기</button>
+    <div id="result"></div>
+    <div id="updated-time"></div>
+    
+    <script src="./app.js"></script>
+    <script src="./adress.js"></script>
+    <script src="./clock.js"></script>     
+  </body>
+</html>
