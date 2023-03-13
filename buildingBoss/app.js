@@ -22,14 +22,26 @@ submitBtn.addEventListener('click', () => {
         itemInfo[bldNm] = {
           '주용도': item.getElementsByTagName('mainPurpsCdNm')[0]?.textContent || '정보없음',
           '기타용도': item.getElementsByTagName('etcPurps')[0]?.textContent || '정보없음',
+          '주소': item.getElementsByTagName('platPlc')[0]?.textContent || '정보없음',
+          
+          '건축허가일': item.getElementsByTagName('pmsDay')[0]?.textContent || '정보없음',
+          '사용승인일': item.getElementsByTagName('useAprDay')[0]?.textContent || '정보없음',
+
           '연면적(㎡)': item.getElementsByTagName('totArea')[0]?.textContent || '정보없음',
+          '건축면적(㎡)': item.getElementsByTagName('archArea')[0]?.textContent || '정보없음',
           '세대수': item.getElementsByTagName('hhldCnt')[0]?.textContent || '정보없음',
-          '처리일자': item.getElementsByTagName('pmsDay')[0]?.textContent || '정보없음',
-          '사용승인일자': item.getElementsByTagName('useAprDay')[0]?.textContent || '정보없음'
+
+          '지상층수': item.getElementsByTagName('grndFlrCnt')[0]?.textContent || '정보없음', 
+          '지하층수': item.getElementsByTagName('ugrndFlrCnt')[0]?.textContent || '정보없음', 
+          '높이': item.getElementsByTagName('heit')[0]?.textContent || '정보없음', 
+
+          '건축물구조': item.getElementsByTagName('strctCdNm')[0]?.textContent || '정보없음', 
+          '지붕구조': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음', 
+
+          '승용승강기': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음', 
+          '비상승강기': item.getElementsByTagName('emgenUseElvtCnt')[0]?.textContent || '정보없음', 
+               
         };
-        if (!isNaN(archArea)) {
-          itemInfo[bldNm]['건축면적(㎡)'] = archArea;
-        }
       }
 
       // 객체를 배열로 변환 후 건축물명을 기준으로 정렬
