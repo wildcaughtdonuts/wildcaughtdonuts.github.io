@@ -1,20 +1,13 @@
 //app.js
 
+const submitBtn = document.getElementById('submit-btn');
 const resultDiv = document.getElementById('result');
+const urlInput = document.getElementById('url-input');
 
-document.getElementById('search-btn').addEventListener('click', () => {
-  new daum.Postcode({
-    oncomplete: (data) => {
-      const buildingCode = data.buildingCode;
-      const apiKey = '5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D';
-      const siggCd = buildingCode.substr(0, 5);
-      const bjdCd = buildingCode.substr(5, 5);
-      const bunCd = buildingCode.substr(11, 4);
-      const jiCd = buildingCode.substr(15, 4);
-      const apiUrl = `https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=${siggCd}&bjdongCd=${bjdCd}&bun=${bunCd}&ji=${jiCd}&ServiceKey=${apiKey}`;
-      
+submitBtn.addEventListener('click', () => {
+  const url = urlInput.value;
 
-  fetch(apiUrl)
+  fetch(url)
     .then(response => response.text())
     .then(data => {
       const parser = new DOMParser();
@@ -66,5 +59,5 @@ document.getElementById('search-btn').addEventListener('click', () => {
     .catch(error => {
       resultDiv.innerHTML = '오류가 발생했습니다. 대국에게 문의해주세요';
       console.error(error);
-    }); }});
+    });
 });

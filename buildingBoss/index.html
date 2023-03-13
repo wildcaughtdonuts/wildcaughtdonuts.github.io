@@ -1,19 +1,21 @@
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
     <title>API 데이터 출력 예제</title>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   </head>
   <body>
     <div id="updated-time"></div>
-    <label for="address-input">주소:</label>
-    <input type="text" id="address-input" style="width: 80%">
-    <button id="search-btn">주소 검색</button>
+    <button id="search-btn">주소검색</button>
+    <div id="mapResult"></div>
+    
+    <input type="text" id="url-input" value="https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=11680&bjdongCd=10300&bun=0012&ji=0000&ServiceKey=5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D" style="width: 80%">
+    <button id="submit-btn">데이터 가져오기</button>
     <div id="result"></div>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=77dff35d27f448ff3956ed4779a8cf42"></script>
-    <script src="./app.js"></script>
-    <script src = "./clock.js"></script> 
+    <script src = "./app.js"> </script>
+    <script src = "./adress.js"> </script>
+    <script src = "./clock.js"></script>     
   </body>
 </html>
-
