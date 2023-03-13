@@ -1,5 +1,3 @@
-//app.js
-
 const submitBtn = document.getElementById('submit-btn');
 const resultDiv = document.getElementById('result');
 const urlInput = document.getElementById('url-input');
@@ -26,32 +24,34 @@ submitBtn.addEventListener('click', () => {
   const url = urlInput.value;
 
   fetch(url)
-  .then(response => response.text())
-  .then(data => {
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(data, 'text/xml');
-    const items = xmlDoc.getElementsByTagName('item');
-    
-    let resultHTML = '';
-    
-    for (let unit in unitNames) {
-      resultHTML += `<h3>${unitNames[unit]}</h3><ul>`;
-      const itemElements = xmlDoc.getElementsByTagName(unit)[0].children;
-      for (let i = 0; i < itemElements.length; i++) {
-        const itemElement = itemElements[i];
-        const itemName = itemElement.tagName;
-        const itemValue = itemElement.textContent || '정보없음';
-        if (itemNames[itemName]) {
-          resultHTML += `<li><strong>${itemNames[itemName]}:</strong> ${itemValue}</li>`;
+    .then(response => response.text())
+    .then(data => {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data, 'text/xml');
+      
+      let resultHTML = '';
+      
+      for (let unit in unitNames) {
+        const unitElement = xmlDoc.getElementsByTagName(unit)[0];
+        if (unitElement) {
+          resultHTML += `<h3>${unitNames[unit]}</h3><ul>`;
+          const itemElements = unitElement.children;
+          for (let i = 0; i < itemElements.length; i++) {
+            const itemElement = itemElements[i];
+            const itemName = itemElement.tagName;
+            const itemValue = itemElement.textContent || '정보없음';
+            if (itemNames[itemName]) {
+              resultHTML += `<li><strong>${itemNames[itemName]}:</strong> ${itemValue}</li>`;
+            }
+          }
+          resultHTML += '</ul>';
         }
       }
-      resultHTML += '</ul>';
-    }
 
-    resultDiv.innerHTML = resultHTML;
-  })
-  .catch(error => {
-    resultDiv.innerHTML = '오류가 발생했습니다. URL을 확인해주세요.';
-    console.error(error);
-  });
+      resultDiv.innerHTML = resultHTML;
+    })
+    .catch(error => {
+      resultDiv.innerHTML = '오류가 발생했습니다. URL을 확인해주세요.';
+      console.error(error);
+    });
 });
