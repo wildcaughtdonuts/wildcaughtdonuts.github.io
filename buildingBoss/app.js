@@ -45,7 +45,7 @@ submitBtn.addEventListener('click', () => {
       const sortedItems = Object.entries(itemInfo).sort((a, b) => a[0].localeCompare(b[0]));
       const numItems = items.length;
 
-      let resultHTML = `<p>건축물 수는 ${numItems}개 입니다.</p>`;
+      let resultHTML = `<li><p><strong>해당 주소의 건축물은 ${numItems}개 입니다.</strong></p></li>`;
       for (const [bldNm, info] of sortedItems) {
         resultHTML += `<h3>${bldNm}</h3><ul>`;
         for (const [key, value] of Object.entries(info)) {
