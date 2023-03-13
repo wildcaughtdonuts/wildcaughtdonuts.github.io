@@ -9,6 +9,7 @@ submitBtn.addEventListener('click', () => {
   fetch(apiUrl)
     .then(response => response.text())
     .then(data => {
+      const apiUrl = `https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=${siggCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&ServiceKey=${apiKey}`;
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, 'text/xml');
       const items = xmlDoc.getElementsByTagName('item');

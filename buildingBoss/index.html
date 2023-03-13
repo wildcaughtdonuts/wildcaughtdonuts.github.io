@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,15 +13,13 @@
     <button id="search-btn">주소검색</button>
     <div id="mapResult"></div>
     
-    <!-- type 속성을 hidden으로 변경하여 숨김 -->
-    <input type="hidden" id="url-input" value="https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=11680&bjdongCd=10300&bun=0012&ji=0000&ServiceKey=5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D">
-    
-    <button id="submit-btn">데이터 가져오기</button>
+    <input type="text" id="url-input" value="https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=11680&bjdongCd=10300&bun=0012&ji=0000&ServiceKey=5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D" style="width: 80%">
+    <button id="submit-btn">표제부(동별) 조회</button>
+    <button id="submit-btn2">총괄표제부 조회</button>
     <div id="result"></div>
     <div id="updated-time"></div>
-    
-    <script src="./app.js"></script>
-    <script src="./adress.js"></script>
-    <script src="./clock.js"></script>     
+    <script src = "./app.js"> </script>
+    <script src = "./adress.js"> </script>
+    <script src = "./clock.js"></script>     
   </body>
 </html>
