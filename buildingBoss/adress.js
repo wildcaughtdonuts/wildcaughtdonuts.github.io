@@ -13,6 +13,7 @@ searchBtn.addEventListener('click', () => {
       const bunCd = buildingCode.substr(11, 4);
       const jiCd = buildingCode.substr(15, 4);
       const apiUrl = `https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=${siggCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&ServiceKey=${apiKey}`;
+      const recapUrl = `https://apis.data.go.kr/1613000/BldRgstService_v2/getBrRecapTitleInfo?sigunguCd=${siggCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&ServiceKey=${apiKey}`;
       mapResultDiv.innerHTML = `<p>주소 불러오기에 성공했습니다. 아래 버튼을 눌러주세요.
       건물이 한개 또는 규모가 작은 경우 표제부,
       규모가 크거나 대단지인 경우 총괄표제부를 조회하세요.</p>`;
