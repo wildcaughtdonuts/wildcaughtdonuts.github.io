@@ -18,7 +18,7 @@ submitBtn.addEventListener('click', () => {
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         const bldNm = item.getElementsByTagName('bldNm')[0]?.textContent || '건축물명 없음';
-        const dongNm = item.getElementsByTagName('dongNm')[0]?.textContent || '건축물명 없음';
+        let dongNm = item.getElementsByTagName('dongNm')[0]?.textContent || '건축물명 없음';
         const archArea = parseInt(item.getElementsByTagName('archArea')[0]?.textContent || 0);
 
         const info = {
@@ -45,7 +45,7 @@ submitBtn.addEventListener('click', () => {
         // itemInfo에 동일한 bldNm이 존재하는지 검사 후 추가 또는 업데이트
         const index = itemInfo.findIndex(building => building.bldNm === bldNm);
         if (index === -1) {
-          itemInfo.push({ bldNm, items: [info] });
+          itemInfo.push({ bldNm, dongNm, items: [info] });
         } else {
           itemInfo[index].items.push(info);
         }
@@ -56,7 +56,7 @@ submitBtn.addEventListener('click', () => {
       const numItems = items.length;
 
       let resultHTML = `<li><p><strong>해당 주소의 건축물은 ${numItems}개 입니다.</strong></p></li>`;
-      for (const { bldNm, items } of itemInfo) {
+      for (const { bldNm, dongNm, items } of itemInfo) {
         resultHTML += `<h3>${bldNm}</h3>`;
         resultHTML += `<h4>${dongNm}</h4>`;
         for (const info of items) {
