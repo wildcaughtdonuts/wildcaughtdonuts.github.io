@@ -61,7 +61,7 @@ submitBtn.addEventListener('click', () => {
         
         for (const info of items) {
           resultHTML += '<ul>';
-          resultHTML += `<h5>동명: ${dongNm}</h5>`;
+          resultHTML += `<strong>- ${dongNm} -</strong>`;
           for (const [key, value] of Object.entries(info)) {
             resultHTML += `<li><strong>${key}:</strong> ${value}</li>`;
           }
