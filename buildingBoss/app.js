@@ -1,9 +1,3 @@
-//app.js
-
-const submitBtn = document.getElementById('submit-btn');
-const resultDiv = document.getElementById('result');
-const urlInput = document.getElementById('url-input');
-
 submitBtn.addEventListener('click', () => {
   const url = urlInput.value;
 
@@ -32,8 +26,11 @@ submitBtn.addEventListener('click', () => {
         }
       }
 
+      // 객체를 배열로 변환 후 건축물명을 기준으로 정렬
+      const sortedItems = Object.entries(itemInfo).sort((a, b) => a[0].localeCompare(b[0]));
+
       let resultHTML = '';
-      for (const [bldNm, info] of Object.entries(itemInfo)) {
+      for (const [bldNm, info] of sortedItems) {
         resultHTML += `<h3>${bldNm}</h3><ul>`;
         for (const [key, value] of Object.entries(info)) {
           resultHTML += `<li><strong>${key}:</strong> ${value}</li>`;
