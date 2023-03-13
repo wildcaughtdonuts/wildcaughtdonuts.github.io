@@ -18,7 +18,7 @@ submitBtn.addEventListener('click', () => {
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
         const bldNm = item.getElementsByTagName('bldNm')[0]?.textContent || '건축물명 없음';
-        let dongNm = item.getElementsByTagName('dongNm')[0]?.textContent || '건축물명 없음';
+        const dongNm = item.getElementsByTagName('dongNm')[0]?.textContent || '건축물명 없음';
         const archArea = parseInt(item.getElementsByTagName('archArea')[0]?.textContent || 0);
 
         const info = {
@@ -58,10 +58,11 @@ submitBtn.addEventListener('click', () => {
       let resultHTML = `<li><p><strong>해당 주소의 건축물은 ${numItems}개 입니다.</strong></p></li>`;
       for (const { bldNm, dongNm, items } of itemInfo) {
         resultHTML += `<h3>${bldNm}</h3>`;
-        resultHTML += `<h4>${dongNm}</h4>`;
+        
         for (const info of items) {
           resultHTML += '<ul>';
           for (const [key, value] of Object.entries(info)) {
+            resultHTML += `<h4>${dongNm}</h4>`;
             resultHTML += `<li><strong>${key}:</strong> ${value}</li>`;
           }
           resultHTML += '</ul>';
