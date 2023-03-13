@@ -21,6 +21,7 @@ submitBtn.addEventListener('click', () => {
         const archArea = parseInt(item.getElementsByTagName('archArea')[0]?.textContent || 0);
 
         const info = {
+          '동명(아파트)': item.getElementsByTagName('dongNm')[0]?.textContent || '정보없음',
           '주용도': item.getElementsByTagName('mainPurpsCdNm')[0]?.textContent || '정보없음',
           '기타용도': item.getElementsByTagName('etcPurps')[0]?.textContent || '정보없음',
           '주소': item.getElementsByTagName('platPlc')[0]?.textContent || '정보없음',
