@@ -5,9 +5,9 @@ const resultDiv = document.getElementById('result');
 const urlInput = document.getElementById('url-input');
 
 submitBtn.addEventListener('click', () => {
-  const url = urlInput.value;
+  const apiUrl = urlInput.value;
 
-  fetch(url)
+  fetch(apiUrl)
     .then(response => response.text())
     .then(data => {
       const parser = new DOMParser();
