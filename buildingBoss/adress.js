@@ -14,6 +14,8 @@ searchBtn.addEventListener('click', () => {
       const jiCd = buildingCode.substr(15, 4);
       const apiUrl = `https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=${siggCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&ServiceKey=${apiKey}`;
       mapResultDiv.innerHTML = `<p>apiUrl: ${apiUrl}</p>`;
+      // apiUrl을 저장하고 있는 urlInput 엘리먼트에 apiUrl 저장
+      document.getElementById('url-input').value = apiUrl;
     }
   }).open();
 });
