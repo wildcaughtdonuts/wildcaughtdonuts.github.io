@@ -9,7 +9,7 @@ submitBtn.addEventListener('click', () => {
 
   loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
   resultDiv.innerHTML = ''; // 결과 영역 초기화
-  
+
   const apiUrl = document.getElementById('url-input').value;
 
   fetch(apiUrl)
@@ -26,7 +26,7 @@ submitBtn.addEventListener('click', () => {
         const bldNm = item.getElementsByTagName('bldNm')[0]?.textContent || '건축물명 없음';
         const dongNm = item.getElementsByTagName('dongNm')[0]?.textContent || '동명 없음';
         const archArea = parseInt(item.getElementsByTagName('archArea')[0]?.textContent || 0);
-      
+
         const info = {
           '주용도': item.getElementsByTagName('mainPurpsCdNm')[0]?.textContent || '정보없음',
           '기타용도': item.getElementsByTagName('etcPurps')[0]?.textContent || '정보없음',
@@ -47,7 +47,7 @@ submitBtn.addEventListener('click', () => {
           '건축물구조': item.getElementsByTagName('strctCdNm')[0]?.textContent || '정보없음',
           '지붕구조': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음',
         };
-      
+
         // itemInfo에 동일한 bldNm이 존재하는지 검사 후 추가 또는 업데이트
         const index = itemInfo.findIndex(building => building.bldNm === bldNm);
         if (index === -1) {
@@ -61,8 +61,8 @@ submitBtn.addEventListener('click', () => {
           }
         }
       }
-      
-      
+
+
       // 건축물명을 기준으로 정렬
       itemInfo.sort((a, b) => {
         if (a.bldNm === b.bldNm) {
@@ -81,14 +81,17 @@ submitBtn.addEventListener('click', () => {
 
 
 
+
       const numItems = items.length;
 
       let resultHTML = `<li><p><strong>해당 주소의 건축물은 ${numItems}개 입니다.</strong></p></li>`;
       for (const { bldNm, units } of itemInfo) {
         resultHTML += `<h3>${bldNm}</h3>`;
-      
+        resultHTML += `<ul class="accordion">`;
+
         for (const { dongNm, items } of units) {
-          resultHTML += `<h4>${dongNm}</h4>`;
+          resultHTML += `<li><div class="accordion-header"><h4>${dongNm}</h4></div>`;
+          resultHTML += `<div class="accordion-body">`;
           for (const info of items) {
             resultHTML += '<ul>';
             for (const [key, value] of Object.entries(info)) {
@@ -96,16 +99,37 @@ submitBtn.addEventListener('click', () => {
             }
             resultHTML += '</ul>';
           }
+          resultHTML += `</div></li>`;
         }
+
+        resultHTML += `</ul>`;
       }
+
       resultDiv.innerHTML = resultHTML;
       loadingDiv.classList.add('hidden');
+
+
+      ;
     })
     .catch(error => {
       resultDiv.innerHTML = '오류가 발생했습니다. 대국에게 문의해주세요';
       console.error(error);
       loadingDiv.classList.add('hidden');
     });
+
+  // 아코디언 기능 추가
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+  accordionHeaders.forEach((header) => {
+    header.addEventListener('click', () => {
+      header.classList.toggle('active');
+      const accordionBody = header.nextElementSibling;
+      if (accordionBody.style.maxHeight) {
+        accordionBody.style.maxHeight = null;
+      } else {
+        accordionBody.style.maxHeight = accordionBody.scrollHeight + 'px';
+      }
+    });
+  });
 });
 
 submitBtn2.addEventListener('click', () => {
@@ -142,7 +166,7 @@ submitBtn2.addEventListener('click', () => {
 
           '주 건축물(개)': item.getElementsByTagName('mainBldCnt')[0]?.textContent || '정보없음',
           '부속 건축물(개)': item.getElementsByTagName('부속건축물수')[0]?.textContent || '정보없음',
-          
+
         };
 
         itemInfo.push({ bldNm, items: [info] });
