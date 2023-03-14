@@ -8,6 +8,8 @@
 body {
   background-color: #fff;
   padding: 10px;
+  max-width: 600px; /* 최대 가로폭 600px */
+  margin: 0 auto; /* 중앙 정렬 */
 }
 ul {
   display: block;
