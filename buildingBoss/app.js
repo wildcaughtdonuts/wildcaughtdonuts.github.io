@@ -3,6 +3,7 @@
 const submitBtn = document.getElementById('submit-btn');
 const submitBtn2 = document.getElementById('submit-btn2');
 const resultDiv = document.getElementById('result');
+const loadingDiv = document.getElementById('loading');
 
 submitBtn.addEventListener('click', () => {
 
