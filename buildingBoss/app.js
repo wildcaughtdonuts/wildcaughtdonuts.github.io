@@ -79,7 +79,7 @@ submitBtn.addEventListener('click', () => {
       
       const numItems = items.length;
       
-      let resultHTML = `<li><p><strong>해당 주소의 건축물은 ${numItems}개 입니다.</strong></p></li>`;
+      let resultHTML = `<p><strong>해당 주소에 포함된 건축물은 ${numItems}개 입니다.</strong></p>`;
       for (const { bldNm, units } of itemInfo) {
         resultHTML += `<h3>${bldNm}</h3>`;
       
