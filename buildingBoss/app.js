@@ -36,8 +36,8 @@ submitBtn.addEventListener('click', () => {
           '사용승인일': item.getElementsByTagName('useAprDay')[0]?.textContent || '정보없음',
 
           '연면적(㎡)': item.getElementsByTagName('totArea')[0]?.textContent || '정보없음',
-          '세대수': item.getElementsByTagName('hhldCnt')[0]?.textContent || '정보없음',
           '건축면적(㎡)': item.getElementsByTagName('archArea')[0]?.textContent || '정보없음',
+          '세대수': item.getElementsByTagName('hhldCnt')[0]?.textContent || '정보없음',
 
 
           '지상층수': item.getElementsByTagName('grndFlrCnt')[0]?.textContent || '정보없음',
@@ -62,6 +62,7 @@ submitBtn.addEventListener('click', () => {
         }
       }
       
+      
       // 건축물명을 기준으로 정렬
       itemInfo.sort((a, b) => {
         if (a.bldNm === b.bldNm) {
@@ -70,8 +71,18 @@ submitBtn.addEventListener('click', () => {
           return a.bldNm.localeCompare(b.bldNm);
         }
       });
+
+      // 동명을 기준으로 정렬
+      for (const building of itemInfo) {
+        for (const unit of building.units) {
+          unit.items.sort((a, b) => a.dongNm.localeCompare(b.dongNm));
+        }
+      }
+
+
+
       const numItems = items.length;
-      
+
       let resultHTML = `<li><p><strong>해당 주소의 건축물은 ${numItems}개 입니다.</strong></p></li>`;
       for (const { bldNm, units } of itemInfo) {
         resultHTML += `<h3>${bldNm}</h3>`;
