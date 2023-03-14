@@ -37,9 +37,10 @@ li {
   display: list-item;
   text-align: -webkit-match-parent;
 }
+
 #search-btn {
-  width: 800px;
-  height: 100px;
+  width: 90%;
+  height: 12vh;
   margin-top: 20px;
   font-size: 3.5rem;
 }
@@ -57,19 +58,18 @@ li {
 }
 
 #button-row {
-  width: 800px;
-  height: 100px;
+  width: 90%;
+  height: 10vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 1.5%;
-  font-size: 1.2rem;
+  font-size: 5rem;
 }
 
 #submit-btn,
 #submit-btn2 {
   width: 48%;
-  height: 100px;
   font-size: 2rem;
 }
 
