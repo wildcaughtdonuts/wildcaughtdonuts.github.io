@@ -1,25 +1,37 @@
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>건축물대국</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  </head>
-  <body>
-    <h1>건축물대장 검색기</h1>
-    
+
+<head>
+  <meta charset="UTF-8">
+  <title>건축물대국</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
+<body>
+
+
+  <div id="button-container">
+    <h1>건축물대국 검색기</h1>
     <button id="search-btn">주소검색</button>
     <div id="mapResult"></div>
-    
-    <input type="hidden" id="url-input" value="https://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=11680&bjdongCd=10300&bun=0012&ji=0000&ServiceKey=5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D" style="width: 80%">
-    <button id="submit-btn">표제부(동별) 조회</button>
-    <button id="submit-btn2">총괄표제부 조회</button>
-    <div id="result"></div>
-    <div id="updated-time"></div>
-    <script src = "./app.js"> </script>
-    <script src = "./adress.js"> </script>
-    <script src = "./clock.js"></script>     
-  </body>
+    <input type="hidden" id="url-input" value="">
+    <div id="button-row">
+      <button id="submit-btn">표제부(동별) 조회</button>
+      <button id="submit-btn2">총괄표제부 조회</button>
+    </div>
+    <div id="infoButton">건축물의 규모가 작으면 표제부, 여러 단지 또는 대형 건물일 경우는 총괄 표제부를 조회하세요.
+    </div>
+  </div>
+
+  <div id="result"></div>
+  <div id="updated-time"></div>
+  <script src="./app.js"></script>
+  <script src="./adress.js"></script>
+  <div id="button-container">
+    <script src="./clock.js"></script>
+    donutsinwild@gmail.com / 정대국
+  </div>
+</body>
+
 </html>
