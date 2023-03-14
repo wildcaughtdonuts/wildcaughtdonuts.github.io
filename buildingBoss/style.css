@@ -11,6 +11,7 @@ body {
   margin: 0 auto; /* 중앙 정렬 */
   height: 100%;
   width: 100%;
+  font-size: 2rem;
 }
 ul {
   display: block;
@@ -37,10 +38,10 @@ li {
   text-align: -webkit-match-parent;
 }
 #search-btn {
-  width: 80%;
-  height: 25%;
+  width: 800px;
+  height: 100px;
   margin-top: 20px;
-  font-size: 1.5rem;
+  font-size: 3.5rem;
 }
 
 #url-input {
@@ -56,8 +57,8 @@ li {
 }
 
 #button-row {
-  width: 80%;
-  height: 25%;
+  width: 800px;
+  height: 100px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -68,8 +69,8 @@ li {
 #submit-btn,
 #submit-btn2 {
   width: 48%;
-  height: 25%;
-  font-size: 1.2rem;
+  height: 100px;
+  font-size: 2rem;
 }
 
 #result {
@@ -78,38 +79,16 @@ li {
   background-color: #fff;
   border-radius: 5px;
   border: 1px solid #ccc; /* 테두리 추가 */
+  font-size: 2rem;
 }
 
 
 #mapResult p {
   margin-top: 3%;
   color: blue;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 #infoButton {
   margin-top: 5px;
-  font-size: 0.9rem;
-}
-
-
-@media (max-width: 400px) {
-  #search-btn {
-    font-size: 1.2rem;
-    height: 50px;
-  }
-  #button-row {
-    height: 40px;
-    font-size: 1rem;
-  }
-  #submit-btn,
-  #submit-btn2 {
-    height: 40px;
-    font-size: 1rem;
-  }
-  #mapResult p {
-    font-size: 1rem;
-  }
-  #infoButton {
-    font-size: 0.8rem;
-  }
+  font-size: 1.5rem;
 }
