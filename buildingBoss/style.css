@@ -20,6 +20,10 @@ body {
   width: 100%;
 }
 
+#mapResult p {
+  color: blue;
+}
+
 #button-container {
   display: flex;
   flex-direction: column;
