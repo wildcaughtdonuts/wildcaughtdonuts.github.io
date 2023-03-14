@@ -57,10 +57,10 @@ submitBtn.addEventListener('click', () => {
       const numItems = items.length;
 
       let resultHTML = `<li><p><strong>해당 주소의 건축물은 ${numItems}개 입니다.</strong></p></li>`;
-      for (const { bldNm, items } of itemInfo) {
+      for (const { bldNm, dongNm, items } of itemInfo) {
         resultHTML += `<h3>${bldNm}</h3>`;
-      
-        for (const { dongNm, info } of items) { // 수정
+
+        for (const info of items) {
           resultHTML += '<ul>';
           resultHTML += `<strong>- ${dongNm} -</strong>`;
           for (const [key, value] of Object.entries(info)) {
@@ -107,8 +107,10 @@ submitBtn2.addEventListener('click', () => {
           '세대수': item.getElementsByTagName('hhldCnt')[0]?.textContent || '정보없음',
           '건축면적(㎡)': item.getElementsByTagName('archArea')[0]?.textContent || '정보없음',
 
+
           '주 건축물(개)': item.getElementsByTagName('mainBldCnt')[0]?.textContent || '정보없음',
           '부속 건축물(개)': item.getElementsByTagName('부속건축물수')[0]?.textContent || '정보없음',
+          
         };
 
         itemInfo.push({ bldNm, items: [info] });
