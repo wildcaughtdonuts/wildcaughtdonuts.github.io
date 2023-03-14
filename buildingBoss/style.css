@@ -87,6 +87,10 @@ li {
   margin-top: 1.5vh;
   color: blue;
   font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 #infoButton {
   margin-top: 1.5vh;
@@ -98,10 +102,5 @@ li {
 
 #loading {
   font-size: 2.5rem;
-  color: blue;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
+  margin-top: 10px;
 }
