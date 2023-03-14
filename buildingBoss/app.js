@@ -166,3 +166,9 @@ submitBtn2.addEventListener('click', () => {
       loadingDiv.classList.add('hidden');
     });
 });
+
+let visitCount = 0;
+    window.onload = function() {
+      visitCount++;
+      document.getElementById("visitor-visitCount").innerHTML = visitCount;
+    };
