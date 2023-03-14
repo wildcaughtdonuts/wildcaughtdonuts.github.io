@@ -92,3 +92,11 @@ li {
   margin-top: 1.5vh;
   font-size: 2.3rem;
 }
+.hidden {
+  display: none;
+}
+
+#loading {
+  font-size: 2.5rem;
+  margin-top: 10px;
+}

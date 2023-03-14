@@ -15,10 +15,12 @@
     <h1>건축물대국 검색기</h1>
     <button id="search-btn">주소검색</button>
     <div id="mapResult"></div>
-    <input type="text" id="url-input" value="">
+    <input type="hidden" id="url-input" value="">
     <div id="button-row">
       <button id="submit-btn">표제부(동별) 조회</button>
       <button id="submit-btn2">총괄표제부 조회</button>
+      <div id="loading" class="hidden">로딩중...</div>
+      
     </div>
     <div id="infoButton">건축물의 규모가 작으면 표제부, 여러 단지 또는 대형 건물일 경우는 총괄 표제부를 조회하세요.
     </div>
