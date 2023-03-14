@@ -104,3 +104,12 @@ li {
   font-size: 2.5rem;
   margin-top: 10px;
 }
+#loadInfo {
+  margin-top: 1.5vh;
+  color: blue;
+  font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
