@@ -40,9 +40,9 @@ li {
 
 #search-btn {
   width: 90%;
-  height: 12vh;
-  margin-top: 20px;
-  font-size: 3.5rem;
+  height: 10vh;
+  margin-top: 2vh;
+  font-size: 5rem;
 }
 
 #url-input {
@@ -59,22 +59,22 @@ li {
 
 #button-row {
   width: 90%;
-  height: 10vh;
+  height: 8vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 1.5%;
+  margin-top: 2vh;
   font-size: 5rem;
 }
 
 #submit-btn,
 #submit-btn2 {
   width: 48%;
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 #result {
-  margin-top: 2%;
+  margin-top: 1.5vh;
   padding: 10px;
   background-color: #fff;
   border-radius: 5px;
@@ -84,11 +84,11 @@ li {
 
 
 #mapResult p {
-  margin-top: 3%;
+  margin-top: 1.5vh;
   color: blue;
-  font-size: 1.5rem;
+  font-size: 3rem;
 }
 #infoButton {
-  margin-top: 5px;
-  font-size: 1.5rem;
+  margin-top: 1.5vh;
+  font-size: 2.3rem;
 }
