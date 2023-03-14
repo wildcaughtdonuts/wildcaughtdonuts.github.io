@@ -1,106 +1,53 @@
-/* style.css */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html>
 
-body {
-  background-color: #fff;
-  padding: 10px;
-  margin: 0 auto; /* 중앙 정렬 */
-  height: 100%;
-  width: 100%;
-  font-size: 2rem;
-}
-ul {
-  display: block;
-  list-style-type: none;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
-}
+<head>
+  <meta charset="UTF-8">
+  <title>건축물대국</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
 
-ol {
-  display: block;
-  list-style-type: decimal;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
-}
-
-li {
-  display: list-item;
-  text-align: -webkit-match-parent;
-}
-
-#search-btn {
-  width: 90%;
-  height: 10vh;
-  margin-top: 2vh;
-  font-size: 5rem;
-}
-
-#url-input {
-  width: 100%;
-}
-
-#button-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-}
-
-#button-row {
-  width: 90%;
-  height: 8vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 2vh;
-  font-size: 5rem;
-}
-
-#submit-btn,
-#submit-btn2 {
-  width: 48%;
-  font-size: 3rem;
-}
-
-#result {
-  margin-top: 1.5vh;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  border: 1px solid #ccc; /* 테두리 추가 */
-  font-size: 2.2rem;
-}
+<body>
 
 
-#mapResult p {
-  margin-top: 1.5vh;
-  color: blue;
-  font-size: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-#infoButton {
-  margin-top: 1.5vh;
-  font-size: 2.3rem;
-}
-.hidden {
-  display: none;
-}
+  <div id="button-container">
+    <h1>건축물대국 검색기</h1>
+    <button id="search-btn">주소검색</button>
+    <div id="mapResult"></div>
+    <input type="hidden" id="url-input" value="">
+    <div id="button-row">
+      <button id="submit-btn">표제부(동별) 조회</button>
+      <button id="submit-btn2">총괄표제부 조회</button>
 
-#loading {
-  font-size: 2.5rem;
-  margin-top: 10px;
-}
+
+    </div>
+    <div id="infoButton">건축물의 규모가 작으면 표제부, 여러 단지 또는 대형 건물일 경우는 총괄 표제부를 조회하세요.
+    </div>
+  </div>
+  
+<div id="loading" class="hidden">
+  <div id="mapResult">
+    <img src=./loading.gif height="220" width="220">
+    <br>로딩중...
+    <br>한 주소에 포함된 건축물이 50개 이상인 경우 에러가 발생합니다.
+  </div>
+</div>
+
+  <div>
+    <div id="result">
+
+    </div>
+
+    <div id="button-container">
+      <div id="updated-time"></div>
+      <div id="infoButton">buildingBoss V0.9 / donutsinwild@gmail.com / 정대국</div>
+    </div>
+
+    <script src="./app.js"></script>
+    <script src="./adress.js"></script>
+    <script src="./clock.js"></script>
+
+</body>
+
+</html>
