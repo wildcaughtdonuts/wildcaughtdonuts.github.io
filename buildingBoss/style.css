@@ -1,0 +1,54 @@
+/* 전체에 대한 스타일링 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 데스크탑 화면을 위한 스타일링 */
+@media (min-width: 768px) {
+  body {
+    max-width: 768px;
+    margin: 0 auto;
+    background-color: #f2f2f2;
+  }
+  
+  #url-input {
+    width: 50%;
+  }
+  
+  #submit-btn {
+    margin-left: 10px;
+  }
+  
+  #result {
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+}
+
+/* 모바일 화면을 위한 스타일링 */
+@media (max-width: 767px) {
+  body {
+    background-color: #fff;
+    padding: 10px;
+  }
+  
+  #url-input {
+    width: 100%;
+  }
+  
+  #submit-btn {
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  #result {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+}
