@@ -5,9 +5,7 @@ const submitBtn2 = document.getElementById('submit-btn2');
 const resultDiv = document.getElementById('result');
 
 submitBtn.addEventListener('click', () => {
-  loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
-  resultDiv.innerHTML = ''; // 결과 영역 초기화
-
+  
   const apiUrl = document.getElementById('url-input').value;
 
   fetch(apiUrl)
@@ -86,15 +84,11 @@ submitBtn.addEventListener('click', () => {
         }
       }
       
-
-
       resultDiv.innerHTML = resultHTML;
-      loadingDiv.classList.add('hidden');
     })
     .catch(error => {
       resultDiv.innerHTML = '오류가 발생했습니다. 대국에게 문의해주세요';
       console.error(error);
-      loadingDiv.classList.add('hidden');
     });
 });
 
