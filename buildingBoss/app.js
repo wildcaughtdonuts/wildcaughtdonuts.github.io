@@ -58,7 +58,13 @@ submitBtn.addEventListener('click', () => {
       }
       
       // 건축물명을 기준으로 정렬
-      itemInfo.sort((a, b) => a.bldNm.localeCompare(b.bldNm));
+      itemInfo.sort((a, b) => {
+        if (a.bldNm === b.bldNm) {
+          return a.dongNm.localeCompare(b.dongNm);
+        } else {
+          return a.bldNm.localeCompare(b.bldNm);
+        }
+      });
       const numItems = items.length;
       
       let resultHTML = `<li><p><strong>해당 주소의 건축물은 ${numItems}개 입니다.</strong></p></li>`;
