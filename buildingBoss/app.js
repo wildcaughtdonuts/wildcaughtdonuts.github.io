@@ -167,8 +167,3 @@ submitBtn2.addEventListener('click', () => {
     });
 });
 
-let visitCount = 0;
-    window.onload = function() {
-      visitCount++;
-      document.getElementById("visitor-visitCount").innerHTML = visitCount;
-    };
