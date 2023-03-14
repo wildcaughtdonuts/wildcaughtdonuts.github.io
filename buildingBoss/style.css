@@ -1,4 +1,9 @@
 /* 전체에 대한 스타일링 */
+@media (max-width: 767px) {
+  body {
+    font-size: 1.2rem;
+  }
+  
 * {
   box-sizing: border-box;
   margin: 0;
@@ -14,6 +19,7 @@ body {
   width: 80%;
   height: 35px;
   margin-top: 20px;
+    font-size: 1.5rem;
 }
 
 #url-input {
@@ -41,12 +47,14 @@ body {
   background-color: #fff;
   border-radius: 5px;
   border: 1px solid #ccc; /* 테두리 추가 */
+    list-style-type: circle;
 }
 
 #submit-btn,
 #submit-btn2 {
+  font-size: 1.2rem;
   width: 48%;
-  height: 30px;
+  height: 10%;
   margin-top: 10-px;
 }
 #mapResult p {
@@ -54,16 +62,18 @@ body {
 }
 #infoButton {
   margin-top: 5px;
-  font-size: 13px;
+  font-size: 0.9rem;
 }
 #result li {
   margin-top: 2;
-  font-weight: normal;  
+  font-weight: normal; 
+    font-size: 1rem;
   padding-left: 10;
 }
 
 #result ul {
-  list-style-type: circle;
+    font-size: 1.2rem;
   font-weight: bold; 
   margin-bottom: 20;
+}
 }
