@@ -21,6 +21,7 @@ ul {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 40px;
+  font-size: 3rem;
 }
 
 ol {
@@ -36,6 +37,7 @@ ol {
 li {
   display: list-item;
   text-align: -webkit-match-parent;
+  font-size: 2rem;
 }
 
 #search-btn {
