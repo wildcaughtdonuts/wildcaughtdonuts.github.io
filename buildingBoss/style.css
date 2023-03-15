@@ -122,3 +122,29 @@ li {
   justify-content: center;
   align-items: center;
 }
+.accordion {
+  cursor: pointer;
+  transition: 0.4s;
+  width: 100%;
+  height: 8vh;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1.5vh;
+}
+.accordion::before {
+  content: "▼";
+  float: right;
+  right: 3vh;
+  transition: transform 0.3s;
+}
+
+.accordion.active::before {
+  transform: rotate(180deg);
+}
+
+.panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
