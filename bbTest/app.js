@@ -17,6 +17,8 @@ function createAccordionMenu() {
       } else {
         panel.style.maxHeight = panel.scrollHeight + "px";
       }
+      const arrow = this.querySelector('.arrow');
+      arrow.classList.toggle('rotate');
     });
   }
 
@@ -119,9 +121,9 @@ submitBtn.addEventListener('click', () => {
       let resultHTML = `<h4><strong>해당 주소에 포함된 건축물 수: ${numItems}개</strong></h4>`;
       for (const { bldNm, units } of itemInfo) {
         resultHTML += `<h3>${bldNm}</h3>`;
-
+      
         for (const { dongNm, items } of units) {
-          resultHTML += `<button class="accordion">${dongNm}</button>`;
+          resultHTML += `<button class="accordion">${dongNm}<span class="arrow">▼</span></button>`;
           resultHTML += `<div class="panel">`;
           for (const info of items) {
             resultHTML += '<ul>';

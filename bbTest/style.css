@@ -132,6 +132,15 @@ li {
   text-align: center;
   margin-top: 1.5vh;
 }
+.accordion::before {
+  content: "▼";
+  float: right;
+  transition: transform 0.3s;
+}
+
+.accordion.active::before {
+  transform: rotate(180deg);
+}
 
 .panel {
   max-height: 0;
