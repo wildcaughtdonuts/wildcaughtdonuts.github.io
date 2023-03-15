@@ -31,8 +31,14 @@ function copyToClipboard(text) {
       textarea.select();
 
       try {
-        document.execCommand('copy');
-        resolve();
+        const successful = document.execCommand('copy');
+        if (successful) {
+          resolve();
+        } else {
+          // Fallback for Android devices
+          window.prompt('복사하려면 Ctrl+C를 누르고 Enter를 누르세요.', text);
+          resolve();
+        }
       } catch (err) {
         reject(err);
       } finally {
