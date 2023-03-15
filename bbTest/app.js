@@ -109,7 +109,19 @@ submitBtn.addEventListener('click', () => {
             }
           });
         }
+        
+        // 동명을 클릭하면 해당 동에 대한 정보를 펼치도록 설정
+        const dongNames = document.querySelectorAll('.dong-name');
+        for (const dongName of dongNames) {
+          dongName.addEventListener('click', function() {
+            const panel = this.nextElementSibling;
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+            const building = this.parentElement.parentElement;
+            building.classList.add('active');
+          });
+        }
       }
+      
       
       createAccordionMenu();
 
