@@ -21,6 +21,7 @@ ul {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 40px;
+  float: left;
   
 }
 
@@ -131,7 +132,7 @@ li {
 .accordion {
   cursor: pointer;
   transition: 0.4s;
-  width: 90%;
+  width: 95%;
   height: 7vh;
   font-size: 2.5rem;
   font-weight: bold;
