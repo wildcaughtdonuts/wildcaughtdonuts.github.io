@@ -93,8 +93,12 @@ submitBtn.addEventListener('click', () => {
           }
         }
       }
+
+      
+      
       resultDiv.innerHTML = resultHTML;
       loadingDiv.classList.add('hidden');
+      createAccordionMenu();
             
     })
     .catch(error => {
