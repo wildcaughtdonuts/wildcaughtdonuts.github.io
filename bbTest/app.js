@@ -95,37 +95,7 @@ submitBtn.addEventListener('click', () => {
       }
       resultDiv.innerHTML = resultHTML;
       loadingDiv.classList.add('hidden');
-      
-      function createAccordionMenu() {
-        const accordion = document.querySelectorAll('.accordion');
-        for (const item of accordion) {
-          item.addEventListener('click', function() {
-            this.classList.toggle('active');
-            const panel = this.nextElementSibling;
-            if (panel.style.maxHeight) {
-              panel.style.maxHeight = null;
-            } else {
-              panel.style.maxHeight = panel.scrollHeight + 'px';
-            }
-          });
-        }
-        
-        // 동명을 클릭하면 해당 동에 대한 정보를 펼치도록 설정
-        const dongNames = document.querySelectorAll('.dong-name');
-        for (const dongName of dongNames) {
-          dongName.addEventListener('click', function() {
-            const panel = this.nextElementSibling;
-            panel.style.maxHeight = panel.scrollHeight + 'px';
-            const building = this.parentElement.parentElement;
-            building.classList.add('active');
-          });
-        }
-      }
-      
-      
-      createAccordionMenu();
-
-      
+            
     })
     .catch(error => {
       resultDiv.innerHTML = '오류가 발생했습니다. 대국에게 문의해주세요';
@@ -133,6 +103,37 @@ submitBtn.addEventListener('click', () => {
       loadingDiv.classList.add('hidden');
     });
 });
+
+function createAccordionMenu() {
+  const accordion = document.querySelectorAll('.accordion');
+  for (const item of accordion) {
+    item.addEventListener('click', function() {
+      this.classList.toggle('active');
+      const panel = this.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  }
+  
+  // 동명을 클릭하면 해당 동에 대한 정보를 펼치도록 설정
+  const dongNames = document.querySelectorAll('.dong-name');
+  for (const dongName of dongNames) {
+    dongName.addEventListener('click', function() {
+      const unit = this.parentElement.nextElementSibling;
+      unit.classList.toggle('active');
+      const panel = unit.lastElementChild;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  }
+}
+
 
 submitBtn2.addEventListener('click', () => {
   loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
