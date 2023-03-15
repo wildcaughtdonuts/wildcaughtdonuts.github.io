@@ -70,12 +70,12 @@ submitBtn.addEventListener('click', () => {
           return a.bldNm.localeCompare(b.bldNm);
         }
       });
+
       // 동명을 기준으로 정렬
       for (const building of itemInfo) {
-        for (const unit of building.units) {
-          unit.items.sort((a, b) => a.dongNm.localeCompare(b.dongNm));
-        }
+        building.units.sort((a, b) => a.dongNm.localeCompare(b.dongNm));
       }
+
       
       const numItems = items.length;
       
