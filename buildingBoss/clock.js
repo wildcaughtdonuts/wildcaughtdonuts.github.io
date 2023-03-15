@@ -11,12 +11,37 @@ const shareBtn = document.getElementById('share-btn');
 
 shareBtn.addEventListener('click', () => {
   const itemInfoText = convertResultToText();
-  navigator.clipboard.writeText(itemInfoText).then(() => {
+  copyToClipboard(itemInfoText).then(() => {
     alert('내용이 클립보드에 복사되었습니다. 원하는 곳에 붙여넣기 해주세요.');
   }).catch(err => {
     console.error('클립보드 복사에 실패했습니다.', err);
   });
 });
+
+function copyToClipboard(text) {
+  if (navigator.clipboard) {
+    return navigator.clipboard.writeText(text);
+  } else {
+    return new Promise((resolve, reject) => {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed'; // avoid scrolling to the bottom
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+
+      try {
+        document.execCommand('copy');
+        resolve();
+      } catch (err) {
+        reject(err);
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    });
+  }
+}
+
 
 function convertResultToText() {
   let itemInfoText = '';
