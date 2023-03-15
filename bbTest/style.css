@@ -135,6 +135,7 @@ li {
 .accordion::before {
   content: "▼";
   float: right;
+  right: 1.5vh;;
   transition: transform 0.3s;
 }
 
