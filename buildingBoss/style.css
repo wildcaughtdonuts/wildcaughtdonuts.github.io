@@ -21,7 +21,6 @@ ul {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 40px;
-  float: left;
   
 }
 
@@ -83,12 +82,7 @@ li {
   border-radius: 5px;
   border: 1px solid #ccc; /* 테두리 추가 */
   font-size: 2.5rem;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
+  
 }
 
 #result ul {
@@ -132,7 +126,7 @@ li {
 .accordion {
   cursor: pointer;
   transition: 0.4s;
-  width: 95%;
+  width: 90%;
   height: 7vh;
   font-size: 2.5rem;
   font-weight: bold;
