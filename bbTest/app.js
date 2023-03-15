@@ -9,7 +9,7 @@ function createAccordionMenu() {
   const accordions = document.getElementsByClassName("accordion");
 
   for (let i = 0; i < accordions.length; i++) {
-    accordions[i].addEventListener("click", function () {
+    accordions[i].addEventListener("click", function() {
       this.classList.toggle("active");
       const panel = this.nextElementSibling;
       if (panel.style.maxHeight) {
@@ -19,7 +19,29 @@ function createAccordionMenu() {
       }
     });
   }
+
+  // 동명을 클릭하면 해당 동에 대한 정보를 펼치도록 설정
+  const dongNames = document.querySelectorAll('.dong-name');
+  for (const dongName of dongNames) {
+    dongName.addEventListener('click', function() {
+      const unit = this.parentElement.nextElementSibling;
+      unit.classList.toggle('active');
+      const panel = unit.lastElementChild;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  }
+
+  if (accordions.length > 0) {
+    accordions[0].classList.add("active");
+    const panel = accordions[0].nextElementSibling;
+    panel.style.maxHeight = panel.scrollHeight + "px";
+  }
 }
+
 
 submitBtn.addEventListener('click', () => {
 
@@ -125,35 +147,6 @@ submitBtn.addEventListener('click', () => {
     });
 });
 
-function createAccordionMenu() {
-  const accordion = document.querySelectorAll('.accordion');
-  for (const item of accordion) {
-    item.addEventListener('click', function () {
-      this.classList.toggle('active');
-      const panel = this.nextElementSibling;
-      if (panel.style.maxHeight) {
-        panel.style.maxHeight = null;
-      } else {
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-      }
-    });
-  }
-
-  // 동명을 클릭하면 해당 동에 대한 정보를 펼치도록 설정
-  const dongNames = document.querySelectorAll('.dong-name');
-  for (const dongName of dongNames) {
-    dongName.addEventListener('click', function () {
-      const unit = this.parentElement.nextElementSibling;
-      unit.classList.toggle('active');
-      const panel = unit.lastElementChild;
-      if (panel.style.maxHeight) {
-        panel.style.maxHeight = null;
-      } else {
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-      }
-    });
-  }
-}
 
 
 submitBtn2.addEventListener('click', () => {

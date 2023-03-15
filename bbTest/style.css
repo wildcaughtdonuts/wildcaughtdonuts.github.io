@@ -125,6 +125,11 @@ li {
 .accordion {
   cursor: pointer;
   transition: 0.4s;
+  width: 90%;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .panel {
