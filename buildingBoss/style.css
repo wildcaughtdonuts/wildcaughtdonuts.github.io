@@ -47,6 +47,13 @@ li {
   font-size: 5rem;
 }
 
+#share-btn {
+  width: 45%;
+  height: 6vh;
+  margin-top: 1.5vh;
+  font-size: 3rem;
+}
+
 #url-input {
   width: 100%;
 }
