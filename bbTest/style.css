@@ -1,4 +1,7 @@
 /* style.css */
+
+@media (max-width: 767px) {
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,27 +14,27 @@ body {
   margin: 0 auto; /* 중앙 정렬 */
   height: 100%;
   width: 100%;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 ul {
   display: block;
   list-style-type: none;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  padding-inline-start: 40px;
+  padding-inline-start: 10px;
   
 }
 
 ol {
   display: block;
   list-style-type: decimal;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  padding-inline-start: 40px;
+  padding-inline-start: 10px;
 }
 
 li {
@@ -40,22 +43,24 @@ li {
   
 }
 
-#search-btn {
-  width: 90%;
-  height: 10vh;
-  margin-top: 2vh;
-  font-size: 5rem;
-}
-
-#share-btn {
-  width: 35%;
-  height: 3vh;
-  margin-top: 1.5vh;
-  font-size: 2rem;
-}
 
 #url-input {
   width: 100%;
+}
+
+
+#search-btn {
+  width: 90%;
+  height: 65px;
+  margin-top: 1vh;
+  font-size: 2.5rem;
+}
+
+#share-btn {
+  width: 45%;
+  height: 30px;
+  margin-top: 1.2vh;
+  font-size: 1rem;
 }
 
 #button-container {
@@ -64,22 +69,23 @@ li {
   justify-content: center;
   align-items: center;
   margin-top: 15px;
+  font-size: 0.9rem;
 }
 
 #button-row {
   width: 90%;
-  height: 8vh;
+  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 2vh;
-  font-size: 5rem;
+  margin-top: 1vh;
+  font-size: 2rem;
 }
 
 #submit-btn,
 #submit-btn2 {
   width: 48%;
-  font-size: 3rem;
+  font-size: 1.1rem;
 }
 
 #result {
@@ -88,48 +94,50 @@ li {
   background-color: #fff;
   border-radius: 5px;
   border: 1px solid #ccc; /* 테두리 추가 */
-  font-size: 2.5rem;
+  font-size: 1.3rem;
   
 }
 
 #result ul {
-  font-size: 4rem;
+  font-size: 1.2rem;
 }
 
 #result li {
-  font-size: 2.3rem;
+  font-size: 1rem;
 }
 
 #mapResult p {
-  margin-top: 1.5vh;
+  margin-top: 1vh;
   color: blue;
-  font-size: 3rem;
+  font-size: 1.2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
+
 #infoButton {
-  margin-top: 1.5vh;
-  font-size: 2.3rem;
+  margin-top: 1vh;
+  font-size: 0.8rem;
   width: 95%;
 }
 #makerInfo {
   margin-top: 1.5vh;
-  font-size: 2rem;
+  font-size: 0.8rem;
 }
 .hidden {
   display: none;
 }
 
 #loading {
-  font-size: 2.5rem;
+  font-size: 1.2rem;
   margin-top: 10px;
 }
 #loadInfo {
-  margin-top: 1.5vh;
+  margin-top: 1.2vh;
   color: blue;
-  font-size: 3rem;
+  font-size: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -140,7 +148,7 @@ li {
   transition: 0.4s;
   width: 100%;
   height: 6vh;
-  font-size: 2.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
   text-align: center;
   margin-top: 1.5vh;
@@ -160,4 +168,6 @@ li {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
+}
+
 }
