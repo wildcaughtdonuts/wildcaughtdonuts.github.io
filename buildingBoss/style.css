@@ -1,163 +1,72 @@
-/* style.css */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+<!DOCTYPE html>
+<html>
 
-body {
-  background-color: #fff;
-  padding: 10px;
-  margin: 0 auto; /* 중앙 정렬 */
-  height: 100%;
-  width: 100%;
-  font-size: 2rem;
-}
-ul {
-  display: block;
-  list-style-type: none;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
+<head>
+  <meta charset="UTF-8">
+  <title>건축물대국</title>
+  <meta name="description" content="건축물대장 검색기 buildingBoss">
+  <meta property="og:description" content="건축물대장 검색기 buildingBoss">
+  <meta property="og:image" content="./img/cheers.jpg">
+  <link rel="stylesheet" href="style.css">
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RT7Z90C0RR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-RT7Z90C0RR');
+  </script>
+</head>
+
+<body>
   
-}
 
-ol {
-  display: block;
-  list-style-type: decimal;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
-}
+  <div id="button-container">
+    
+    <h1>소방점검용 건축물대장 검색기</h1>
+    <button id="search-btn">주소검색</button>
+    <div id="mapResult"></div>
+    <input type="hidden" id="url-input" value="">
+    <div id="button-row">
+      <button id="submit-btn">표제부(동별) 조회</button>
+      <button id="submit-btn2">총괄표제부 조회</button>
 
-li {
-  display: list-item;
-  text-align: -webkit-match-parent;
+
+    </div>
+    <div id="infoButton">소민터에서 발행하는 건축물 대장 정보를 실시간으로 반영합니다.
+      건축물의 규모가 작으면 표제부, 여러 단지 또는 대형 건물일 경우는 총괄 표제부를 조회하세요.
+    </div>
+    <div>
+    <button id="share-btn">결과 복사하기</button></div>
+
+    <div id="infoButton">카카오톡 인앱 브라우저에서는 복사하기가 작동하지 않습니다. 우측 하단에 점세개 버튼을 누르고 '다른 브라우저로 열기' 를 누르고 사용해주세요. <br> 요청사항이 있으시면 화면 하단 링크를 통해 요청해주세요.
+    </div>
+  </div>
   
-}
+<div id="loading" class="hidden">
+  <div id="loadInfo">
+    <img src=./img/loading.gif height="220" width="220">
+    <br>로딩중...
+    <br>사용자가 많은 경우 로딩시간이 길어질 수 있습니다.
+  </div>
+</div>
 
-#search-btn {
-  width: 90%;
-  height: 10vh;
-  margin-top: 2vh;
-  font-size: 5rem;
-}
+  <div>
+    
+    <div id="result">
 
-#share-btn {
-  width: 35%;
-  height: 3vh;
-  margin-top: 1.5vh;
-  font-size: 2.3rem;
-}
+    </div>
 
-#url-input {
-  width: 100%;
-}
+    <div id="button-container">
+      
+      <div id="makerInfo"><a href= "https://docs.google.com/forms/d/e/1FAIpQLSdOG-0BWq6LaNbwjalgVOYfbZXZrT4zFvApHHtZfNxW5jmiQQ/viewform?usp=sf_link">요청사항 작성하기</a> / donutsinwild@gmail.com</div>
+      <div id="updated-time"></div>
+    </div>
 
-#button-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2.5vh;
-}
+    <script src="./app.js"></script>
+    <script src="./adress.js"></script>
+    <script src="./clock.js"></script>
 
-#button-row {
-  width: 90%;
-  height: 8vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 2vh;
-  font-size: 5rem;
-}
+</body>
 
-#submit-btn,
-#submit-btn2 {
-  width: 48%;
-  font-size: 3rem;
-}
-
-#result {
-  margin-top: 1.5vh;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  border: 1px solid #ccc; /* 테두리 추가 */
-  font-size: 2.5rem;
-  
-}
-
-#result ul {
-  font-size: 4rem;
-}
-
-#result li {
-  font-size: 2.3rem;
-}
-
-#mapResult p {
-  margin-top: 1.5vh;
-  color: blue;
-  font-size: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-#infoButton {
-  margin-top: 1.5vh;
-  font-size: 2.1rem;
-  width: 95%;
-}
-#makerInfo {
-  margin-top: 1.5vh;
-  font-size: 2.3rem;
-}
-.hidden {
-  display: none;
-}
-
-#loading {
-  font-size: 2.5rem;
-  margin-top: 10px;
-}
-#loadInfo {
-  margin-top: 1.5vh;
-  color: blue;
-  font-size: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.accordion {
-  cursor: pointer;
-  transition: 0.4s;
-  width: 100%;
-  height: 6vh;
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 1.5vh;
-}
-.accordion::before {
-  content: "▼";
-  float: right;
-  right: 3vh;
-  transition: transform 0.3s;
-}
-
-.accordion.active::before {
-  transform: rotate(180deg);
-}
-
-.panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-}
+</html>
