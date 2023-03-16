@@ -48,10 +48,10 @@ li {
 }
 
 #share-btn {
-  width: 45%;
-  height: 6vh;
+  width: 35%;
+  height: 3vh;
   margin-top: 1.5vh;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 #url-input {
@@ -110,6 +110,11 @@ li {
   align-items: center;
 }
 #infoButton {
+  margin-top: 1.5vh;
+  font-size: 2.3rem;
+  width: 95%;
+}
+#makerInfo {
   margin-top: 1.5vh;
   font-size: 2.3rem;
 }
