@@ -1,166 +1,177 @@
 
 @media (min-width: 768px) {
-/* style.css */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
-body {
-  background-color: #fff;
-  padding: 10px;
-  margin: 0 auto; /* 중앙 정렬 */
-  height: 100%;
-  width: 100%;
-  font-size: 2rem;
-}
-ul {
-  display: block;
-  list-style-type: none;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
-  
-}
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-ol {
-  display: block;
-  list-style-type: decimal;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
-}
+  body {
+    background-color: #fff;
+    padding: 10px;
+    margin: 0 auto;
+    /* 중앙 정렬 */
+    height: 100%;
+    width: 100%;
+    font-size: 1rem;
+  }
 
-li {
-  display: list-item;
-  text-align: -webkit-match-parent;
-  
-}
+  ul {
+    display: block;
+    list-style-type: none;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
 
-#search-btn {
-  width: 90%;
-  height: 10vh;
-  margin-top: 2vh;
-  font-size: 5rem;
-}
+  }
 
-#share-btn {
-  width: 35%;
-  height: 3vh;
-  margin-top: 1.5vh;
-  font-size: 2rem;
-}
+  ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+  }
 
-#url-input {
-  width: 100%;
-}
+  li {
+    display: list-item;
+    text-align: -webkit-match-parent;
 
-#button-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-}
+  }
 
-#button-row {
-  width: 90%;
-  height: 8vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 2vh;
-  font-size: 5rem;
-}
+  #search-btn {
+    width: 90%;
+    height: 10vh;
+    margin-top: 2vh;
+    font-size: 45px;
+  }
 
-#submit-btn,
-#submit-btn2 {
-  width: 48%;
-  font-size: 3rem;
-}
+  #share-btn {
+    width: 45%;
+    height: 130px;
+    margin-top: 1.5vh;
+    font-size: 30px;
+  }
 
-#result {
-  margin-top: 1.5vh;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  border: 1px solid #ccc; /* 테두리 추가 */
-  font-size: 2.5rem;
-  
-}
+  #url-input {
+    width: 100%;
+  }
 
-#result ul {
-  font-size: 4rem;
-}
+  #button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 25px;
+  }
 
-#result li {
-  font-size: 2.3rem;
-}
+  #button-row {
+    width: 90%;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1.5vh;
+    font-size: 30px;
+  }
 
-#mapResult p {
-  margin-top: 1.5vh;
-  color: blue;
-  font-size: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-#infoButton {
-  margin-top: 1.5vh;
-  font-size: 2.3rem;
-  width: 95%;
-}
-#makerInfo {
-  margin-top: 1.5vh;
-  font-size: 2rem;
-}
-.hidden {
-  display: none;
-}
+  #submit-btn,
+  #submit-btn2 {
+    width: 48%;
+    font-size: 30px;
+  }
 
-#loading {
-  font-size: 2.5rem;
-  margin-top: 10px;
-}
-#loadInfo {
-  margin-top: 1.5vh;
-  color: blue;
-  font-size: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.accordion {
-  cursor: pointer;
-  transition: 0.4s;
-  width: 100%;
-  height: 6vh;
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 1.5vh;
-}
-.accordion::before {
-  content: "▼";
-  float: right;
-  right: 3vh;
-  transition: transform 0.3s;
-}
+  #result {
+    margin-top: 1.5vh;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    /* 테두리 추가 */
+    font-size: 1rem;
 
-.accordion.active::before {
-  transform: rotate(180deg);
-}
+  }
 
-.panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-}
+  #result ul {
+    font-size: 2rem;
+  }
+
+  #result li {
+    font-size: 1rem;
+  }
+
+  #mapResult p {
+    margin-top: 1.5vh;
+    color: blue;
+    font-size: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #infoButton {
+    margin-top: 1.5vh;
+    font-size: 20px;
+    width: 95%;
+  }
+
+  #makerInfo {
+    margin-top: 1.5vh;
+    font-size: 15px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  #loading {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+
+  #loadInfo {
+    margin-top: 1.5vh;
+    color: blue;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .accordion {
+    cursor: pointer;
+    transition: 0.4s;
+    width: 100%;
+    height: 6vh;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1.5vh;
+  }
+
+  .accordion::before {
+    content: "▼";
+    float: right;
+    right: 3vh;
+    transition: transform 0.3s;
+  }
+
+  .accordion.active::before {
+    transform: rotate(180deg);
+  }
+
+  .panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+
 }
