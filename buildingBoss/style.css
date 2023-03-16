@@ -51,7 +51,7 @@ li {
   width: 35%;
   height: 3vh;
   margin-top: 1.5vh;
-  font-size: 2.3rem;
+  font-size: 2rem;
 }
 
 #url-input {
@@ -63,7 +63,7 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 2.5vh;
+  margin-top: 15px;
 }
 
 #button-row {
@@ -111,12 +111,12 @@ li {
 }
 #infoButton {
   margin-top: 1.5vh;
-  font-size: 2.1rem;
+  font-size: 2.3rem;
   width: 95%;
 }
 #makerInfo {
   margin-top: 1.5vh;
-  font-size: 2.3rem;
+  font-size: 2rem;
 }
 .hidden {
   display: none;
