@@ -11,7 +11,7 @@ body {
   margin: 0 auto; /* 중앙 정렬 */
   height: 100%;
   width: 100%;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 ul {
   display: block;
@@ -44,14 +44,14 @@ li {
   width: 90%;
   height: 10vh;
   margin-top: 2vh;
-  font-size: 5rem;
+  font-size: 2.5rem;
 }
 
 #share-btn {
   width: 35%;
   height: 3vh;
   margin-top: 1.5vh;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 #url-input {
@@ -73,13 +73,13 @@ li {
   flex-direction: row;
   justify-content: space-between;
   margin-top: 2vh;
-  font-size: 5rem;
+  font-size: 1.5rem;
 }
 
 #submit-btn,
 #submit-btn2 {
   width: 48%;
-  font-size: 3rem;
+  font-size: 1.5rem;
 }
 
 #result {
@@ -160,4 +160,21 @@ li {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
+}
+
+/* 데스크톱 및 태블릿 스타일 */
+@media only screen and (min-width: 768px) {
+  body {
+    
+    font-size: 2rem;
+  }
+  
+  #search-btn {
+    width: 90%;
+    height: 10vh;
+    margin-top: 2vh;
+    font-size: 5rem;
+  }
+
+  
 }
