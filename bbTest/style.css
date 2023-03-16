@@ -19,8 +19,8 @@ body {
 ul {
   display: block;
   list-style-type: none;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 40px;
@@ -30,8 +30,8 @@ ul {
 ol {
   display: block;
   list-style-type: decimal;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 40px;
@@ -52,14 +52,14 @@ li {
 #search-btn {
   width: 90%;
   height: 65px;
-  margin-top: 2vh;
+  margin-top: 1vh;
   font-size: 2.5rem;
 }
 
 #share-btn {
   width: 45%;
   height: 30px;
-  margin-top: 1.5vh;
+  margin-top: 1.2vh;
   font-size: 1rem;
 }
 
@@ -109,7 +109,7 @@ li {
 #mapResult p {
   margin-top: 1vh;
   color: blue;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -119,7 +119,7 @@ li {
 
 #infoButton {
   margin-top: 1vh;
-  font-size: 1rem;
+  font-size: 0.8rem;
   width: 95%;
 }
 #makerInfo {
@@ -131,11 +131,11 @@ li {
 }
 
 #loading {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-top: 10px;
 }
 #loadInfo {
-  margin-top: 1.5vh;
+  margin-top: 1.2vh;
   color: blue;
   font-size: 2rem;
   display: flex;
