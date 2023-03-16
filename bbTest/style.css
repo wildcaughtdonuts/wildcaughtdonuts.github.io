@@ -94,12 +94,12 @@ li {
   background-color: #fff;
   border-radius: 5px;
   border: 1px solid #ccc; /* 테두리 추가 */
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   
 }
 
 #result ul {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 #result li {
@@ -109,7 +109,7 @@ li {
 #mapResult p {
   margin-top: 1.5vh;
   color: blue;
-  font-size: 2rem;
+  font-size: 1.8rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -131,7 +131,7 @@ li {
 }
 
 #loading {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-top: 10px;
 }
 #loadInfo {
