@@ -51,7 +51,7 @@ li {
 
 #search-btn {
   width: 90%;
-  height: 90px;
+  height: 65px;
   margin-top: 2vh;
   font-size: 2.5rem;
 }
@@ -74,7 +74,7 @@ li {
 
 #button-row {
   width: 90%;
-  height: 80px;
+  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -94,22 +94,22 @@ li {
   background-color: #fff;
   border-radius: 5px;
   border: 1px solid #ccc; /* 테두리 추가 */
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   
 }
 
 #result ul {
-  font-size: 1.5rem;
-}
-
-#result li {
   font-size: 1.2rem;
 }
 
+#result li {
+  font-size: 1rem;
+}
+
 #mapResult p {
-  margin-top: 1.5vh;
+  margin-top: 1vh;
   color: blue;
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -118,8 +118,8 @@ li {
 
 
 #infoButton {
-  margin-top: 1.5vh;
-  font-size: 1.1rem;
+  margin-top: 1vh;
+  font-size: 1rem;
   width: 95%;
 }
 #makerInfo {
@@ -131,7 +131,7 @@ li {
 }
 
 #loading {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-top: 10px;
 }
 #loadInfo {
@@ -148,7 +148,7 @@ li {
   transition: 0.4s;
   width: 100%;
   height: 6vh;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
   text-align: center;
   margin-top: 1.5vh;
