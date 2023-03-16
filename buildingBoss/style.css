@@ -112,6 +112,7 @@ li {
 #infoButton {
   margin-top: 1.5vh;
   font-size: 2.3rem;
+  width: 95%;
 }
 .hidden {
   display: none;
