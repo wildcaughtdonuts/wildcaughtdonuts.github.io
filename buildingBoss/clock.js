@@ -1,4 +1,4 @@
-//clock.js
+//clock.js1
 
 const updatedTime = new Date(document.lastModified);
 const updatedTimeDiv = document.getElementById('updated-time');
