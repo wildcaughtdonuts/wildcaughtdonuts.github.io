@@ -1,4 +1,4 @@
-//1adress.js
+//adress.js
 
 const searchBtn = document.getElementById('search-btn');
 const mapResultDiv = document.getElementById('mapResult');

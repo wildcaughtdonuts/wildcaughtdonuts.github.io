@@ -86,6 +86,9 @@ submitBtn.addEventListener('click', () => {
 
           '건축물구조': item.getElementsByTagName('strctCdNm')[0]?.textContent || '정보없음',
           '지붕구조': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음',
+
+          '승용승강기(대)': item.getElementsByTagName('rideUseElvtCnt')[0]?.textContent || '정보없음',
+          '비상승강기(대)': item.getElementsByTagName('emgenUseElvtCnt')[0]?.textContent || '정보없음',
         };
 
         // itemInfo에 동일한 bldNm이 존재하는지 검사 후 추가 또는 업데이트
