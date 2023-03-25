@@ -7,7 +7,7 @@ searchBtn.addEventListener('click', () => {
   new daum.Postcode({
     oncomplete: function (data) {
       const buildingCode = data.buildingCode;
-      const apiKey = "5A1ar8VsZgpiuOpuMbwPSgtsHIl%2FDCfu%2FMINUxKvTbwgL6nXfgG42fYYAHIq4gmp1bUZcQHO%2F1B2ilg7w8Hlzw%3D%3D";
+      const apiKey = "imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg%3D%3D";
       const siggCd = buildingCode.substr(0, 5);
       const bjdCd = buildingCode.substr(5, 5);
       const bunCd = buildingCode.substr(11, 4);
