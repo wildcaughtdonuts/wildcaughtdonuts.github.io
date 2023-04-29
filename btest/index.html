@@ -29,7 +29,12 @@
     
     <h1>소방용 건축물대장 검색기</h1>
     <button id="search-btn">주소검색</button>
-    <div id="mapResult"></div>
+    <!-- <div id="mapResult"></div> -->
+    <div id="mapResult" class="hidden">
+      <div id="mapResultInfo">로딩중...
+      <br>사용자가 많은 경우 로딩시간이 길어질 수 있습니다.
+      </div>
+    </div>
     <input type="hidden" id="url-input" value="">
     <div id="button-row">
       <button id="submit-btn">표제부(동별)<br>조회</button>
@@ -72,4 +77,3 @@
 </body>
 
 </html>
-//1
