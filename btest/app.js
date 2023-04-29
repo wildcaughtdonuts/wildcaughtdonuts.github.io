@@ -218,7 +218,6 @@ submitBtn2.addEventListener('click', () => {
     });
 });
 
-
 submitBtn3.addEventListener('click', () => {
   loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
   resultDiv.innerHTML = ''; // 결과 영역 초기화
@@ -258,4 +257,4 @@ function createTable(buildingData) {
   container.appendChild(table);
   resultDiv.appendChild(container);
   loadingDiv.classList.add('hidden');
-}
+};
