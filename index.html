@@ -20,7 +20,6 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5315666776953707"
   crossorigin="anonymous"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
 </head>
 
 <body>
@@ -30,12 +29,7 @@
     
     <h1>소방용 건축물대장 검색기</h1>
     <button id="search-btn">주소검색</button>
-        <div id="mapResult" class="hidden">
-      <div id="mapResultInfo">
-        <div id="map" style="width:500px;height:400px;"></div>
-        주소 불러오기에 성공했습니다.
-      </div>
-    </div>
+    <div id="mapResult"></div>
     <input type="hidden" id="url-input" value="">
     <div id="button-row">
       <button id="submit-btn">표제부(동별)<br>조회</button>
@@ -74,16 +68,6 @@
     <script src="./app.js"></script>
     <script src="./adress.js"></script>
     <script src="./clock.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=77dff35d27f448ff3956ed4779a8cf42"></script>
-    <script>
-      var container = document.getElementById('map');
-      var options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), //좌표입력
-        level: 3
-      };
-  
-      var map = new kakao.maps.Map(container, options);
-    </script>
 
 </body>
 
