@@ -83,8 +83,9 @@ li {
 }
 
 #submit-btn,
-#submit-btn2 {
-  width: 48%;
+#submit-btn2,
+#submit-btn3  {
+  width: 31%;
   font-size: 1.1rem;
 }
 
