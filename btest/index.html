@@ -30,7 +30,7 @@
     
     <h1>소방용 건축물대장 검색기</h1>
     <button id="search-btn">주소검색</button>
-    <!-- <div id="mapResult"></div> -->
+    
     <div id="mapResult" class="hidden">
       <div id="mapResultInfo">
         <div id="map" style="width:500px;height:400px;"></div>
@@ -79,7 +79,7 @@
     <script>
       var container = document.getElementById('map');
       var options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(33.450701, 126.570667), //좌표입력
         level: 3
       };
   
