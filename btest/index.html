@@ -20,7 +20,7 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5315666776953707"
   crossorigin="anonymous"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b8c3d238ea4ac83422e19547e564902"></script>
+  
 </head>
 
 <body>
@@ -75,6 +75,16 @@
     <script src="./app.js"></script>
     <script src="./adress.js"></script>
     <script src="./clock.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=77dff35d27f448ff3956ed4779a8cf42"></script>
+    <script>
+      var container = document.getElementById('map');
+      var options = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3
+      };
+  
+      var map = new kakao.maps.Map(container, options);
+    </script>
 
 </body>
 
