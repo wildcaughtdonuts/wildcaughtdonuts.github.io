@@ -221,6 +221,7 @@ submitBtn2.addEventListener('click', () => {
 submitBtn3.addEventListener('click', () => {
   loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
   resultDiv.innerHTML = ''; // 결과 영역 초기화
+  const flrUrl = document.getElementById('url-input').value.replace('getBrTitleInfo', 'getBrFlrOulnInfo');
 
   fetch(flrUrl)
     .then(response => response.json())
