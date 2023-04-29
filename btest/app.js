@@ -224,20 +224,22 @@ submitBtn3.addEventListener('click', () => {
   const flrUrl = document.getElementById('url-input').value.replace('getBrTitleInfo', 'getBrFlrOulnInfo');
 
   fetch(flrUrl)
-    .then(response => response.json())
-    .then(data => {
-      if (data.response.body.items.item) {
-        const buildingData = data.response.body.items.item;
-        createTable(buildingData);
-      } else {
-        console.error("Error: No data found.");
-      }
-    })
-    .catch(error => {
-      resultDiv.innerHTML = '오류가 발생했습니다. 다시 시도해주세요.';
-      console.error(error);
-      loadingDiv.classList.add('hidden');
-    });
+  .then(response => response.text())
+  .then(data => {
+    const jsonData = JSON.parse(data);
+    if (jsonData.response.body.items.item) {
+      const buildingData = jsonData.response.body.items.item;
+      createTable(buildingData);
+    } else {
+      console.error("Error: No data found.");
+    }
+  })
+  .catch(error => {
+    resultDiv.innerHTML = '오류가 발생했습니다. 다시 시도해주세요.';
+    console.error(error);
+    loadingDiv.classList.add('hidden');
+  });
+
 });
 
 function createTable(buildingData) {
