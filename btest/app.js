@@ -4,7 +4,6 @@ const submitBtn = document.getElementById('submit-btn');
 const submitBtn2 = document.getElementById('submit-btn2');
 window.resultDiv = document.getElementById('result');
 const loadingDiv = document.getElementById('loading');
-const submitBtn3 = document.getElementById('submit-btn3');
 
 function createAccordionMenu() {
   const accordions = document.getElementsByClassName("accordion");
@@ -218,43 +217,3 @@ submitBtn2.addEventListener('click', () => {
     });
 });
 
-submitBtn3.addEventListener('click', () => {
-  loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
-  resultDiv.innerHTML = ''; // 결과 영역 초기화
-
-  fetch(flrUrl)
-    .then(response => response.json())
-    .then(data => {
-      if (data.response.body.items.item) {
-        const buildingData = data.response.body.items.item;
-        createTable(buildingData);
-      } else {
-        console.error("Error: No data found.");
-      }
-    })
-    .catch(error => {
-      resultDiv.innerHTML = '오류가 발생했습니다. 다시 시도해주세요.';
-      console.error(error);
-      loadingDiv.classList.add('hidden');
-    });
-});
-
-function createTable(buildingData) {
-  const table = document.createElement("table");
-  const headerRow = table.insertRow();
-  headerRow.innerHTML = "<th>flrGbCdNm</th><th>flrNoNm</th><th>area</th><th>mainPurpsCd + mainPurpsCdNm + etcPurps</th>";
-
-  buildingData.forEach(floor => {
-    const row = table.insertRow();
-    row.insertCell().textContent = floor.flrGbCdNm;
-    row.insertCell().textContent = floor.flrNoNm;
-    row.insertCell().textContent = floor.area;
-    row.insertCell().textContent = `${floor.mainPurpsCd} ${floor.mainPurpsCdNm} ${floor.etcPurps}`;
-  });
-
-  const container = document.createElement("div");
-  container.innerHTML = `<h3>${buildingData[0].bldNm} (총 ${buildingData.length} 층)</h3>`;
-  container.appendChild(table);
-  resultDiv.appendChild(container);
-  loadingDiv.classList.add('hidden');
-};
