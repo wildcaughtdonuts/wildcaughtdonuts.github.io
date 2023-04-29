@@ -20,6 +20,7 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5315666776953707"
   crossorigin="anonymous"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b8c3d238ea4ac83422e19547e564902"></script>
 </head>
 
 <body>
@@ -31,8 +32,9 @@
     <button id="search-btn">주소검색</button>
     <!-- <div id="mapResult"></div> -->
     <div id="mapResult" class="hidden">
-      <div id="mapResultInfo">로딩중...
-      <br>사용자가 많은 경우 로딩시간이 길어질 수 있습니다.
+      <div id="mapResultInfo">
+        <div id="map" style="width:500px;height:400px;"></div>
+        주소 불러오기에 성공했습니다.
       </div>
     </div>
     <input type="hidden" id="url-input" value="">

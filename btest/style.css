@@ -106,7 +106,7 @@ li {
   font-size: 1rem;
 }
 
-#mapResult p {
+#mapResult {
   margin-top: 1vh;
   color: blue;
   font-size: 1.2rem;
