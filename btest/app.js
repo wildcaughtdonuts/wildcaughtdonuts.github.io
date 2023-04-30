@@ -45,6 +45,29 @@ function createAccordionMenu() {
   }
 }
 
+function createAccordion(titleText) {
+  const button = document.createElement("button");
+  button.classList.add("accordion");
+  button.textContent = titleText;
+  button.addEventListener("click", function () {
+    this.classList.toggle("active");
+    const panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+  return button;
+}
+
+function createPanel() {
+  const panel = document.createElement("div");
+  panel.classList.add("panel");
+  return panel;
+}
+
+
 submitBtn.addEventListener("click", () => {
   loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
   resultDiv.innerHTML = ""; // 결과 영역 초기화
@@ -147,23 +170,28 @@ submitBtn.addEventListener("click", () => {
 
       const numItems = items.length;
 
-      let resultHTML = `<h4><strong>해당 주소에 포함된 건축물 수: ${numItems}개</strong></h4>`;
-      for (const { bldNm, units } of itemInfo) {
-        resultHTML += `<h3>${bldNm}</h3>`;
+  let resultHTML = `<h4><strong>해당 주소에 포함된 건축물 수: ${numItems}개</strong></h4>`;
+  for (const { bldNm, units } of itemInfo) {
+    resultHTML += `<h3>${bldNm}</h3>`;
 
-        for (const { dongNm, items } of units) {
-          resultHTML += `<button class="accordion">${dongNm}</button>`;
-          resultHTML += `<div class="panel">`;
-          for (const info of items) {
-            resultHTML += "<ul>";
-            for (const [key, value] of Object.entries(info)) {
-              resultHTML += `<li><strong>${key}:</strong> ${value}</li>`;
-            }
-            resultHTML += "</ul>";
-          }
-          resultHTML += `</div>`;
+    for (const { dongNm, items } of units) {
+      const accordion = createAccordion(dongNm);
+      resultDiv.appendChild(accordion);
+
+      const panel = createPanel();
+      resultDiv.appendChild(panel);
+
+      for (const info of items) {
+        const ul = document.createElement("ul");
+        for (const [key, value] of Object.entries(info)) {
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>${key}:</strong> ${value}`;
+          ul.appendChild(li);
         }
+        panel.appendChild(ul);
       }
+    }
+  }
 
       resultDiv.innerHTML = resultHTML;
       loadingDiv.classList.add("hidden");
@@ -357,8 +385,8 @@ submitBtn3.addEventListener("click", () => {
           tbody.appendChild(tr);
         }
         table.appendChild(tbody);
-
         resultDiv.appendChild(table);
+        panel.appendChild(table);
       }
 
       let groupedData = {};
@@ -407,18 +435,20 @@ submitBtn3.addEventListener("click", () => {
           const bldTitle = document.createElement("h2");
           bldTitle.textContent = `${bldNm}`;
           resultDiv.appendChild(bldTitle);
-
-          // 동명을 정렬하기 위한 코드 추가
+    
           const sortedDongNames = Object.keys(groupedData[bldNm]).sort();
-
+    
           for (const dongNm of sortedDongNames) {
             const buildingData = groupedData[bldNm][dongNm];
-            const title = document.createElement("h3");
-            title.textContent = `${dongNm}`;
-            resultDiv.appendChild(title);
-
+    
+            const accordion = createAccordion(dongNm);
+            resultDiv.appendChild(accordion);
+    
+            const panel = createPanel();
+            resultDiv.appendChild(panel);
+    
             const sortedFloors = sortFloors(buildingData);
-            createTable(sortedFloors);
+            createTable(sortedFloors, panel);
           }
         }
       }
