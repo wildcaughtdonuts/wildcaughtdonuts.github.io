@@ -280,9 +280,6 @@ submitBtn3.addEventListener("click", () => {
         const thead = document.createElement("thead");
         const tbody = document.createElement("tbody");
 
-        let groupedData = {};
-        let buildingData = [];
-
         // 테이블 헤더 생성
         const headers = [
           "구분",
@@ -346,7 +343,7 @@ submitBtn3.addEventListener("click", () => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
       const items = xmlDoc.getElementsByTagName("item");
-      
+      let groupedData = {};
 
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
