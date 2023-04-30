@@ -224,40 +224,29 @@ submitBtn3.addEventListener('click', () => {
   const flrUrl = document.getElementById('url-input').value.replace('getBrTitleInfo', 'getBrFlrOulnInfo');
 
   fetch(flrUrl)
-  .then(response => response.text())
-  .then(data => {
-    const jsonData = JSON.parse(data);
-    if (jsonData.response.body.items.item) {
-      const buildingData = jsonData.response.body.items.item;
-      createTable(buildingData);
-    } else {
-      console.error("Error: No data found.");
-    }
-  })
-  .catch(error => {
-    resultDiv.innerHTML = '오류가 발생했습니다. 다시 시도해주세요.';
-    console.error(error);
-    loadingDiv.classList.add('hidden');
-  });
-
+    .then(response => response.text())
+    .then(data => {
+      const jsonData = JSON.parse(data);
+      if (jsonData.response.body.items.item) {
+        const buildingData = jsonData.response.body.items.item;
+        let resultHTML = `<h3>${buildingData[0].bldNm} (총 ${buildingData.length} 층)</h3>`;
+        for (const floor of buildingData) {
+          resultHTML += `<div><strong>${floor.flrGbCdNm} ${floor.flrNoNm}</strong></div>`;
+          resultHTML += `<ul>`;
+          resultHTML += `<li>면적: ${floor.area}</li>`;
+          resultHTML += `<li>용도: ${floor.mainPurpsCd} ${floor.mainPurpsCdNm} ${floor.etcPurps}</li>`;
+          resultHTML += `</ul>`;
+        }
+        resultDiv.innerHTML = resultHTML;
+      } else {
+        console.error("Error: No data found.");
+        resultDiv.innerHTML = "Error: No data found.";
+      }
+      loadingDiv.classList.add('hidden');
+    })
+    .catch(error => {
+      resultDiv.innerHTML = '오류가 발생했습니다. 다시 시도해주세요.';
+      console.error(error);
+      loadingDiv.classList.add('hidden');
+    });
 });
-
-function createTable(buildingData) {
-  const table = document.createElement("table");
-  const headerRow = table.insertRow();
-  headerRow.innerHTML = "<th>flrGbCdNm</th><th>flrNoNm</th><th>area</th><th>mainPurpsCd + mainPurpsCdNm + etcPurps</th>";
-
-  buildingData.forEach(floor => {
-    const row = table.insertRow();
-    row.insertCell().textContent = floor.flrGbCdNm;
-    row.insertCell().textContent = floor.flrNoNm;
-    row.insertCell().textContent = floor.area;
-    row.insertCell().textContent = `${floor.mainPurpsCd} ${floor.mainPurpsCdNm} ${floor.etcPurps}`;
-  });
-
-  const container = document.createElement("div");
-  container.innerHTML = `<h3>${buildingData[0].bldNm} (총 ${buildingData.length} 층)</h3>`;
-  container.appendChild(table);
-  resultDiv.appendChild(container);
-  loadingDiv.classList.add('hidden');
-};
