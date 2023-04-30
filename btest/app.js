@@ -323,6 +323,8 @@ submitBtn3.addEventListener("click", () => {
   const apiUrl =
     urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo") +
     "&numOfRows=999";
+  const accordions = document.getElementsByClassName("accordion");
+
 
   fetchApiData(apiUrl)
     .then((allItems) => {
@@ -470,13 +472,10 @@ submitBtn3.addEventListener("click", () => {
               }
             });
 
-            if (accordions.length > 0) {
-              accordions[0].classList.add("active");
-              const panel = accordions[0].nextElementSibling;
-              panel.style.maxHeight = panel.scrollHeight + "px";
-            }
+            
           }
         }
+        if (accordions.length > 0) accordions[0].click();
       }
     })
     .catch((error) => {
