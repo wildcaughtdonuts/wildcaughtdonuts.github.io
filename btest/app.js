@@ -51,7 +51,6 @@ submitBtn.addEventListener("click", () => {
 
   const apiUrl = document.getElementById("url-input").value + "&numOfRows=150";
 
-
   fetch(apiUrl)
     .then((response) => response.text())
     .then((data) => {
@@ -258,34 +257,59 @@ submitBtn2.addEventListener("click", () => {
 
 function sortFloors(floors) {
   // 지하, 지상 층을 분리
-  const undergroundFloors = floors.filter((floor) => floor.flrNoNm.startsWith("지하"));
-  const abovegroundFloors = floors.filter((floor) => !floor.flrNoNm.startsWith("지하"));
+  const undergroundFloors = floors.filter((floor) =>
+    floor.flrNoNm.startsWith("지하")
+  );
+  const abovegroundFloors = floors.filter(
+    (floor) => !floor.flrNoNm.startsWith("지하")
+  );
 
   // 각 층을 정렬
-  undergroundFloors.sort((a, b) => parseInt(a.flrNoNm.slice(2)) - parseInt(b.flrNoNm.slice(2)));
-  abovegroundFloors.sort((a, b) => parseInt(b.flrNoNm.slice(0, -1)) - parseInt(a.flrNoNm.slice(0, -1)));
+  undergroundFloors.sort(
+    (a, b) => parseInt(a.flrNoNm.slice(2)) - parseInt(b.flrNoNm.slice(2))
+  );
+  abovegroundFloors.sort(
+    (a, b) =>
+      parseInt(b.flrNoNm.slice(0, -1)) - parseInt(a.flrNoNm.slice(0, -1))
+  );
 
   // 결과를 다시 합치기 (지상층이 먼저 출력되도록 변경)
   return abovegroundFloors.concat(undergroundFloors);
 }
 
+function fetchApiData(url, pageNo = 1, result = []) {
+  const updatedUrl = `${url}&pageNo=${pageNo}`;
+  return fetch(updatedUrl)
+    .then((response) => response.text())
+    .then((data) => {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data, "text/xml");
+      const items = xmlDoc.getElementsByTagName("item");
 
-
+      if (items.length === 0) {
+        return result;
+      } else {
+        // 재귀 호출을 통해 다음 페이지를 가져옵니다.
+        return fetchApiData(url, pageNo + 1, result.concat(Array.from(items)));
+      }
+    });
+}
 
 submitBtn3.addEventListener("click", () => {
   loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
   resultDiv.innerHTML = ""; // 결과 영역 초기화
   const urlInput = document.getElementById("url-input");
-  const apiUrl = urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo") + "&numOfRows=999";
-  
-  fetch(apiUrl)
-    .then((response) => response.text())
-    .then((data) => {
+  const apiUrl =
+    urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo") +
+    "&numOfRows=999";
+
+    fetchApiData(apiUrl)
+    .then((allItems) => {
       function createTable(buildingData) {
         const table = document.createElement("table");
         const thead = document.createElement("thead");
         const tbody = document.createElement("tbody");
-      
+
         // 테이블 헤더 생성
         const headers = ["구분", "층", "면적", "정보"];
         const tr = document.createElement("tr");
@@ -296,7 +320,7 @@ submitBtn3.addEventListener("click", () => {
         }
         thead.appendChild(tr);
         table.appendChild(thead);
-      
+
         // 테이블 바디 생성
         for (const {
           flrGbCdNm,
@@ -307,40 +331,47 @@ submitBtn3.addEventListener("click", () => {
           mainBldCnt,
         } of buildingData) {
           const tr = document.createElement("tr");
-      
+
           const td1 = document.createElement("td");
           td1.textContent = flrGbCdNm;
           tr.appendChild(td1);
-      
+
           const td2 = document.createElement("td");
           td2.textContent = flrNoNm;
           tr.appendChild(td2);
-      
+
           const td3 = document.createElement("td");
           td3.textContent = area;
           tr.appendChild(td3);
-      
+
           const td4 = document.createElement("td");
-          td4.textContent = `${mainPurpsCdNm}, ${etcPurps}, ${mainBldCnt}`;
+          td4.textContent = [
+            mainPurpsCdNm || "",
+            etcPurps || "",
+            mainBldCnt || "",
+          ]
+            .filter((value) => value)
+            .join(", ");
           tr.appendChild(td4);
-      
+
           tbody.appendChild(tr);
         }
         table.appendChild(tbody);
-      
+
         resultDiv.appendChild(table);
       }
-      
 
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
       const items = xmlDoc.getElementsByTagName("item");
       let groupedData = {};
 
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        const bldNm = item.getElementsByTagName("bldNm")[0]?.textContent || "정보없음";
-        const dongNm = item.getElementsByTagName("dongNm")[0]?.textContent || "정보없음";
+      for (let i = 0; i < allItems.length; i++) {
+        const item = allItems[i];
+        const bldNm =
+          item.getElementsByTagName("bldNm")[0]?.textContent || "정보없음";
+        const dongNm =
+          item.getElementsByTagName("dongNm")[0]?.textContent || "정보없음";
         const flrGbCdNm =
           item.getElementsByTagName("flrGbCdNm")[0]?.textContent || "정보없음";
         const flrNoNm =
@@ -374,29 +405,26 @@ submitBtn3.addEventListener("click", () => {
         });
       }
 
-
       if (Object.keys(groupedData).length > 0) {
         for (const bldNm in groupedData) {
           const bldTitle = document.createElement("h2");
           bldTitle.textContent = `${bldNm}`;
           resultDiv.appendChild(bldTitle);
-      
+
           // 동명을 정렬하기 위한 코드 추가
           const sortedDongNames = Object.keys(groupedData[bldNm]).sort();
-          
+
           for (const dongNm of sortedDongNames) {
             const buildingData = groupedData[bldNm][dongNm];
             const title = document.createElement("h3");
             title.textContent = `${dongNm}`;
             resultDiv.appendChild(title);
-      
+
             const sortedFloors = sortFloors(buildingData);
             createTable(sortedFloors);
           }
         }
       }
-      
-      
     })
     .catch((error) => {
       resultDiv.innerHTML = "오류가 발생했습니다. 다시 시도해주세요.";
