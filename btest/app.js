@@ -1,16 +1,16 @@
 //app.js
 
-const submitBtn = document.getElementById('submit-btn');
-const submitBtn2 = document.getElementById('submit-btn2');
-const submitBtn3 = document.getElementById('submit-btn3');
-window.resultDiv = document.getElementById('result');
-const loadingDiv = document.getElementById('loading');
+const submitBtn = document.getElementById("submit-btn");
+const submitBtn2 = document.getElementById("submit-btn2");
+const submitBtn3 = document.getElementById("submit-btn3");
+window.resultDiv = document.getElementById("result");
+const loadingDiv = document.getElementById("loading");
 
 function createAccordionMenu() {
   const accordions = document.getElementsByClassName("accordion");
 
   for (let i = 0; i < accordions.length; i++) {
-    accordions[i].addEventListener("click", function() {
+    accordions[i].addEventListener("click", function () {
       this.classList.toggle("active");
       const panel = this.nextElementSibling;
       if (panel.style.maxHeight) {
@@ -18,22 +18,22 @@ function createAccordionMenu() {
       } else {
         panel.style.maxHeight = panel.scrollHeight + "px";
       }
-      const arrow = this.querySelector('.arrow');
-      arrow.classList.toggle('rotate');
+      const arrow = this.querySelector(".arrow");
+      arrow.classList.toggle("rotate");
     });
   }
 
   // 동명을 클릭하면 해당 동에 대한 정보를 펼치도록 설정
-  const dongNames = document.querySelectorAll('.dong-name');
+  const dongNames = document.querySelectorAll(".dong-name");
   for (const dongName of dongNames) {
-    dongName.addEventListener('click', function() {
+    dongName.addEventListener("click", function () {
       const unit = this.parentElement.nextElementSibling;
-      unit.classList.toggle('active');
+      unit.classList.toggle("active");
       const panel = unit.lastElementChild;
       if (panel.style.maxHeight) {
         panel.style.maxHeight = null;
       } else {
-        panel.style.maxHeight = panel.scrollHeight + 'px';
+        panel.style.maxHeight = panel.scrollHeight + "px";
       }
     });
   }
@@ -45,59 +45,84 @@ function createAccordionMenu() {
   }
 }
 
+submitBtn.addEventListener("click", () => {
+  loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
+  resultDiv.innerHTML = ""; // 결과 영역 초기화
 
-submitBtn.addEventListener('click', () => {
-
-  loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
-  resultDiv.innerHTML = ''; // 결과 영역 초기화
-
-  const apiUrl = document.getElementById('url-input').value;
+  const apiUrl = document.getElementById("url-input").value;
 
   fetch(apiUrl)
-    .then(response => response.text())
-    .then(data => {
-
+    .then((response) => response.text())
+    .then((data) => {
       const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(data, 'text/xml');
-      const items = xmlDoc.getElementsByTagName('item');
+      const xmlDoc = parser.parseFromString(data, "text/xml");
+      const items = xmlDoc.getElementsByTagName("item");
       let itemInfo = [];
 
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
-        const bldNm = item.getElementsByTagName('bldNm')[0]?.textContent || '건축물명 없음';
-        const dongNm = item.getElementsByTagName('dongNm')[0]?.textContent || '동명 없음';
-        const archArea = parseInt(item.getElementsByTagName('archArea')[0]?.textContent || 0);
+        const bldNm =
+          item.getElementsByTagName("bldNm")[0]?.textContent || "건축물명 없음";
+        const dongNm =
+          item.getElementsByTagName("dongNm")[0]?.textContent || "동명 없음";
+        const archArea = parseInt(
+          item.getElementsByTagName("archArea")[0]?.textContent || 0
+        );
 
         const info = {
-          '주용도': item.getElementsByTagName('mainPurpsCdNm')[0]?.textContent || '정보없음',
-          '기타용도': item.getElementsByTagName('etcPurps')[0]?.textContent || '정보없음',
-          '주소': item.getElementsByTagName('platPlc')[0]?.textContent || '정보없음',
+          주용도:
+            item.getElementsByTagName("mainPurpsCdNm")[0]?.textContent ||
+            "정보없음",
+          기타용도:
+            item.getElementsByTagName("etcPurps")[0]?.textContent || "정보없음",
+          주소:
+            item.getElementsByTagName("platPlc")[0]?.textContent || "정보없음",
 
-          '건축허가일': item.getElementsByTagName('pmsDay')[0]?.textContent || '정보없음',
-          '사용승인일': item.getElementsByTagName('useAprDay')[0]?.textContent || '정보없음',
+          건축허가일:
+            item.getElementsByTagName("pmsDay")[0]?.textContent || "정보없음",
+          사용승인일:
+            item.getElementsByTagName("useAprDay")[0]?.textContent ||
+            "정보없음",
 
-          '연면적(㎡)': item.getElementsByTagName('totArea')[0]?.textContent || '정보없음',
-          '건축면적(㎡)': item.getElementsByTagName('archArea')[0]?.textContent || '정보없음',
-          '세대수': item.getElementsByTagName('hhldCnt')[0]?.textContent || '정보없음',
+          "연면적(㎡)":
+            item.getElementsByTagName("totArea")[0]?.textContent || "정보없음",
+          "건축면적(㎡)":
+            item.getElementsByTagName("archArea")[0]?.textContent || "정보없음",
+          세대수:
+            item.getElementsByTagName("hhldCnt")[0]?.textContent || "정보없음",
 
+          지상층수:
+            item.getElementsByTagName("grndFlrCnt")[0]?.textContent ||
+            "정보없음",
+          지하층수:
+            item.getElementsByTagName("ugrndFlrCnt")[0]?.textContent ||
+            "정보없음",
+          높이: item.getElementsByTagName("heit")[0]?.textContent || "정보없음",
 
-          '지상층수': item.getElementsByTagName('grndFlrCnt')[0]?.textContent || '정보없음',
-          '지하층수': item.getElementsByTagName('ugrndFlrCnt')[0]?.textContent || '정보없음',
-          '높이': item.getElementsByTagName('heit')[0]?.textContent || '정보없음',
+          건축물구조:
+            item.getElementsByTagName("strctCdNm")[0]?.textContent ||
+            "정보없음",
+          지붕구조:
+            item.getElementsByTagName("roofCdNm")[0]?.textContent || "정보없음",
 
-          '건축물구조': item.getElementsByTagName('strctCdNm')[0]?.textContent || '정보없음',
-          '지붕구조': item.getElementsByTagName('roofCdNm')[0]?.textContent || '정보없음',
-
-          '승용승강기(대)': item.getElementsByTagName('rideUseElvtCnt')[0]?.textContent || '정보없음',
-          '비상승강기(대)': item.getElementsByTagName('emgenUseElvtCnt')[0]?.textContent || '정보없음',
+          "승용승강기(대)":
+            item.getElementsByTagName("rideUseElvtCnt")[0]?.textContent ||
+            "정보없음",
+          "비상승강기(대)":
+            item.getElementsByTagName("emgenUseElvtCnt")[0]?.textContent ||
+            "정보없음",
         };
 
         // itemInfo에 동일한 bldNm이 존재하는지 검사 후 추가 또는 업데이트
-        const index = itemInfo.findIndex(building => building.bldNm === bldNm);
+        const index = itemInfo.findIndex(
+          (building) => building.bldNm === bldNm
+        );
         if (index === -1) {
           itemInfo.push({ bldNm, dongNm, units: [{ dongNm, items: [info] }] });
         } else {
-          const unitIndex = itemInfo[index].units.findIndex(unit => unit.dongNm === dongNm);
+          const unitIndex = itemInfo[index].units.findIndex(
+            (unit) => unit.dongNm === dongNm
+          );
           if (unitIndex === -1) {
             itemInfo[index].units.push({ dongNm, items: [info] });
           } else {
@@ -130,126 +155,217 @@ submitBtn.addEventListener('click', () => {
           resultHTML += `<button class="accordion">${dongNm}</button>`;
           resultHTML += `<div class="panel">`;
           for (const info of items) {
-            resultHTML += '<ul>';
+            resultHTML += "<ul>";
             for (const [key, value] of Object.entries(info)) {
               resultHTML += `<li><strong>${key}:</strong> ${value}</li>`;
             }
-            resultHTML += '</ul>';
+            resultHTML += "</ul>";
           }
           resultHTML += `</div>`;
         }
       }
 
-
       resultDiv.innerHTML = resultHTML;
-      loadingDiv.classList.add('hidden');
+      loadingDiv.classList.add("hidden");
       createAccordionMenu();
-
     })
-    .catch(error => {
-      resultDiv.innerHTML = '오류가 발생했습니다. 대국에게 문의해주세요';
+    .catch((error) => {
+      resultDiv.innerHTML = "오류가 발생했습니다. 대국에게 문의해주세요";
       console.error(error);
-      loadingDiv.classList.add('hidden');
+      loadingDiv.classList.add("hidden");
     });
 });
 
-
-
-submitBtn2.addEventListener('click', () => {
-  loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
-  resultDiv.innerHTML = ''; // 결과 영역 초기화
-  const recapUrl = document.getElementById('url-input').value.replace('getBrTitleInfo', 'getBrRecapTitleInfo');
+submitBtn2.addEventListener("click", () => {
+  loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
+  resultDiv.innerHTML = ""; // 결과 영역 초기화
+  const recapUrl = document
+    .getElementById("url-input")
+    .value.replace("getBrTitleInfo", "getBrRecapTitleInfo");
 
   fetch(recapUrl)
-    .then(response => response.text())
-    .then(data => {
-
+    .then((response) => response.text())
+    .then((data) => {
       const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(data, 'text/xml');
-      const items = xmlDoc.getElementsByTagName('item');
+      const xmlDoc = parser.parseFromString(data, "text/xml");
+      const items = xmlDoc.getElementsByTagName("item");
       let itemInfo = [];
 
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
-        const bldNm = item.getElementsByTagName('bldNm')[0]?.textContent || '건축물명 없음';
-        const archArea = parseInt(item.getElementsByTagName('archArea')[0]?.textContent || 0);
+        const bldNm =
+          item.getElementsByTagName("bldNm")[0]?.textContent || "건축물명 없음";
+        const archArea = parseInt(
+          item.getElementsByTagName("archArea")[0]?.textContent || 0
+        );
 
         const info = {
-          '주용도': item.getElementsByTagName('mainPurpsCdNm')[0]?.textContent || '정보없음',
-          '기타용도': item.getElementsByTagName('etcPurps')[0]?.textContent || '정보없음',
-          '주소': item.getElementsByTagName('platPlc')[0]?.textContent || '정보없음',
+          주용도:
+            item.getElementsByTagName("mainPurpsCdNm")[0]?.textContent ||
+            "정보없음",
+          기타용도:
+            item.getElementsByTagName("etcPurps")[0]?.textContent || "정보없음",
+          주소:
+            item.getElementsByTagName("platPlc")[0]?.textContent || "정보없음",
 
-          '건축허가일': item.getElementsByTagName('pmsDay')[0]?.textContent || '정보없음',
-          '사용승인일': item.getElementsByTagName('useAprDay')[0]?.textContent || '정보없음',
+          건축허가일:
+            item.getElementsByTagName("pmsDay")[0]?.textContent || "정보없음",
+          사용승인일:
+            item.getElementsByTagName("useAprDay")[0]?.textContent ||
+            "정보없음",
 
-          '연면적(㎡)': item.getElementsByTagName('totArea')[0]?.textContent || '정보없음',
-          '세대수': item.getElementsByTagName('hhldCnt')[0]?.textContent || '정보없음',
-          '건축면적(㎡)': item.getElementsByTagName('archArea')[0]?.textContent || '정보없음',
+          "연면적(㎡)":
+            item.getElementsByTagName("totArea")[0]?.textContent || "정보없음",
+          세대수:
+            item.getElementsByTagName("hhldCnt")[0]?.textContent || "정보없음",
+          "건축면적(㎡)":
+            item.getElementsByTagName("archArea")[0]?.textContent || "정보없음",
 
-
-          '주 건축물(개)': item.getElementsByTagName('mainBldCnt')[0]?.textContent || '정보없음',
-          '부속 건축물(개)': item.getElementsByTagName('부속건축물수')[0]?.textContent || '정보없음',
-
+          "주 건축물(개)":
+            item.getElementsByTagName("mainBldCnt")[0]?.textContent ||
+            "정보없음",
+          "부속 건축물(개)":
+            item.getElementsByTagName("부속건축물수")[0]?.textContent ||
+            "정보없음",
         };
 
         itemInfo.push({ bldNm, items: [info] });
       }
 
-      let resultHTML = '';
+      let resultHTML = "";
       for (const { bldNm, items } of itemInfo) {
         resultHTML += `<h3>${bldNm}</h3>`;
 
         for (const info of items) {
-          resultHTML += '<ul>';
+          resultHTML += "<ul>";
           for (const [key, value] of Object.entries(info)) {
             resultHTML += `<li><strong>${key}:</strong> ${value}</li>`;
           }
-          resultHTML += '</ul>';
+          resultHTML += "</ul>";
         }
       }
 
       resultDiv.innerHTML = resultHTML;
-      loadingDiv.classList.add('hidden');
+      loadingDiv.classList.add("hidden");
     })
-    .catch(error => {
-      resultDiv.innerHTML = '오류가 발생했습니다. 대국에게 문의해주세요';
+    .catch((error) => {
+      resultDiv.innerHTML = "오류가 발생했습니다. 대국에게 문의해주세요";
       console.error(error);
-      loadingDiv.classList.add('hidden');
+      loadingDiv.classList.add("hidden");
     });
 });
 
-submitBtn3.addEventListener('click', () => {
-  loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
-  resultDiv.innerHTML = ''; // 결과 영역 초기화
-  const urlInput = document.getElementById('url-input');
-  const apiUrl = urlInput.value.replace('getBrTitleInfo', 'getBrFlrOulnInfo');
+submitBtn3.addEventListener("click", () => {
+  loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
+  resultDiv.innerHTML = ""; // 결과 영역 초기화
+  const urlInput = document.getElementById("url-input");
+  const apiUrl = urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo");
 
   // url-input 요소에 입력된 URL이 유효한지 검사
-  if (!apiUrl.startsWith('http://') && !apiUrl.startsWith('https://')) {
-    resultDiv.innerHTML = 'URL이 유효하지 않습니다.';
-    loadingDiv.classList.add('hidden');
+  if (!apiUrl.startsWith("http://") && !apiUrl.startsWith("https://")) {
+    resultDiv.innerHTML = "URL이 유효하지 않습니다.";
+    loadingDiv.classList.add("hidden");
     return;
   }
 
   fetch(apiUrl)
-    .then(response => response.text())
-    .then(data => {
+    .then((response) => response.text())
+    .then((data) => {
+      function createTable(buildingData) {
+        const table = document.createElement("table");
+        const thead = document.createElement("thead");
+        const tbody = document.createElement("tbody");
+
+        // 테이블 헤더 생성
+        const headers = [
+          "구분",
+          "층",
+          "면적",
+          "주용도",
+          "기타용도",
+          "주건축물",
+        ];
+        const tr = document.createElement("tr");
+        for (const header of headers) {
+          const th = document.createElement("th");
+          th.textContent = header;
+          tr.appendChild(th);
+        }
+        thead.appendChild(tr);
+        table.appendChild(thead);
+
+        // 테이블 바디 생성
+        for (const {
+          flrGbCdNm,
+          flrNoNm,
+          area,
+          mainPurpsCdNm,
+          etcPurps,
+          mainBldCnt,
+        } of buildingData) {
+          const tr = document.createElement("tr");
+
+          const td1 = document.createElement("td");
+          td1.textContent = flrGbCdNm;
+          tr.appendChild(td1);
+
+          const td2 = document.createElement("td");
+          td2.textContent = flrNoNm;
+          tr.appendChild(td2);
+
+          const td3 = document.createElement("td");
+          td3.textContent = area;
+          tr.appendChild(td3);
+
+          const td4 = document.createElement("td");
+          td4.textContent = mainPurpsCdNm;
+          tr.appendChild(td4);
+
+          const td5 = document.createElement("td");
+          td5.textContent = etcPurps;
+          tr.appendChild(td5);
+
+          const td6 = document.createElement("td");
+          td6.textContent = mainBldCnt;
+          tr.appendChild(td6);
+
+          tbody.appendChild(tr);
+        }
+        table.appendChild(tbody);
+
+        resultDiv.appendChild(table);
+      }
 
       const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(data, 'text/xml');
-      const items = xmlDoc.getElementsByTagName('item');
+      const xmlDoc = parser.parseFromString(data, "text/xml");
+      const items = xmlDoc.getElementsByTagName("item");
       let buildingData = [];
 
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
-        const flrGbCdNm = item.getElementsByTagName('flrGbCdNm')[0]?.textContent || '정보없음';
-        const flrNoNm = item.getElementsByTagName('flrNoNm')[0]?.textContent || '정보없음';
-        const area = item.getElementsByTagName('area')[0]?.textContent || '정보없음';
-        const mainPurpsCd = item.getElementsByTagName('mainPurpsCd')[0]?.textContent || '정보없음';
-        const mainPurpsCdNm = item.getElementsByTagName('mainPurpsCdNm')[0]?.textContent || '정보없음';
-        const etcPurps = item.getElementsByTagName('etcPurps')[0]?.textContent || '정보없음';
+        const flrGbCdNm =
+          item.getElementsByTagName("flrGbCdNm")[0]?.textContent || "정보없음";
+        const flrNoNm =
+          item.getElementsByTagName("flrNoNm")[0]?.textContent || "정보없음";
+        const area =
+          item.getElementsByTagName("area")[0]?.textContent || "정보없음";
+        const mainPurpsCd =
+          item.getElementsByTagName("mainPurpsCd")[0]?.textContent ||
+          "정보없음";
+        const mainPurpsCdNm =
+          item.getElementsByTagName("mainPurpsCdNm")[0]?.textContent ||
+          "정보없음";
+        const etcPurps =
+          item.getElementsByTagName("etcPurps")[0]?.textContent || "정보없음";
 
-        buildingData.push({ flrGbCdNm, flrNoNm, area, mainPurpsCd, mainPurpsCdNm, etcPurps });
+        buildingData.push({
+          flrGbCdNm,
+          flrNoNm,
+          area,
+          mainPurpsCd,
+          mainPurpsCdNm,
+          etcPurps,
+        });
       }
 
       if (buildingData.length > 0) {
@@ -257,14 +373,12 @@ submitBtn3.addEventListener('click', () => {
       } else {
         console.error("Error: No data found.");
       }
-
     })
-    .catch(error => {
-      resultDiv.innerHTML = '오류가 발생했습니다. 다시 시도해주세요.';
+    .catch((error) => {
+      resultDiv.innerHTML = "오류가 발생했습니다. 다시 시도해주세요.";
       console.error(error);
     })
     .finally(() => {
-      loadingDiv.classList.add('hidden');
+      loadingDiv.classList.add("hidden");
     });
 });
-
