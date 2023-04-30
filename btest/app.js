@@ -460,7 +460,21 @@ submitBtn3.addEventListener("click", () => {
             panel.appendChild(table);
             resultDiv.appendChild(panel);
 
-            
+            title.addEventListener("click", function () {
+              this.classList.toggle("active");
+              const panel = this.nextElementSibling;
+              if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+              } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+              }
+            });
+
+            if (accordions.length > 0) {
+              accordions[0].classList.add("active");
+              const panel = accordions[0].nextElementSibling;
+              panel.style.maxHeight = panel.scrollHeight + "px";
+            }
           }
         }
       }
