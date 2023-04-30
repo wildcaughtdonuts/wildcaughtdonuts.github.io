@@ -276,7 +276,7 @@ submitBtn3.addEventListener("click", () => {
   loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
   resultDiv.innerHTML = ""; // 결과 영역 초기화
   const urlInput = document.getElementById("url-input");
-  const apiUrl = urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo") + "&numOfRows=1";
+  const apiUrl = urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo") + "&numOfRows=999";
   
   fetch(apiUrl)
     .then((response) => response.text())
