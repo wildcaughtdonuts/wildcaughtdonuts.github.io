@@ -260,13 +260,14 @@ function sortFloors(floors) {
   const undergroundFloors = floors.filter((floor) => floor.flrNoNm.startsWith("지하"));
   const abovegroundFloors = floors.filter((floor) => !floor.flrNoNm.startsWith("지하"));
 
-  // 각 층을 오름차순으로 정렬
+  // 각 층을 정렬
   undergroundFloors.sort((a, b) => parseInt(a.flrNoNm.slice(2)) - parseInt(b.flrNoNm.slice(2)));
-  abovegroundFloors.sort((a, b) => parseInt(a.flrNoNm.slice(0, -1)) - parseInt(b.flrNoNm.slice(0, -1)));
+  abovegroundFloors.sort((a, b) => parseInt(b.flrNoNm.slice(0, -1)) - parseInt(a.flrNoNm.slice(0, -1)));
 
-  // 결과를 다시 합치기
-  return undergroundFloors.concat(abovegroundFloors);
+  // 결과를 다시 합치기 (지상층이 먼저 출력되도록 변경)
+  return abovegroundFloors.concat(undergroundFloors);
 }
+
 
 
 
