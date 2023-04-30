@@ -219,30 +219,25 @@ submitBtn2.addEventListener('click', () => {
 });
 
 submitBtn3.addEventListener('click', () => {
-  loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
-  resultDiv.innerHTML = ''; // 결과 영역 초기화
+  loadingDiv.classList.remove('hidden');
+  resultDiv.innerHTML = '';
   const flrUrl = document.getElementById('url-input').value.replace('getBrTitleInfo', 'getBrFlrOulnInfo');
 
   fetch(flrUrl)
-    .then(response => response.text())
+    .then(response => response.json()) // text() 대신에 json()을 사용합니다.
     .then(data => {
-      const jsonData = JSON.parse(data);
-      if (jsonData.response.body.items.item) {
-        const buildingData = jsonData.response.body.items.item;
-        let resultHTML = `<h3>${buildingData[0].bldNm} (총 ${buildingData.length} 층)</h3>`;
-        for (const floor of buildingData) {
-          resultHTML += `<div><strong>${floor.flrGbCdNm} ${floor.flrNoNm}</strong></div>`;
-          resultHTML += `<ul>`;
-          resultHTML += `<li>면적: ${floor.area}</li>`;
-          resultHTML += `<li>용도: ${floor.mainPurpsCd} ${floor.mainPurpsCdNm} ${floor.etcPurps}</li>`;
-          resultHTML += `</ul>`;
-        }
+      if (data.response.body.items.item) {
+        const buildingData = data.response.body.items.item;
+        let resultHTML = `<h3>${buildingData[0].bldNm} (총 ${buildingData.length} 층)</h3><table><thead><tr><th>flrGbCdNm</th><th>flrNoNm</th><th>area</th><th>mainPurpsCd + mainPurpsCdNm + etcPurps</th></tr></thead><tbody>`;
+        buildingData.forEach(floor => {
+          resultHTML += `<tr><td>${floor.flrGbCdNm}</td><td>${floor.flrNoNm}</td><td>${floor.area}</td><td>${floor.mainPurpsCd} ${floor.mainPurpsCdNm} ${floor.etcPurps}</td></tr>`;
+        });
+        resultHTML += `</tbody></table>`;
         resultDiv.innerHTML = resultHTML;
       } else {
         console.error("Error: No data found.");
-        resultDiv.innerHTML = "Error: No data found.";
+        resultDiv.innerHTML = '데이터를 찾을 수 없습니다.';
       }
-      loadingDiv.classList.add('hidden');
     })
     .catch(error => {
       resultDiv.innerHTML = '오류가 발생했습니다. 다시 시도해주세요.';
