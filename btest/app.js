@@ -255,12 +255,6 @@ submitBtn2.addEventListener("click", () => {
     });
 });
 
-
-
-
-
-
-
 function sortFloors(floors) {
   // 지하, 지상 층을 분리
   const undergroundFloors = floors.filter((floor) => floor.flrNoNm.startsWith("지하"));
@@ -396,20 +390,24 @@ submitBtn3.addEventListener("click", () => {
       if (Object.keys(groupedData).length > 0) {
         for (const bldNm in groupedData) {
           const bldTitle = document.createElement("h2");
-          bldTitle.textContent = `건축물명: ${bldNm}`;
+          bldTitle.textContent = `${bldNm}`;
           resultDiv.appendChild(bldTitle);
       
-          for (const dongNm in groupedData[bldNm]) {
+          // 동명을 정렬하기 위한 코드 추가
+          const sortedDongNames = Object.keys(groupedData[bldNm]).sort();
+          
+          for (const dongNm of sortedDongNames) {
             const buildingData = groupedData[bldNm][dongNm];
             const title = document.createElement("h3");
-            title.textContent = `동명: ${dongNm}`;
+            title.textContent = `${dongNm}`;
             resultDiv.appendChild(title);
       
-            const sortedFloors = sortFloors(buildingData); // 위치 변경
-            createTable(sortedFloors); // 위치 변경
+            const sortedFloors = sortFloors(buildingData);
+            createTable(sortedFloors);
           }
         }
       }
+      
       
     })
     .catch((error) => {
