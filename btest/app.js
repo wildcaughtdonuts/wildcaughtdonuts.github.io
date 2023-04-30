@@ -305,7 +305,11 @@ submitBtn3.addEventListener("click", () => {
 
   fetchApiData(apiUrl)
     .then((allItems) => {
-      function createTable(buildingData) {
+      function createTable(buildingData, parentDiv) {
+        if (parentDiv === null) {
+          return;
+        }
+
         const table = document.createElement("table");
         const thead = document.createElement("thead");
         const tbody = document.createElement("tbody");
@@ -376,7 +380,7 @@ submitBtn3.addEventListener("click", () => {
         panel.appendChild(table);
         div.appendChild(panel);
 
-        resultDiv.appendChild(div);
+        parentDiv.appendChild(div);
 
         // 각 동 이름을 클릭하면 해당 동에 대한 정보가 펼쳐지도록 설정
         const dongNames = document.querySelectorAll(".dong-name");
@@ -398,7 +402,13 @@ submitBtn3.addEventListener("click", () => {
             unit.classList.add("active");
             const panel = unit.lastElementChild;
             panel.style.maxHeight = panel.scrollHeight + "px";
-          }
+            } else {
+            const unit = dongName.parentElement.nextElementSibling;
+            unit.classList.remove("active");
+            const panel = unit.lastElementChild;
+            panel.style.maxHeight = null;
+            }
+            
         }
       }
 
