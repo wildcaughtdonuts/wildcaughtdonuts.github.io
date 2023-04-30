@@ -6,8 +6,6 @@ const submitBtn3 = document.getElementById("submit-btn3");
 window.resultDiv = document.getElementById("result");
 const loadingDiv = document.getElementById("loading");
 
-
-
 function createAccordionMenu() {
   const accordions = document.getElementsByClassName("accordion");
 
@@ -324,7 +322,7 @@ submitBtn3.addEventListener("click", () => {
         table.appendChild(thead);
 
         // 테이블 바디 생성
-        
+
         return { table, tbody };
       }
 
@@ -375,13 +373,6 @@ submitBtn3.addEventListener("click", () => {
           bldTitle.textContent = `${bldNm}`;
           resultDiv.appendChild(bldTitle);
 
-          const tr = document.createElement("tr");
-
-          // 지상과 지하층 구분을 위한 속성 추가
-          if (flrNoNm === "지상1층" || flrNoNm === "지하1층") {
-            tr.setAttribute("data-divider", "true");
-          }
-
           // 동명을 정렬하기 위한 코드 추가
           const sortedDongNames = Object.keys(groupedData[bldNm]).sort();
 
@@ -404,6 +395,11 @@ submitBtn3.addEventListener("click", () => {
               mainBldCnt,
             } of sortedFloors) {
               const tr = document.createElement("tr");
+
+              // 지상과 지하층 구분을 위한 속성 추가
+              if (flrNoNm === "지상1층" || flrNoNm === "지하1층") {
+                tr.setAttribute("data-divider", "true");
+              }
 
               const td1 = document.createElement("td");
               td1.textContent = flrGbCdNm;
@@ -457,4 +453,3 @@ submitBtn3.addEventListener("click", () => {
       loadingDiv.classList.add("hidden");
     });
 });
-
