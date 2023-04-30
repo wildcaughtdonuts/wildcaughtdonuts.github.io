@@ -219,29 +219,43 @@ submitBtn2.addEventListener('click', () => {
 });
 
 submitBtn3.addEventListener('click', () => {
-  loadingDiv.classList.remove('hidden');
-  resultDiv.innerHTML = '';
+  loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
+  resultDiv.innerHTML = ''; // 결과 영역 초기화
   const flrUrl = document.getElementById('url-input').value.replace('getBrTitleInfo', 'getBrFlrOulnInfo');
 
   fetch(flrUrl)
-    .then(response => response.json()) // text() 대신에 json()을 사용합니다.
+    .then(response => response.text())
     .then(data => {
-      if (data.response.body.items.item) {
-        const buildingData = data.response.body.items.item;
-        let resultHTML = `<h3>${buildingData[0].bldNm} (총 ${buildingData.length} 층)</h3><table><thead><tr><th>flrGbCdNm</th><th>flrNoNm</th><th>area</th><th>mainPurpsCd + mainPurpsCdNm + etcPurps</th></tr></thead><tbody>`;
-        buildingData.forEach(floor => {
-          resultHTML += `<tr><td>${floor.flrGbCdNm}</td><td>${floor.flrNoNm}</td><td>${floor.area}</td><td>${floor.mainPurpsCd} ${floor.mainPurpsCdNm} ${floor.etcPurps}</td></tr>`;
-        });
-        resultHTML += `</tbody></table>`;
-        resultDiv.innerHTML = resultHTML;
+
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data, 'text/xml');
+      const items = xmlDoc.getElementsByTagName('item');
+      let buildingData = [];
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const flrGbCdNm = item.getElementsByTagName('flrGbCdNm')[0]?.textContent || '정보없음';
+        const flrNoNm = item.getElementsByTagName('flrNoNm')[0]?.textContent || '정보없음';
+        const area = item.getElementsByTagName('area')[0]?.textContent || '정보없음';
+        const mainPurpsCd = item.getElementsByTagName('mainPurpsCd')[0]?.textContent || '정보없음';
+        const mainPurpsCdNm = item.getElementsByTagName('mainPurpsCdNm')[0]?.textContent || '정보없음';
+        const etcPurps = item.getElementsByTagName('etcPurps')[0]?.textContent || '정보없음';
+
+        buildingData.push({ flrGbCdNm, flrNoNm, area, mainPurpsCd, mainPurpsCdNm, etcPurps });
+      }
+
+      if (buildingData.length > 0) {
+        createTable(buildingData);
       } else {
         console.error("Error: No data found.");
-        resultDiv.innerHTML = '데이터를 찾을 수 없습니다.';
       }
+
     })
     .catch(error => {
       resultDiv.innerHTML = '오류가 발생했습니다. 다시 시도해주세요.';
       console.error(error);
+    })
+    .finally(() => {
       loadingDiv.classList.add('hidden');
     });
 });
