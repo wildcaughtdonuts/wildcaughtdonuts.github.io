@@ -344,6 +344,7 @@ submitBtn3.addEventListener("click", () => {
       const xmlDoc = parser.parseFromString(data, "text/xml");
       const items = xmlDoc.getElementsByTagName("item");
       let groupedData = {};
+      let buildingData = [];
 
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
@@ -373,10 +374,16 @@ submitBtn3.addEventListener("click", () => {
         });
         
         if (!groupedData[bldNm]) {
-          groupedData[bldNm] = [];
+          groupedData[bldNm] = {};
         }
-      
-        groupedData[bldNm].push({
+        
+        const dongNm = item.getElementsByTagName("dongNm")[0]?.textContent || "정보없음";
+        
+        if (!groupedData[bldNm][dongNm]) {
+          groupedData[bldNm][dongNm] = [];
+        }
+        
+        groupedData[bldNm][dongNm].push({
           flrGbCdNm,
           flrNoNm,
           area,
@@ -388,15 +395,19 @@ submitBtn3.addEventListener("click", () => {
 
       if (Object.keys(groupedData).length > 0) {
         for (const bldNm in groupedData) {
-          const buildingData = groupedData[bldNm];
-          const title = document.createElement("h3");
-          title.textContent = `동명: ${bldNm}`;
-          resultDiv.appendChild(title);
-
-          createTable(buildingData);
+          const bldTitle = document.createElement("h2");
+          bldTitle.textContent = `건축물명: ${bldNm}`;
+          resultDiv.appendChild(bldTitle);
+      
+          for (const dongNm in groupedData[bldNm]) {
+            const buildingData = groupedData[bldNm][dongNm];
+            const title = document.createElement("h3");
+            title.textContent = `동명: ${dongNm}`;
+            resultDiv.appendChild(title);
+      
+            createTable(buildingData);
+          }
         }
-      } else {
-        console.error("Error: No data found.");
       }
     })
     .catch((error) => {
