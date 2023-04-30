@@ -29,7 +29,9 @@
     
     <h1>소방용 건축물대장 검색기</h1>
     <button id="search-btn">주소검색</button>
-    <div id="mapResult"></div>
+    <div id="mapResult">
+      <div id="map" style="width:500px;height:400px;"></div>
+    </div>
     <input type="hidden" id="url-input" value="">
     <div id="button-row">
       <button id="submit-btn">표제부(동별)<br>조회</button>
@@ -69,6 +71,7 @@
     <script src="./app.js"></script>
     <script src="./adress.js"></script>
     <script src="./clock.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b8c3d238ea4ac83422e19547e564902"></script>
 
 </body>
 
