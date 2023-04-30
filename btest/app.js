@@ -54,7 +54,7 @@ function applyRowDivider(tbody) {
     const row = rows[i];
     const floorCell = row.querySelector("td:nth-child(2)");
 
-    if (floorCell.textContent === "지상1층") {
+    if (floorCell.textContent === "1층") {
       groundFloorIndex = i;
       break;
     }
