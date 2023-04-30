@@ -255,6 +255,10 @@ submitBtn2.addEventListener("click", () => {
     });
 });
 
+
+
+
+
 submitBtn3.addEventListener("click", () => {
   loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
   resultDiv.innerHTML = ""; // 결과 영역 초기화
@@ -339,10 +343,11 @@ submitBtn3.addEventListener("click", () => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
       const items = xmlDoc.getElementsByTagName("item");
-      let buildingData = [];
+      let groupedData = {};
 
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
+        const bldNm = item.getElementsByTagName("bldNm")[0]?.textContent || "정보없음";
         const flrGbCdNm =
           item.getElementsByTagName("flrGbCdNm")[0]?.textContent || "정보없음";
         const flrNoNm =
@@ -366,10 +371,30 @@ submitBtn3.addEventListener("click", () => {
           mainPurpsCdNm,
           etcPurps,
         });
+        
+        if (!groupedData[bldNm]) {
+          groupedData[bldNm] = [];
+        }
+      
+        groupedData[bldNm].push({
+          flrGbCdNm,
+          flrNoNm,
+          area,
+          mainPurpsCd,
+          mainPurpsCdNm,
+          etcPurps,
+        });
       }
 
-      if (buildingData.length > 0) {
-        createTable(buildingData);
+      if (Object.keys(groupedData).length > 0) {
+        for (const bldNm in groupedData) {
+          const buildingData = groupedData[bldNm];
+          const title = document.createElement("h3");
+          title.textContent = `동명: ${bldNm}`;
+          resultDiv.appendChild(title);
+
+          createTable(buildingData);
+        }
       } else {
         console.error("Error: No data found.");
       }
