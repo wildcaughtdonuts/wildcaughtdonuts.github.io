@@ -472,6 +472,26 @@ submitBtn3.addEventListener("click", () => {
           }
         }
       }
+
+      const accordions = document.querySelectorAll(".accordion");
+
+      if (accordions.length > 0) {
+        accordions[0].classList.add("active");
+        const panel = accordions[0].nextElementSibling;
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+
+      for (const accordion of accordions) {
+        accordion.addEventListener("click", function () {
+          this.classList.toggle("active");
+          const panel = this.nextElementSibling;
+          if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+          } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+          }
+        });
+      }
     })
     .catch((error) => {
       resultDiv.innerHTML = "오류가 발생했습니다. 다시 시도해주세요.";
