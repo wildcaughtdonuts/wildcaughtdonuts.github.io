@@ -45,7 +45,6 @@ function createAccordionMenu() {
   }
 }
 
-
 function applyRowDivider(tbody) {
   const rows = tbody.querySelectorAll("tr");
   let groundFloorIndex = -1;
@@ -66,7 +65,6 @@ function applyRowDivider(tbody) {
     }
   }
 }
-
 
 submitBtn.addEventListener("click", () => {
   loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
@@ -326,13 +324,13 @@ submitBtn3.addEventListener("click", () => {
     urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo") +
     "&numOfRows=999";
 
-    fetchApiData(apiUrl)
+  fetchApiData(apiUrl)
     .then((allItems) => {
       function createTable() {
         const table = document.createElement("table");
         const thead = document.createElement("thead");
         const tbody = document.createElement("tbody");
-  
+
         // 테이블 헤더 생성
         const headers = ["구분", "층", "면적", "정보"];
         const tr = document.createElement("tr");
@@ -343,9 +341,9 @@ submitBtn3.addEventListener("click", () => {
         }
         thead.appendChild(tr);
         table.appendChild(thead);
-  
+
         // 테이블 바디 생성은 여기에서 삭제합니다.
-  
+
         return { table, tbody };
       }
 
@@ -408,8 +406,6 @@ submitBtn3.addEventListener("click", () => {
 
             const { table, tbody } = createTable();
 
-            applyRowDivider(tbody);
-
             const sortedFloors = sortFloors(buildingData);
             for (const {
               flrGbCdNm,
@@ -456,6 +452,8 @@ submitBtn3.addEventListener("click", () => {
               tbody.appendChild(tr);
             }
             table.appendChild(tbody);
+
+            applyRowDivider(tbody); // 이 위치로 이동
 
             const panel = document.createElement("div");
             panel.classList.add("panel");
