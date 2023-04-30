@@ -45,6 +45,29 @@ function createAccordionMenu() {
   }
 }
 
+
+function applyRowDivider(tbody) {
+  const rows = tbody.querySelectorAll("tr");
+  let groundFloorIndex = -1;
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const floorCell = row.querySelector("td:nth-child(2)");
+
+    if (floorCell.textContent === "지상1층") {
+      groundFloorIndex = i;
+      break;
+    }
+  }
+
+  if (groundFloorIndex !== -1) {
+    for (let i = groundFloorIndex - 5; i >= 0; i -= 5) {
+      rows[i].classList.add("row-divider");
+    }
+  }
+}
+
+
 submitBtn.addEventListener("click", () => {
   loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
   resultDiv.innerHTML = ""; // 결과 영역 초기화
@@ -303,13 +326,13 @@ submitBtn3.addEventListener("click", () => {
     urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo") +
     "&numOfRows=999";
 
-  fetchApiData(apiUrl)
+    fetchApiData(apiUrl)
     .then((allItems) => {
       function createTable() {
         const table = document.createElement("table");
         const thead = document.createElement("thead");
         const tbody = document.createElement("tbody");
-
+  
         // 테이블 헤더 생성
         const headers = ["구분", "층", "면적", "정보"];
         const tr = document.createElement("tr");
@@ -320,9 +343,9 @@ submitBtn3.addEventListener("click", () => {
         }
         thead.appendChild(tr);
         table.appendChild(thead);
-
-        // 테이블 바디 생성
-
+  
+        // 테이블 바디 생성은 여기에서 삭제합니다.
+  
         return { table, tbody };
       }
 
@@ -384,6 +407,8 @@ submitBtn3.addEventListener("click", () => {
             resultDiv.appendChild(title);
 
             const { table, tbody } = createTable();
+
+            applyRowDivider(tbody);
 
             const sortedFloors = sortFloors(buildingData);
             for (const {

@@ -213,8 +213,8 @@
     border-top: 2px solid #000;
   }
 
-  /* 4. 1층을 기준으로 5개 행 마다 선을 그어서 구분할 것 */
-  table .ground-floor~tr:nth-child(5n) td {
+  /* 1층을 기준으로 위로 5개 행 마다 선을 그어서 구분할 것 */
+  .row-divider td {
     border-bottom: 1px solid #ccc;
   }
 
