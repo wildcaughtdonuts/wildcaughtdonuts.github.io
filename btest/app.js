@@ -38,11 +38,7 @@ function createAccordionMenu() {
     });
   }
 
-  if (accordions.length > 0) {
-    accordions[0].classList.add("active");
-    const panel = accordions[0].nextElementSibling;
-    panel.style.maxHeight = panel.scrollHeight + "px";
-  }
+
 }
 
 function applyRowDivider(tbody) {
