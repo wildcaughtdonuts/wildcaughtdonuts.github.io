@@ -6,6 +6,8 @@ const submitBtn3 = document.getElementById("submit-btn3");
 window.resultDiv = document.getElementById("result");
 const loadingDiv = document.getElementById("loading");
 
+
+
 function createAccordionMenu() {
   const accordions = document.getElementsByClassName("accordion");
 
@@ -372,6 +374,13 @@ submitBtn3.addEventListener("click", () => {
           const bldTitle = document.createElement("h2");
           bldTitle.textContent = `${bldNm}`;
           resultDiv.appendChild(bldTitle);
+
+          const tr = document.createElement("tr");
+
+          // 지상과 지하층 구분을 위한 속성 추가
+          if (flrNoNm === "지상1층" || flrNoNm === "지하1층") {
+            tr.setAttribute("data-divider", "true");
+          }
 
           // 동명을 정렬하기 위한 코드 추가
           const sortedDongNames = Object.keys(groupedData[bldNm]).sort();
