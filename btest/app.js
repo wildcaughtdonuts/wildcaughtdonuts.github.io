@@ -221,9 +221,17 @@ submitBtn2.addEventListener('click', () => {
 submitBtn3.addEventListener('click', () => {
   loadingDiv.classList.remove('hidden'); // 로딩중 메시지 표시
   resultDiv.innerHTML = ''; // 결과 영역 초기화
-  const flrUrl = document.getElementById('url-input').value.replace('getBrTitleInfo', 'getBrFlrOulnInfo');
+  const urlInput = document.getElementById('url-input');
+  const apiUrl = urlInput.value.replace('getBrTitleInfo', 'getBrFlrOulnInfo');
 
-  fetch(flrUrl)
+  // url-input 요소에 입력된 URL이 유효한지 검사
+  if (!apiUrl.startsWith('http://') && !apiUrl.startsWith('https://')) {
+    resultDiv.innerHTML = 'URL이 유효하지 않습니다.';
+    loadingDiv.classList.add('hidden');
+    return;
+  }
+
+  fetch(apiUrl)
     .then(response => response.text())
     .then(data => {
 
@@ -259,3 +267,4 @@ submitBtn3.addEventListener('click', () => {
       loadingDiv.classList.add('hidden');
     });
 });
+
