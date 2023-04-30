@@ -303,9 +303,9 @@ submitBtn3.addEventListener("click", () => {
     urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo") +
     "&numOfRows=999";
 
-    fetchApiData(apiUrl)
+  fetchApiData(apiUrl)
     .then((allItems) => {
-      function createTable(buildingData) {
+      function createTable() {
         const table = document.createElement("table");
         const thead = document.createElement("thead");
         const tbody = document.createElement("tbody");
@@ -322,43 +322,8 @@ submitBtn3.addEventListener("click", () => {
         table.appendChild(thead);
 
         // 테이블 바디 생성
-        for (const {
-          flrGbCdNm,
-          flrNoNm,
-          area,
-          mainPurpsCdNm,
-          etcPurps,
-          mainBldCnt,
-        } of buildingData) {
-          const tr = document.createElement("tr");
-
-          const td1 = document.createElement("td");
-          td1.textContent = flrGbCdNm;
-          tr.appendChild(td1);
-
-          const td2 = document.createElement("td");
-          td2.textContent = flrNoNm;
-          tr.appendChild(td2);
-
-          const td3 = document.createElement("td");
-          td3.textContent = area;
-          tr.appendChild(td3);
-
-          const td4 = document.createElement("td");
-          td4.textContent = [
-            mainPurpsCdNm || "",
-            etcPurps || "",
-            mainBldCnt || "",
-          ]
-            .filter((value) => value)
-            .join(", ");
-          tr.appendChild(td4);
-
-          tbody.appendChild(tr);
-        }
-        table.appendChild(tbody);
-
-        resultDiv.appendChild(table);
+        
+        return { table, tbody };
       }
 
       let groupedData = {};
@@ -413,36 +378,67 @@ submitBtn3.addEventListener("click", () => {
 
           for (const dongNm of sortedDongNames) {
             const buildingData = groupedData[bldNm][dongNm];
-            const title = document.createElement("h3");
+            const title = document.createElement("button");
             title.textContent = `${dongNm}`;
+            title.classList.add("accordion");
             resultDiv.appendChild(title);
 
+            const { table, tbody } = createTable();
+
             const sortedFloors = sortFloors(buildingData);
-            createTable(sortedFloors);
-          }
-        }
-      }
+            for (const {
+              flrGbCdNm,
+              flrNoNm,
+              area,
+              mainPurpsCdNm,
+              etcPurps,
+              mainBldCnt,
+            } of sortedFloors) {
+              const tr = document.createElement("tr");
 
-      for (const { bldNm, units } of itemInfo) {
-        resultHTML += `<h3>${bldNm}</h3>`;
+              const td1 = document.createElement("td");
+              td1.textContent = flrGbCdNm;
+              tr.appendChild(td1);
 
-        for (const { dongNm, items } of units) {
-          resultHTML += `<button class="accordion">${dongNm}</button>`;
-          resultHTML += `<div class="panel">`;
-          for (const info of items) {
-            resultHTML += "<ul>";
-            for (const [key, value] of Object.entries(info)) {
-              resultHTML += `<li><strong>${key}:</strong> ${value}</li>`;
+              const td2 = document.createElement("td");
+              td2.textContent = flrNoNm;
+              tr.appendChild(td2);
+
+              const td3 = document.createElement("td");
+              td3.textContent = area;
+              tr.appendChild(td3);
+
+              const td4 = document.createElement("td");
+              td4.textContent = [
+                mainPurpsCdNm || "",
+                etcPurps || "",
+                mainBldCnt || "",
+              ]
+                .filter((value) => value)
+                .join(", ");
+              tr.appendChild(td4);
+
+              tbody.appendChild(tr);
             }
-            resultHTML += "</ul>";
+            table.appendChild(tbody);
+
+            const panel = document.createElement("div");
+            panel.classList.add("panel");
+            panel.appendChild(table);
+            resultDiv.appendChild(panel);
+
+            title.addEventListener("click", function () {
+              this.classList.toggle("active");
+              const panel = this.nextElementSibling;
+              if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+              } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+              }
+            });
           }
-          resultHTML += `</div>`;
         }
       }
-
-      resultDiv.innerHTML = resultHTML;
-      loadingDiv.classList.add("hidden");
-      createAccordionMenu();
     })
     .catch((error) => {
       resultDiv.innerHTML = "오류가 발생했습니다. 다시 시도해주세요.";
