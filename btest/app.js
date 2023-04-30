@@ -401,6 +401,11 @@ submitBtn3.addEventListener("click", () => {
                 tr.setAttribute("data-divider", "true");
               }
 
+              // 지상 1층이 포함된 행에 특정 클래스를 추가
+              if (flrNoNm === "지상1층") {
+                tr.classList.add("ground-floor");
+              }
+
               const td1 = document.createElement("td");
               td1.textContent = flrGbCdNm;
               tr.appendChild(td1);

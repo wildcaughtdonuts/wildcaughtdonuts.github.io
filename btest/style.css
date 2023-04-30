@@ -214,7 +214,7 @@
   }
 
   /* 4. 1층을 기준으로 5개 행 마다 선을 그어서 구분할 것 */
-  table tr:nth-child(5n) td {
+  table .ground-floor~tr:nth-child(5n) td {
     border-bottom: 1px solid #ccc;
   }
 
