@@ -185,6 +185,13 @@
     margin-left: 1%;
     margin-right: 1%;
     border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  table th,
+  table td {
+    text-align: center;
+    /* 테이블의 헤더와 셀 모두 가운데 정렬합니다. */
   }
 
   /* 2. 테이블의 1번열은 좌우 15%, 2번열은 10%, 3번 열은 20%, 4번 열은 55%를 차지하도록 수정 */
@@ -221,8 +228,5 @@
   table tr:not(:last-child) td {
     border-bottom: 1px solid #ccc;
   }
-  
-  table {
-    font-size: 14px;
-  }
+
 }
