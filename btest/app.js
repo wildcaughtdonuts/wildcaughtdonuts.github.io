@@ -255,18 +255,19 @@ submitBtn2.addEventListener("click", () => {
     });
 });
 
+
+
+
+
+
+
+
+
 submitBtn3.addEventListener("click", () => {
   loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
   resultDiv.innerHTML = ""; // 결과 영역 초기화
   const urlInput = document.getElementById("url-input");
   const apiUrl = urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo");
-
-  // url-input 요소에 입력된 URL이 유효한지 검사
-  if (!apiUrl.startsWith("http://") && !apiUrl.startsWith("https://")) {
-    resultDiv.innerHTML = "URL이 유효하지 않습니다.";
-    loadingDiv.classList.add("hidden");
-    return;
-  }
 
   fetch(apiUrl)
     .then((response) => response.text())
@@ -339,10 +340,12 @@ submitBtn3.addEventListener("click", () => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
       const items = xmlDoc.getElementsByTagName("item");
-      let buildingData = [];
+      let groupedData = {};
 
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
+        const bldNm = item.getElementsByTagName("bldNm")[0]?.textContent || "정보없음";
+        const dongNm = item.getElementsByTagName("dongNm")[0]?.textContent || "정보없음";
         const flrGbCdNm =
           item.getElementsByTagName("flrGbCdNm")[0]?.textContent || "정보없음";
         const flrNoNm =
@@ -358,7 +361,15 @@ submitBtn3.addEventListener("click", () => {
         const etcPurps =
           item.getElementsByTagName("etcPurps")[0]?.textContent || "정보없음";
 
-        buildingData.push({
+        if (!groupedData[bldNm]) {
+          groupedData[bldNm] = {};
+        }
+
+        if (!groupedData[bldNm][dongNm]) {
+          groupedData[bldNm][dongNm] = [];
+        }
+
+        groupedData[bldNm][dongNm].push({
           flrGbCdNm,
           flrNoNm,
           area,
@@ -368,10 +379,21 @@ submitBtn3.addEventListener("click", () => {
         });
       }
 
-      if (buildingData.length > 0) {
-        createTable(buildingData);
-      } else {
-        console.error("Error: No data found.");
+      if (Object.keys(groupedData).length > 0) {
+        for (const bldNm in groupedData) {
+          const bldTitle = document.createElement("h2");
+          bldTitle.textContent = `건축물명: ${bldNm}`;
+          resultDiv.appendChild(bldTitle);
+
+          for (const dongNm in groupedData[bldNm]) {
+            const buildingData = groupedData[bldNm][dongNm];
+            const title = document.createElement("h3");
+            title.textContent = `동명: ${dongNm}`;
+            resultDiv.appendChild(title);
+
+            createTable(buildingData);
+          }
+        }
       }
     })
     .catch((error) => {
