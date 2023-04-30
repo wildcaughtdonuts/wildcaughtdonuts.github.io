@@ -285,16 +285,9 @@ submitBtn3.addEventListener("click", () => {
         const table = document.createElement("table");
         const thead = document.createElement("thead");
         const tbody = document.createElement("tbody");
-
+      
         // 테이블 헤더 생성
-        const headers = [
-          "구분",
-          "층",
-          "면적",
-          "주용도",
-          "기타용도",
-          "주건축물",
-        ];
+        const headers = ["구분", "층", "면적", "정보"];
         const tr = document.createElement("tr");
         for (const header of headers) {
           const th = document.createElement("th");
@@ -303,7 +296,7 @@ submitBtn3.addEventListener("click", () => {
         }
         thead.appendChild(tr);
         table.appendChild(thead);
-
+      
         // 테이블 바디 생성
         for (const {
           flrGbCdNm,
@@ -314,37 +307,30 @@ submitBtn3.addEventListener("click", () => {
           mainBldCnt,
         } of buildingData) {
           const tr = document.createElement("tr");
-
+      
           const td1 = document.createElement("td");
           td1.textContent = flrGbCdNm;
           tr.appendChild(td1);
-
+      
           const td2 = document.createElement("td");
           td2.textContent = flrNoNm;
           tr.appendChild(td2);
-
+      
           const td3 = document.createElement("td");
           td3.textContent = area;
           tr.appendChild(td3);
-
+      
           const td4 = document.createElement("td");
-          td4.textContent = mainPurpsCdNm;
+          td4.textContent = `${mainPurpsCdNm}, ${etcPurps}, ${mainBldCnt}`;
           tr.appendChild(td4);
-
-          const td5 = document.createElement("td");
-          td5.textContent = etcPurps;
-          tr.appendChild(td5);
-
-          const td6 = document.createElement("td");
-          td6.textContent = mainBldCnt;
-          tr.appendChild(td6);
-
+      
           tbody.appendChild(tr);
         }
         table.appendChild(tbody);
-
+      
         resultDiv.appendChild(table);
       }
+      
 
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
