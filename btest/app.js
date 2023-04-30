@@ -261,6 +261,19 @@ submitBtn2.addEventListener("click", () => {
 
 
 
+function sortFloors(floors) {
+  // 지하, 지상 층을 분리
+  const undergroundFloors = floors.filter((floor) => floor.flrNoNm.startsWith("지하"));
+  const abovegroundFloors = floors.filter((floor) => !floor.flrNoNm.startsWith("지하"));
+
+  // 각 층을 오름차순으로 정렬
+  undergroundFloors.sort((a, b) => parseInt(a.flrNoNm.slice(2)) - parseInt(b.flrNoNm.slice(2)));
+  abovegroundFloors.sort((a, b) => parseInt(a.flrNoNm.slice(0, -1)) - parseInt(b.flrNoNm.slice(0, -1)));
+
+  // 결과를 다시 합치기
+  return undergroundFloors.concat(abovegroundFloors);
+}
+
 
 
 submitBtn3.addEventListener("click", () => {
@@ -379,22 +392,25 @@ submitBtn3.addEventListener("click", () => {
         });
       }
 
+
       if (Object.keys(groupedData).length > 0) {
         for (const bldNm in groupedData) {
           const bldTitle = document.createElement("h2");
           bldTitle.textContent = `건축물명: ${bldNm}`;
           resultDiv.appendChild(bldTitle);
-
+      
           for (const dongNm in groupedData[bldNm]) {
             const buildingData = groupedData[bldNm][dongNm];
             const title = document.createElement("h3");
             title.textContent = `동명: ${dongNm}`;
             resultDiv.appendChild(title);
-
-            createTable(buildingData);
+      
+            const sortedFloors = sortFloors(buildingData); // 위치 변경
+            createTable(sortedFloors); // 위치 변경
           }
         }
       }
+      
     })
     .catch((error) => {
       resultDiv.innerHTML = "오류가 발생했습니다. 다시 시도해주세요.";
