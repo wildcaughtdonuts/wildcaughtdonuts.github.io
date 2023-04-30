@@ -392,7 +392,11 @@ submitBtn3.addEventListener("click", () => {
 
       if (Object.keys(groupedData).length > 0) {
         for (const bldNm in groupedData) {
-          const bldTitle = document.createElement("h2");
+          const numItems = allItems.length;
+          let resultHTML = `<h4><strong>해당 주소에 포함된 건축물 수: ${numItems}개</strong></h4>`;
+          resultDiv.innerHTML = resultHTML;
+
+          const bldTitle = document.createElement("h3");
           bldTitle.textContent = `${bldNm}`;
           resultDiv.appendChild(bldTitle);
 
@@ -471,8 +475,6 @@ submitBtn3.addEventListener("click", () => {
                 panel.style.maxHeight = panel.scrollHeight + "px";
               }
             });
-
-            
           }
         }
         if (accordions.length > 0) accordions[0].click();
