@@ -361,9 +361,6 @@ submitBtn3.addEventListener("click", () => {
         resultDiv.appendChild(table);
       }
 
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(data, "text/xml");
-      const items = xmlDoc.getElementsByTagName("item");
       let groupedData = {};
 
       for (let i = 0; i < allItems.length; i++) {
