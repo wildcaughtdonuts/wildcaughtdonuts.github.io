@@ -303,7 +303,7 @@ submitBtn3.addEventListener("click", () => {
     urlInput.value.replace("getBrTitleInfo", "getBrFlrOulnInfo") +
     "&numOfRows=999";
 
-    fetchApiData(apiUrl)
+  fetchApiData(apiUrl)
     .then((allItems) => {
       function createTable(buildingData) {
         const table = document.createElement("table");
@@ -358,7 +358,48 @@ submitBtn3.addEventListener("click", () => {
         }
         table.appendChild(tbody);
 
-        resultDiv.appendChild(table);
+        const div = document.createElement("div");
+        div.classList.add("unit");
+
+        const title = document.createElement("div");
+        title.classList.add("dong-name");
+        title.textContent = `${buildingData[0].bldNm} ${buildingData[0].dongNm}`;
+        div.appendChild(title);
+
+        const panel = document.createElement("div");
+        panel.classList.add("panel");
+        if (buildingData.length > 1) {
+          panel.classList.add("active");
+        }
+
+        const sortedFloors = sortFloors(buildingData);
+        panel.appendChild(table);
+        div.appendChild(panel);
+
+        resultDiv.appendChild(div);
+
+        // 각 동 이름을 클릭하면 해당 동에 대한 정보가 펼쳐지도록 설정
+        const dongNames = document.querySelectorAll(".dong-name");
+        for (const dongName of dongNames) {
+          dongName.addEventListener("click", function () {
+            const unit = this.parentElement.nextElementSibling;
+            unit.classList.toggle("active");
+            const panel = unit.lastElementChild;
+            if (panel.style.maxHeight) {
+              panel.style.maxHeight = null;
+            } else {
+              panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+          });
+
+          // 첫번째 동만 열어두기
+          if (dongName === dongNames[0]) {
+            const unit = dongName.parentElement.nextElementSibling;
+            unit.classList.add("active");
+            const panel = unit.lastElementChild;
+            panel.style.maxHeight = panel.scrollHeight + "px";
+          }
+        }
       }
 
       let groupedData = {};
