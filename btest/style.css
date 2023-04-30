@@ -222,4 +222,7 @@
     border-bottom: 1px solid #ccc;
   }
   
+  table {
+    font-size: 14px;
+  }
 }
