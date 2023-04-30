@@ -436,7 +436,7 @@ submitBtn3.addEventListener("click", () => {
               tr.appendChild(td2);
 
               const td3 = document.createElement("td");
-              td3.textContent = area;
+              td3.textContent = parseFloat(area).toFixed(2); // 소수점 두 자리까지 출력
               tr.appendChild(td3);
 
               const td4 = document.createElement("td");
