@@ -5,13 +5,6 @@ const submitBtn2 = document.getElementById("submit-btn2");
 const submitBtn3 = document.getElementById("submit-btn3");
 window.resultDiv = document.getElementById("result");
 const loadingDiv = document.getElementById("loading");
-const tr = document.createElement("tr");
-
-// 지상과 지하층 구분을 위한 속성 추가
-if (flrNoNm === "지상1층" || flrNoNm === "지하1층") {
-  tr.setAttribute("data-divider", "true");
-}
-
 
 function createAccordionMenu() {
   const accordions = document.getElementsByClassName("accordion");
