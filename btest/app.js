@@ -316,23 +316,29 @@ function sortFloors(floors) {
 
 
 
-function fetchApiData(url, pageNo = 1, result = []) {
-  const updatedUrl = `${url}&pageNo=${pageNo}`;
-  return fetch(updatedUrl)
-    .then((response) => response.text())
-    .then((data) => {
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(data, "text/xml");
-      const items = xmlDoc.getElementsByTagName("item");
+async function fetchApiData(apiUrl) {
+  let pageNo = 1;
+  let hasNextPage = true;
+  let allItems = [];
 
-      if (items.length === 0) {
-        return result;
-      } else {
-        // 재귀 호출을 통해 다음 페이지를 가져옵니다.
-        return fetchApiData(url, pageNo + 1, result.concat(Array.from(items)));
-      }
-    });
+  while (hasNextPage) {
+    const response = await fetch(`${apiUrl}&pageNo=${pageNo}`);
+    const data = await response.text();
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(data, "application/xml");
+    const items = xmlDoc.getElementsByTagName("item");
+
+    if (items.length > 0) {
+      allItems.push(...items);
+      pageNo++;
+    } else {
+      hasNextPage = false;
+    }
+  }
+
+  return allItems;
 }
+
 
 submitBtn3.addEventListener("click", () => {
   loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
