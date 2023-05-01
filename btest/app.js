@@ -279,31 +279,34 @@ submitBtn2.addEventListener("click", () => {
 });
 
 function sortFloors(floors) {
-  // 옥탑, 지상, 지하 층을 분리
-  const rooftopFloors = floors.filter((floor) =>
-    floor.flrNoNm.startsWith("옥탑")
-  );
-  const abovegroundFloors = floors.filter(
-    (floor) => !floor.flrNoNm.startsWith("지하") && !floor.flrNoNm.startsWith("옥탑")
-  );
-  const undergroundFloors = floors.filter((floor) =>
-    floor.flrNoNm.startsWith("지하")
-  );
-
   // 각 층을 정렬
-  rooftopFloors.sort(
-    (a, b) => parseInt(a.flrNoNm.slice(2)) - parseInt(b.flrNoNm.slice(2))
-  );
-  abovegroundFloors.sort(
-    (a, b) =>
-      parseInt(b.flrNoNm.slice(0, -1)) - parseInt(a.flrNoNm.slice(0, -1))
-  );
-  undergroundFloors.sort(
-    (a, b) => parseInt(a.flrNoNm.slice(2)) - parseInt(b.flrNoNm.slice(2))
-  );
+  floors.sort((a, b) => {
+    const floorA = a.flrNoNm;
+    const floorB = b.flrNoNm;
+    const isRooftopA = floorA.startsWith("옥탑");
+    const isRooftopB = floorB.startsWith("옥탑");
+    const isUndergroundA = floorA.startsWith("지하");
+    const isUndergroundB = floorB.startsWith("지하");
 
-  // 결과를 다시 합치기 (옥탑층 > 지상층 > 지하층 순서로 출력되도록 변경)
-  return rooftopFloors.concat(abovegroundFloors, undergroundFloors);
+    if (isRooftopA && !isRooftopB) return -1;
+    if (!isRooftopA && isRooftopB) return 1;
+    if (isUndergroundA && !isUndergroundB) return 1;
+    if (!isUndergroundA && isUndergroundB) return -1;
+
+    const numA = parseInt(floorA.slice(isRooftopA ? 2 : (isUndergroundA ? 2 : 0)));
+    const numB = parseInt(floorB.slice(isRooftopB ? 2 : (isUndergroundB ? 2 : 0)));
+
+    const diff = isUndergroundA ? (numA - numB) : (numB - numA);
+
+    if (diff !== 0) {
+      return diff;
+    } else {
+      // 숫자가 같으면 문자로 정렬
+      return floorA.localeCompare(floorB);
+    }
+  });
+
+  return floors;
 }
 
 
