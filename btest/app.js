@@ -279,7 +279,6 @@ submitBtn2.addEventListener("click", () => {
 });
 
 function sortFloors(floors) {
-  // 각 층을 정렬
   floors.sort((a, b) => {
     const floorA = a.flrNoNm;
     const floorB = b.flrNoNm;
@@ -296,18 +295,24 @@ function sortFloors(floors) {
     const numA = parseInt(floorA.slice(isRooftopA ? 2 : (isUndergroundA ? 2 : 0)));
     const numB = parseInt(floorB.slice(isRooftopB ? 2 : (isUndergroundB ? 2 : 0)));
 
-    const diff = isUndergroundA ? (numA - numB) : (numB - numA);
-
-    if (diff !== 0) {
-      return diff;
+    if (isUndergroundA) {
+      if (numA === numB) {
+        return floorA.localeCompare(floorB);
+      } else {
+        return numA - numB;
+      }
     } else {
-      // 숫자가 같으면 문자로 정렬
-      return floorA.localeCompare(floorB);
+      if (numA === numB) {
+        return floorA.localeCompare(floorB);
+      } else {
+        return numB - numA;
+      }
     }
   });
 
   return floors;
 }
+
 
 
 
