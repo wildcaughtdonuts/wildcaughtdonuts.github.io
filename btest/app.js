@@ -49,17 +49,23 @@ function setRowBackground(tbody) {
   const rows = tbody.getElementsByTagName("tr");
   for (const row of rows) {
     const floorNumberText = row.children[1].textContent; // 2열의 텍스트를 가져옵니다.
-    const floorNumber = parseInt(floorNumberText); // 텍스트에서 숫자만 추출합니다.
 
-    if (floorNumber % 2 === 0) {
-      // 짝수 층인 경우 배경색을 #ccc로 설정합니다.
-      row.style.backgroundColor = "#ccc";
-    } else {
-      // 홀수 층인 경우 배경색을 없애거나 흰색으로 설정합니다.
-      row.style.backgroundColor = "white";
+    // 지상층, 옥탑층, 지하층의 숫자만 추출합니다.
+    const floorNumberMatch = floorNumberText.match(/\d+/);
+    if (floorNumberMatch) {
+      const floorNumber = parseInt(floorNumberMatch[0]); // 텍스트에서 숫자만 추출합니다.
+
+      if (floorNumber % 2 === 0) {
+        
+        row.style.backgroundColor = "#E5E4E2";
+      } else {
+        // 홀수 층인 경우 배경색을 없애거나 흰색으로 설정합니다.
+        row.style.backgroundColor = "white";
+      }
     }
   }
 }
+
 
 
 submitBtn.addEventListener("click", () => {
@@ -273,34 +279,33 @@ submitBtn2.addEventListener("click", () => {
 });
 
 function sortFloors(floors) {
-  // 지하, 지상, 옥탑 층을 분리
-  const undergroundFloors = floors.filter((floor) =>
-    floor.flrNoNm.startsWith("지하")
-  );
-  const abovegroundFloors = floors.filter(
-    (floor) =>
-      !floor.flrNoNm.startsWith("지하") && !floor.flrNoNm.startsWith("옥탑")
-  );
+  // 옥탑, 지상, 지하 층을 분리
   const rooftopFloors = floors.filter((floor) =>
     floor.flrNoNm.startsWith("옥탑")
   );
+  const abovegroundFloors = floors.filter(
+    (floor) => !floor.flrNoNm.startsWith("지하") && !floor.flrNoNm.startsWith("옥탑")
+  );
+  const undergroundFloors = floors.filter((floor) =>
+    floor.flrNoNm.startsWith("지하")
+  );
 
   // 각 층을 정렬
-  undergroundFloors.sort(
+  rooftopFloors.sort(
     (a, b) => parseInt(a.flrNoNm.slice(2)) - parseInt(b.flrNoNm.slice(2))
   );
   abovegroundFloors.sort(
     (a, b) =>
       parseInt(b.flrNoNm.slice(0, -1)) - parseInt(a.flrNoNm.slice(0, -1))
   );
-  rooftopFloors.sort(
-    (a, b) =>
-      parseInt(a.flrNoNm.slice(2, -1)) - parseInt(b.flrNoNm.slice(2, -1))
+  undergroundFloors.sort(
+    (a, b) => parseInt(a.flrNoNm.slice(2)) - parseInt(b.flrNoNm.slice(2))
   );
 
-  // 결과를 다시 합치기 (옥탑층 > 지상층 > 지하층 순으로 출력되도록 변경)
+  // 결과를 다시 합치기 (옥탑층 > 지상층 > 지하층 순서로 출력되도록 변경)
   return rooftopFloors.concat(abovegroundFloors, undergroundFloors);
 }
+
 
 
 function fetchApiData(url, pageNo = 1, result = []) {
