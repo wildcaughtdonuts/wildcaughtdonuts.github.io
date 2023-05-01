@@ -45,26 +45,22 @@ function createAccordionMenu() {
   }
 }
 
-function applyRowDivider(tbody) {
-  const rows = tbody.querySelectorAll("tr");
-  let groundFloorIndex = -1;
+function setRowBackground(tbody) {
+  const rows = tbody.getElementsByTagName("tr");
+  for (const row of rows) {
+    const floorNumberText = row.children[1].textContent; // 2열의 텍스트를 가져옵니다.
+    const floorNumber = parseInt(floorNumberText); // 텍스트에서 숫자만 추출합니다.
 
-  for (let i = 0; i < rows.length; i++) {
-    const row = rows[i];
-    const floorCell = row.querySelector("td:nth-child(2)");
-
-    if (floorCell.textContent === "1층") {
-      groundFloorIndex = i;
-      break;
-    }
-  }
-
-  if (groundFloorIndex !== -1) {
-    for (let i = groundFloorIndex - 5; i >= 0; i -= 5) {
-      rows[i].classList.add("row-divider");
+    if (floorNumber % 2 === 0) {
+      // 짝수 층인 경우 배경색을 #ccc로 설정합니다.
+      row.style.backgroundColor = "#ccc";
+    } else {
+      // 홀수 층인 경우 배경색을 없애거나 흰색으로 설정합니다.
+      row.style.backgroundColor = "white";
     }
   }
 }
+
 
 submitBtn.addEventListener("click", () => {
   loadingDiv.classList.remove("hidden"); // 로딩중 메시지 표시
@@ -277,12 +273,16 @@ submitBtn2.addEventListener("click", () => {
 });
 
 function sortFloors(floors) {
-  // 지하, 지상 층을 분리
+  // 지하, 지상, 옥탑 층을 분리
   const undergroundFloors = floors.filter((floor) =>
     floor.flrNoNm.startsWith("지하")
   );
   const abovegroundFloors = floors.filter(
-    (floor) => !floor.flrNoNm.startsWith("지하")
+    (floor) =>
+      !floor.flrNoNm.startsWith("지하") && !floor.flrNoNm.startsWith("옥탑")
+  );
+  const rooftopFloors = floors.filter((floor) =>
+    floor.flrNoNm.startsWith("옥탑")
   );
 
   // 각 층을 정렬
@@ -293,10 +293,15 @@ function sortFloors(floors) {
     (a, b) =>
       parseInt(b.flrNoNm.slice(0, -1)) - parseInt(a.flrNoNm.slice(0, -1))
   );
+  rooftopFloors.sort(
+    (a, b) =>
+      parseInt(a.flrNoNm.slice(2, -1)) - parseInt(b.flrNoNm.slice(2, -1))
+  );
 
-  // 결과를 다시 합치기 (지상층이 먼저 출력되도록 변경)
-  return abovegroundFloors.concat(undergroundFloors);
+  // 결과를 다시 합치기 (옥탑층 > 지상층 > 지하층 순으로 출력되도록 변경)
+  return rooftopFloors.concat(abovegroundFloors, undergroundFloors);
 }
+
 
 function fetchApiData(url, pageNo = 1, result = []) {
   const updatedUrl = `${url}&pageNo=${pageNo}`;
@@ -455,7 +460,7 @@ submitBtn3.addEventListener("click", () => {
             }
             table.appendChild(tbody);
 
-            applyRowDivider(tbody); // 이 위치로 이동
+            setRowBackground(tbody);; // 이 위치로 이동
 
             const panel = document.createElement("div");
             panel.classList.add("panel");

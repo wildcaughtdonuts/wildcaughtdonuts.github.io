@@ -216,15 +216,7 @@
     border-top: 2px solid #000;
   }
 
-  /* 1층을 기준으로 위로 5개 행 마다 선을 그어서 구분할 것 */
-  .row-divider tr td {
-    border-bottom: 1px solid #000;
-  }
-  
-  table tr:not(:last-child) td {
-    border-bottom: 1px solid #ccc;
-  }
-  
+
 
 
 }
