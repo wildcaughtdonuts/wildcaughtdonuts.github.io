@@ -1,54 +1,61 @@
-var canvas = document.getElementById('signature-pad');
-var context = canvas.getContext('2d');
-var isDrawing = false;
+// Set up signature pad
+const canvas = document.getElementById('signature-pad');
+const ctx = canvas.getContext('2d');
+let drawing = false;
 
-canvas.addEventListener('mousedown', function(e) {
-  isDrawing = true;
-  context.beginPath();
-  context.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-});
-
-canvas.addEventListener('mousemove', function(e) {
-  if (isDrawing) {
-    context.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-    context.stroke();
-  }
+canvas.addEventListener('mousedown', function(event) {
+  drawing = true;
+  ctx.beginPath();
+  ctx.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
 });
 
 canvas.addEventListener('mouseup', function() {
-  isDrawing = false;
+  drawing = false;
 });
 
-document.getElementById('clear-button').addEventListener('click', function() {
-  context.clearRect(0, 0, canvas.width, canvas.height);
+canvas.addEventListener('mousemove', function(event) {
+  if (drawing) {
+    ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+    ctx.stroke();
+  }
 });
 
-document.getElementById('info-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+function clearPad() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// Form submission
+document.getElementById('myForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const signature = canvas.toDataURL(); // Convert signature to data URL
   
-    var dataUrl = canvas.toDataURL('image/png');
-  
-    var data = {
-      date: document.getElementById('edu-date').value,
-      name: document.getElementById('name').value,
-      position: document.getElementById('position').value,
-      contact: document.getElementById('contact').value,
-      birthdate: document.getElementById('birthdate').value,
-      signature: dataUrl
-    };
-  
-    fetch('https://script.google.com/macros/s/1mza4TkWBYsZNrLNhsGz5n03_KOh8E1ONIRjBiW6Gkrli5gnBv7yKmT2A/exec', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(function(response) {
-      return response.json();
-    }).then(function(data) {
-      console.log(data);
-    }).catch(function(error) {
-      console.error(error);
-    });
-  });
-  
+  const data = {
+    date: document.getElementById('date').value,
+    name: document.getElementById('name').value,
+    position: document.getElementById('position').value,
+    phone: document.getElementById('phone').value,
+    birthday: document.getElementById('birthday').value,
+    signature: signature
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbzzyrqLYotbI5tZgiaVQlpRqjtSvdkVKeZp869UCoW4kZj4GX6ndKCjGXE9n5SDKI3dtg/exec', {
+  method: 'POST',
+  body: JSON.stringify(data),
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  mode: 'no-cors' // 추가
+})
+.then(response => {
+  if (response.ok) {
+    alert('Form successfully submitted');
+  } else {
+    throw new Error('Network response was not ok');
+  }
+})
+.catch(error => {
+  console.error('Error:', error);
+});
+
+});

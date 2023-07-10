@@ -1,32 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Signature Form</title>
+  <title>Signature</title>
 </head>
 <body>
-    <form id="info-form">
-        <label for="date">최근 소방안전관리자 교육이수 날짜:</label>
-        <input type="date" id="edu-date" name="edu-date"><br>
+  <form id="myForm">
+    <label for="date">날짜 선택:</label><br>
+    <input type="date" id="date" name="date"><br>
+    <label for="name">성명:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <label for="position">직위:</label><br>
+    <input type="text" id="position" name="position"><br>
+    <label for="phone">연락처:</label><br>
+    <input type="tel" id="phone" name="phone"><br>
+    <label for="birthday">생년월일:</label><br>
+    <input type="text" id="birthday" name="birthday" placeholder="19880723"><br>
+    <canvas id="signature-pad" width=400 height=200></canvas><br>
+    <button type="button" onclick="clearPad()">지우기</button>
+    <input type="submit" value="제출하기">
+  </form>
 
-        <label for="name">성명:</label>
-        <input type="text" id="name" name="name"><br>
-
-        <label for="position">직위:</label>
-        <input type="text" id="position" name="position"><br>
-
-        <label for="contact">연락처:</label>
-        <input type="text" id="contact" name="contact"><br>
-
-        <label for="birthdate">생년월일 (ex: 19880723):</label>
-        <input type="text" id="birthdate" name="birthdate"><br>
-
-        <label for="signature-pad">서명:</label><br>
-        <canvas id="signature-pad" width="400" height="200" style="border:1px solid #000000;"></canvas><br>
-        <button type="button" id="clear-button">Clear</button>
-
-        <input type="submit" value="Submit">
-    </form>
-
-    <script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
