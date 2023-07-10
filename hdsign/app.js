@@ -4,21 +4,31 @@ const ctx = canvas.getContext('2d');
 let drawing = false;
 
 canvas.addEventListener('mousedown', function(event) {
-  drawing = true;
-  ctx.beginPath();
-  ctx.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+  startDrawing(event.clientX, event.clientY);
 });
 
-canvas.addEventListener('mouseup', function() {
-  drawing = false;
-});
+canvas.addEventListener('mouseup', stopDrawing);
 
 canvas.addEventListener('mousemove', function(event) {
   if (drawing) {
-    ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
-    ctx.stroke();
+    drawLine(event.clientX, event.clientY);
   }
 });
+
+function startDrawing(x, y) {
+  drawing = true;
+  ctx.beginPath();
+  ctx.moveTo(x - canvas.offsetLeft, y - canvas.offsetTop);
+}
+
+function stopDrawing() {
+  drawing = false;
+}
+
+function drawLine(x, y) {
+  ctx.lineTo(x - canvas.offsetLeft, y - canvas.offsetTop);
+  ctx.stroke();
+}
 
 function clearPad() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -40,22 +50,27 @@ document.getElementById('myForm').addEventListener('submit', function(event) {
   };
 
   fetch('https://script.google.com/macros/s/AKfycbzzyrqLYotbI5tZgiaVQlpRqjtSvdkVKeZp869UCoW4kZj4GX6ndKCjGXE9n5SDKI3dtg/exec', {
-  method: 'POST',
-  body: JSON.stringify(data),
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  mode: 'no-cors' // 추가
-})
-.then(response => {
-  if (response.ok) {
-    alert('Form successfully submitted');
-  } else {
-    throw new Error('Network response was not ok');
-  }
-})
-.catch(error => {
-  console.error('Error:', error);
-});
-
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Network response was not ok');
+    }
+  })
+  .then(data => {
+    if (data.status === 'success') {
+      alert('Form successfully submitted');
+    } else {
+      throw new Error('Error in server script');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
 });
