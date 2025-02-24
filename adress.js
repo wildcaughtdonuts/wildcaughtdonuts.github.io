@@ -6,12 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const BASE_URL = "https://apis.data.go.kr/1613000/BldRgstHubService";
 
   if (!searchBtn) {
-    console.error("❌ 검색 버튼을 찾을 수 없습니다. HTML 파일을 확인하세요.");
+    console.error("❌ 검색 버튼을 찾을 수 없습니다. index.html을 확인하세요.");
     return;
   }
 
   searchBtn.addEventListener("click", () => {
-    console.log("🔍 주소 검색 버튼 클릭됨"); // 버튼 클릭 여부 확인용 로그
+    console.log("🔍 주소 검색 버튼 클릭됨");
 
     new daum.Postcode({
       oncomplete: function (data) {
@@ -22,20 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        const siggCd = data.buildingCode.substr(0, 5);
-        const bjdCd = data.buildingCode.substr(5, 5);
-        const bunCd = data.buildingCode.substr(10, 4);
-        const jiCd = data.buildingCode.substr(14, 4);
-
-        const queryParams = `?serviceKey=${API_KEY}&sigunguCd=${siggCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}`;
-
-        const apiUrl = `${BASE_URL}/getBrTitleInfo${queryParams}`;
-        const recapUrl = `${BASE_URL}/getBrRecapTitleInfo${queryParams}`;
-        const flrUrl = `${BASE_URL}/getBrFlrOulnInfo${queryParams}`;
-
+        document.getElementById("url-input").value = BASE_URL + "?serviceKey=" + API_KEY;
         mapResultDiv.innerHTML = `<p>주소 불러오기에 성공했습니다.<br>아래 버튼을 눌러주세요.</p>`;
-
-        document.getElementById("url-input").value = apiUrl;
       },
     }).open();
   });
