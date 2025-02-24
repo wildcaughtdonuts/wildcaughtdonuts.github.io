@@ -7,22 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const API_KEY = "imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg%3D%3D";
     const BASE_URL = "https://apis.data.go.kr/1613000/BldRgstHubService";
 
-    let unifiedCodeMap = {};
-
-    // 🔹 JSON 파일에서 통합분류코드 데이터 로드
-    fetch("./unifiedCodes.json")
-        .then(response => response.json())
-        .then(data => {
-            unifiedCodeMap = data;
-            console.log("✅ 통합분류코드 매핑 데이터 로드 완료");
-        })
-        .catch(error => console.error("❌ 통합분류코드 데이터 로드 실패:", error));
-
-    // 🔹 시군구코드 → 통합분류코드 변환 함수
-    function getUnifiedCode(sigunguCd) {
-        return unifiedCodeMap[sigunguCd] || sigunguCd;  // 매핑 데이터가 있으면 변환
-    }
-
     searchBtn.addEventListener("click", () => {
         console.log("🔍 주소 검색 버튼 클릭됨");
 
@@ -37,17 +21,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // 🔹 `buildingCode`를 분해하여 API 요청 파라미터 설정
                 const sigunguCd = data.buildingCode.substr(0, 5); // 시군구 코드
-                const bjdCd = data.buildingCode.substr(5, 5);  // 법정동 코드
-                const bunCd = data.buildingCode.substr(10, 4); // 번지 코드
-                const jiCd = data.buildingCode.substr(14, 4);  // 지번 코드
+                const bjdongCd = data.buildingCode.substr(5, 5);  // 법정동 코드
+                let bunCd = data.buildingCode.substr(10, 4).replace(/^0+/, ""); // 번지 앞 0 제거
+                let jiCd = data.buildingCode.substr(14, 4).replace(/^0+/, "");  // 지번 앞 0 제거
 
-                // 🔹 통합분류코드 변환
-                const unifiedCd = getUnifiedCode(sigunguCd);
+                console.log(`🔍 변환된 시군구코드: ${sigunguCd}, 법정동코드: ${bjdongCd}, 번지: ${bunCd}, 지번: ${jiCd}`);
 
-                // 🔹 API URL 생성
-                const apiUrl = `${BASE_URL}/getBrTitleInfo?unifiedCd=${unifiedCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&serviceKey=${API_KEY}`;
-                const recapUrl = `${BASE_URL}/getBrRecapTitleInfo?unifiedCd=${unifiedCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&serviceKey=${API_KEY}`;
-                const flrUrl = `${BASE_URL}/getBrFlrOulnInfo?unifiedCd=${unifiedCd}&bjdongCd=${bjdCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&serviceKey=${API_KEY}`;
+                // 🔹 API URL 생성 (unifiedCd 제거하고 sigunguCd 사용)
+                const apiUrl = `${BASE_URL}/getBrTitleInfo?sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&serviceKey=${API_KEY}`;
+                const recapUrl = `${BASE_URL}/getBrRecapTitleInfo?sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&serviceKey=${API_KEY}`;
+                const flrUrl = `${BASE_URL}/getBrFlrOulnInfo?sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&serviceKey=${API_KEY}`;
 
                 // 🔹 URL을 `url-input`에 설정
                 urlInput.value = apiUrl;
