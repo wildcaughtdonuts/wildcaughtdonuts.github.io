@@ -6,40 +6,55 @@ document.addEventListener("DOMContentLoaded", function () {
     const loadingDiv = document.getElementById("loading");
     const urlInput = document.getElementById("url-input");
 
-    const API_KEY = "imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg%3D%3D";
+    // ✅ Encoding된 API 키 적용
+    const API_KEY = encodeURIComponent("imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg%3D%3D");
 
-    // ✅ API 데이터 요청 함수 (페이지네이션 지원, 종료 조건 추가)
+    // ✅ API 데이터 요청 함수
     async function fetchApiData(apiUrl) {
         let pageNo = 1;
         let allItems = [];
         let totalCount = Infinity;
+
         while (true) {
-            const response = await fetch(`${apiUrl}&pageNo=${pageNo}&_type=json`);
-            const data = await response.json();
-            if (!data.response || !data.response.body) {
-                console.error("❌ 응답에 body가 없습니다.", data);
+            console.log(`🔍 API 요청 실행 (페이지: ${pageNo}): ${apiUrl}&pageNo=${pageNo}`);
+            
+            try {
+                const response = await fetch(`${apiUrl}&pageNo=${pageNo}&_type=json`);
+                const data = await response.json();
+
+                if (!data.response || !data.response.body) {
+                    console.error("❌ API 응답 오류: body가 없음", data);
+                    break;
+                }
+
+                if (pageNo === 1) {
+                    totalCount = parseInt(data.response.body.totalCount, 10) || 0;
+                    console.log(`🔍 총 데이터 개수: ${totalCount}`);
+                    if (totalCount === 0) {
+                        console.warn("⚠️ API 응답에 데이터가 없음 (totalCount = 0)");
+                        break;
+                    }
+                }
+
+                let items = data.response.body.items?.item || [];
+                if (!Array.isArray(items)) {
+                    items = [items]; // 단일 객체일 경우 배열로 변환
+                }
+
+                allItems.push(...items);
+                console.log(`📌 페이지 ${pageNo} 처리 완료, 누적 데이터: ${allItems.length}`);
+
+                if (allItems.length >= totalCount || items.length === 0) {
+                    break;
+                }
+
+                pageNo++;
+            } catch (error) {
+                console.error("❌ API 요청 중 오류 발생:", error);
                 break;
             }
-            if (pageNo === 1 && data.response.body.totalCount) {
-                totalCount = parseInt(data.response.body.totalCount, 10);
-                console.log(`🔍 총 데이터 개수: ${totalCount}`);
-            }
-            let items = data.response.body.items.item;
-            if (!items) {
-                console.log("🔍 더 이상 조회할 항목이 없습니다.");
-                break;
-            }
-            // 단일 객체인 경우 배열로 변환
-            if (!Array.isArray(items)) {
-                items = [items];
-            }
-            allItems.push(...items);
-            console.log(`🔍 페이지 ${pageNo} 조회, 누적 데이터: ${allItems.length}`);
-            if (allItems.length >= totalCount) {
-                break;
-            }
-            pageNo++;
         }
+
         return allItems;
     }
 
@@ -56,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             // URL 변경: 기존 "getBrTitleInfo"을 원하는 apiType으로 대체
-            const apiUrl = `${urlInput.value.replace("getBrTitleInfo", apiType)}&numOfRows=150`;
+            const apiUrl = `${urlInput.value.replace("getBrTitleInfo", apiType)}&numOfRows=150&serviceKey=${API_KEY}`;
             console.log(`🔍 API 요청 URL: ${apiUrl}`);
 
             const allItems = await fetchApiData(apiUrl);
