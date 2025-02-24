@@ -68,9 +68,10 @@
       </div>
     </div>
 
-    <script src="./app.js"></script>
-    <script src="./adress.js"></script>
-    <script src="./clock.js"></script>
+<script src="./adress.js"></script> <!-- 주소 검색이 먼저 실행되어야 함 -->
+<script src="./app.js"></script>    <!-- API 요청은 주소가 설정된 후 실행되어야 함 -->
+<script src="./clock.js"></script>  <!-- 마지막으로 시간 및 클립보드 기능 적용 -->
+
 
 </body>
 
