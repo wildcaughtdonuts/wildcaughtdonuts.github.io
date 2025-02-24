@@ -12,22 +12,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         new daum.Postcode({
             oncomplete: function (data) {
-                console.log("✅ 주소 검색 결과:", data);
+                console.log("✅ Daum API 응답 데이터:", data);
 
                 if (!data.buildingCode) {
                     mapResultDiv.innerHTML = `<p>⚠️ 건물 코드가 없습니다. 다시 검색해주세요.</p>`;
                     return;
                 }
 
-                // 🔹 `buildingCode`를 분해하여 API 요청 파라미터 설정
-                const sigunguCd = data.buildingCode.substr(0, 5); // 시군구 코드
-                const bjdongCd = data.buildingCode.substr(5, 5);  // 법정동 코드
-                let bunCd = data.buildingCode.substr(10, 4).replace(/^0+/, ""); // 번지 앞 0 제거
-                let jiCd = data.buildingCode.substr(14, 4).replace(/^0+/, "");  // 지번 앞 0 제거
+                // 🔹 `buildingCode`에서 API 요청에 필요한 값 추출
+                const sigunguCd = data.buildingCode.substr(0, 5);  // 시군구 코드
+                const bjdongCd = data.buildingCode.substr(5, 5);   // 법정동 코드
+                let bunCd = data.buildingCode.substr(10, 4).padStart(4, "0"); // 4자리 유지
+                let jiCd = data.buildingCode.substr(14, 4).padStart(4, "0");  // 4자리 유지
 
-                console.log(`🔍 변환된 시군구코드: ${sigunguCd}, 법정동코드: ${bjdongCd}, 번지: ${bunCd}, 지번: ${jiCd}`);
+                // ✅ 변환된 값 디버깅 출력
+                console.log(`🔍 변환된 시군구코드: ${sigunguCd}`);
+                console.log(`🔍 변환된 법정동코드: ${bjdongCd}`);
+                console.log(`🔍 변환된 번지: ${bunCd}, 지번: ${jiCd}`);
 
-                // 🔹 API URL 생성 (unifiedCd 제거하고 sigunguCd 사용)
+                // 🔹 API URL 생성 (신규 방식)
                 const apiUrl = `${BASE_URL}/getBrTitleInfo?sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&serviceKey=${API_KEY}`;
                 const recapUrl = `${BASE_URL}/getBrRecapTitleInfo?sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&serviceKey=${API_KEY}`;
                 const flrUrl = `${BASE_URL}/getBrFlrOulnInfo?sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&serviceKey=${API_KEY}`;
