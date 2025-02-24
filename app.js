@@ -7,23 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlInput = document.getElementById("url-input");
 
     const API_KEY = "imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg%3D%3D";
-    const BASE_URL = "https://apis.data.go.kr/1613000/BldRgstHubService";
-
-    let unifiedCodeMap = {};
-
-    // 🔹 JSON 파일에서 통합분류코드 데이터 로드
-    fetch("./unifiedCodes.json")
-        .then(response => response.json())
-        .then(data => {
-            unifiedCodeMap = data;
-            console.log("✅ 통합분류코드 매핑 데이터 로드 완료");
-        })
-        .catch(error => console.error("❌ 통합분류코드 데이터 로드 실패:", error));
-
-    // 🔹 시군구코드 → 통합분류코드 변환 함수
-    function getUnifiedCode(sigunguCd) {
-        return unifiedCodeMap[sigunguCd] || sigunguCd;  // 매핑 데이터가 있으면 변환
-    }
 
     // ✅ API 데이터 요청 함수 (페이지네이션 지원)
     async function fetchApiData(apiUrl) {
@@ -32,20 +15,16 @@ document.addEventListener("DOMContentLoaded", function () {
         let allItems = [];
 
         while (hasNextPage) {
-            const response = await fetch(`${apiUrl}&pageNo=${pageNo}`);
-            const data = await response.text();
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data, "application/xml");
-            const items = xmlDoc.getElementsByTagName("item");
+            const response = await fetch(`${apiUrl}&pageNo=${pageNo}&_type=json`);
+            const data = await response.json();
 
-            if (items.length > 0) {
-                allItems.push(...items);
+            if (data.response.body.items.item) {
+                allItems.push(...data.response.body.items.item);
                 pageNo++;
             } else {
                 hasNextPage = false;
             }
         }
-
         return allItems;
     }
 
@@ -61,16 +40,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const apiUrl = `${urlInput.value}/${apiType}?serviceKey=${API_KEY}&numOfRows=150`;
+            const apiUrl = `${urlInput.value.replace("getBrTitleInfo", apiType)}&numOfRows=150`;
+            console.log(`🔍 API 요청 URL: ${apiUrl}`);
+
             const allItems = await fetchApiData(apiUrl);
             let resultHTML = `<h4><strong>조회 결과: ${allItems.length}개</strong></h4>`;
 
             for (const item of allItems) {
-                const bldNm = item.getElementsByTagName("bldNm")[0]?.textContent || "건축물명 없음";
-                const mainPurpsCdNm = item.getElementsByTagName("mainPurpsCdNm")[0]?.textContent || "정보없음";
-                const totArea = item.getElementsByTagName("totArea")[0]?.textContent || "정보없음";
-                const platPlc = item.getElementsByTagName("platPlc")[0]?.textContent || "정보없음";
-                
+                const bldNm = item.bldNm || "건축물명 없음";
+                const mainPurpsCdNm = item.mainPurpsCdNm || "정보없음";
+                const totArea = item.totArea || "정보없음";
+                const platPlc = item.platPlc || "정보없음";
+
                 resultHTML += `<h3>${bldNm}</h3>
                     <ul>
                         <li><strong>주용도:</strong> ${mainPurpsCdNm}</li>
@@ -82,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
             resultDiv.innerHTML = resultHTML;
         } catch (error) {
             resultDiv.innerHTML = "오류가 발생했습니다. 다시 시도해주세요.";
-            console.error(error);
+            console.error("❌ API 요청 실패:", error);
         } finally {
             loadingDiv.classList.add("hidden");
         }
