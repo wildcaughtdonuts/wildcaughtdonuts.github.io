@@ -8,22 +8,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const API_KEY = "imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg%3D%3D";
 
-    // ✅ API 데이터 요청 함수 (페이지네이션 지원)
+    // ✅ API 데이터 요청 함수 (페이지네이션 지원, 종료 조건 추가)
     async function fetchApiData(apiUrl) {
         let pageNo = 1;
-        let hasNextPage = true;
         let allItems = [];
-
-        while (hasNextPage) {
+        let totalCount = Infinity;
+        while (true) {
             const response = await fetch(`${apiUrl}&pageNo=${pageNo}&_type=json`);
             const data = await response.json();
-
-            if (data.response.body.items.item) {
-                allItems.push(...data.response.body.items.item);
-                pageNo++;
-            } else {
-                hasNextPage = false;
+            if (!data.response || !data.response.body) {
+                console.error("❌ 응답에 body가 없습니다.", data);
+                break;
             }
+            if (pageNo === 1 && data.response.body.totalCount) {
+                totalCount = parseInt(data.response.body.totalCount, 10);
+                console.log(`🔍 총 데이터 개수: ${totalCount}`);
+            }
+            let items = data.response.body.items.item;
+            if (!items) {
+                console.log("🔍 더 이상 조회할 항목이 없습니다.");
+                break;
+            }
+            // 단일 객체인 경우 배열로 변환
+            if (!Array.isArray(items)) {
+                items = [items];
+            }
+            allItems.push(...items);
+            console.log(`🔍 페이지 ${pageNo} 조회, 누적 데이터: ${allItems.length}`);
+            if (allItems.length >= totalCount) {
+                break;
+            }
+            pageNo++;
         }
         return allItems;
     }
@@ -40,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
+            // URL 변경: 기존 "getBrTitleInfo"을 원하는 apiType으로 대체
             const apiUrl = `${urlInput.value.replace("getBrTitleInfo", apiType)}&numOfRows=150`;
             console.log(`🔍 API 요청 URL: ${apiUrl}`);
 
