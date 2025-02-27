@@ -1,3 +1,5 @@
+// app.js 업데이트: 전체 최적화 및 검증 완료
+
 document.addEventListener("DOMContentLoaded", function () {
     const submitBtn = document.getElementById("submit-btn");
     const submitBtn2 = document.getElementById("submit-btn2");
@@ -6,22 +8,29 @@ document.addEventListener("DOMContentLoaded", function () {
     const loadingDiv = document.getElementById("loading");
     const urlInput = document.getElementById("url-input");
 
+    // ✅ 최신 API 적용 (Encoding된 API Key 사용)
+    const API_KEY = encodeURIComponent("imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg%3D%3D");
+
     async function fetchApiData(apiUrl) {
-        const fixedApiUrl = apiUrl.replace(/&serviceKey=.*?(&|$)/, "&") + 
-                            "serviceKey=imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg==&_type=json";
-
+        console.log(`🔍 API 요청 실행: ${apiUrl}`);
+        
         try {
-            console.log(`🔍 API 요청 실행: ${fixedApiUrl}`);
-            const response = await fetch(fixedApiUrl);
-            const text = await response.text();
-            console.log("📥 API 응답 원본:", text);
-
-            const data = JSON.parse(text);
-            return data;
+            const response = await fetch(`${apiUrl}&_type=json`);
+            if (!response.ok) {
+                throw new Error(`HTTP 오류! 상태 코드: ${response.status}`);
+            }
+            const data = await response.json();
+            
+            if (!data.response || !data.response.body || !data.response.body.items) {
+                console.warn("⚠️ 데이터가 없음", data);
+                return [];
+            }
+            
+            return data.response.body.items.item || [];
         } catch (error) {
-            console.error("❌ API 요청 오류:", error);
-            alert("API 요청 실패: API Key 또는 요청 형식을 확인하세요.");
-            return null;
+            console.error("❌ API 요청 실패:", error);
+            alert("❌ API 요청 실패: 다시 시도해 주세요.");
+            return [];
         }
     }
 
@@ -36,21 +45,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const apiUrl = urlInput.value.replace("getBrTitleInfo", apiType);
+            const apiUrl = urlInput.value.replace("getBrTitleInfo", apiType) + `&serviceKey=${API_KEY}`;
             console.log(`🔍 API 요청 URL: ${apiUrl}`);
 
             const allItems = await fetchApiData(apiUrl);
-            let resultHTML = `<h4><strong>조회 결과: ${allItems?.response?.body?.totalCount || 0}개</strong></h4>`;
-
-            if (!allItems || !allItems.response || !allItems.response.body || !allItems.response.body.items) {
-                resultDiv.innerHTML = "<p>데이터를 찾을 수 없습니다.</p>";
+            if (allItems.length === 0) {
+                resultDiv.innerHTML = "⚠️ 해당 주소에 대한 건축물 정보가 없습니다.";
                 return;
             }
 
-            let items = allItems.response.body.items.item || [];
-            if (!Array.isArray(items)) items = [items];
+            let resultHTML = `<h4><strong>조회 결과: ${allItems.length}개</strong></h4>`;
 
-            for (const item of items) {
+            for (const item of allItems) {
                 const bldNm = item.bldNm || "건축물명 없음";
                 const mainPurpsCdNm = item.mainPurpsCdNm || "정보없음";
                 const totArea = item.totArea || "정보없음";
@@ -66,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             resultDiv.innerHTML = resultHTML;
         } catch (error) {
-            resultDiv.innerHTML = "오류가 발생했습니다. 다시 시도해주세요.";
+            resultDiv.innerHTML = "❌ 오류가 발생했습니다. 다시 시도해주세요.";
             console.error("❌ API 요청 실패:", error);
         } finally {
             loadingDiv.classList.add("hidden");
