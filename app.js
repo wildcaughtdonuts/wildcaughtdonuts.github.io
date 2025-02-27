@@ -1,4 +1,4 @@
-// app.js 업데이트: 전체 최적화 및 검증 완료
+// app.js 업데이트: 중복 API Key 문제 해결 및 JSON 응답 처리 개선
 
 document.addEventListener("DOMContentLoaded", function () {
     const submitBtn = document.getElementById("submit-btn");
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlInput = document.getElementById("url-input");
 
     // ✅ 최신 API 적용 (Encoding된 API Key 사용)
-    const API_KEY = encodeURIComponent("imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg%3D%3D");
+    const API_KEY = "imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg==";
 
     async function fetchApiData(apiUrl) {
         console.log(`🔍 API 요청 실행: ${apiUrl}`);
@@ -19,14 +19,20 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!response.ok) {
                 throw new Error(`HTTP 오류! 상태 코드: ${response.status}`);
             }
-            const data = await response.json();
+            const text = await response.text();
             
-            if (!data.response || !data.response.body || !data.response.body.items) {
-                console.warn("⚠️ 데이터가 없음", data);
+            try {
+                const data = JSON.parse(text);
+                if (!data.response || !data.response.body || !data.response.body.items) {
+                    console.warn("⚠️ 데이터가 없음", data);
+                    return [];
+                }
+                return data.response.body.items.item || [];
+            } catch (error) {
+                console.error("❌ JSON 파싱 오류:", text);
+                alert("❌ API 응답이 JSON 형식이 아닙니다. API Key 또는 요청 형식을 확인하세요.");
                 return [];
             }
-            
-            return data.response.body.items.item || [];
         } catch (error) {
             console.error("❌ API 요청 실패:", error);
             alert("❌ API 요청 실패: 다시 시도해 주세요.");
@@ -45,7 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const apiUrl = urlInput.value.replace("getBrTitleInfo", apiType) + `&serviceKey=${API_KEY}`;
+            let apiUrl = urlInput.value.replace("getBrTitleInfo", apiType);
+            apiUrl = apiUrl.replace(/&serviceKey=.*?(&|$)/, "&") + `&serviceKey=${API_KEY}`;
             console.log(`🔍 API 요청 URL: ${apiUrl}`);
 
             const allItems = await fetchApiData(apiUrl);
