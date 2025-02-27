@@ -1,10 +1,12 @@
+// adress.js 업데이트: 새로운 건축HUB API 적용
+
 document.addEventListener("DOMContentLoaded", function () {
     const searchBtn = document.getElementById("search-btn");
     const mapResultDiv = document.getElementById("mapResult");
     const urlInput = document.getElementById("url-input");
 
-    // ✅ API Key 직접 입력
-    const API_KEY = "imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg==";
+    // ✅ 최신 API 적용 (Encoding된 API Key 사용)
+    const API_KEY = encodeURIComponent("imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg%3D%3D");
     const BASE_URL = "https://apis.data.go.kr/1613000/BldRgstHubService";
 
     searchBtn.addEventListener("click", () => {
@@ -29,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(`🔍 변환된 법정동코드: ${bjdongCd}`);
                 console.log(`🔍 변환된 번지: ${bunCd}, 지번: ${jiCd}`);
 
-                // 🔹 API URL 생성
+                // 🔹 새로운 API 엔드포인트 적용
                 const apiUrl = `${BASE_URL}/getBrTitleInfo?sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&platGbCd=0&bun=${bunCd}&ji=${jiCd}&serviceKey=${API_KEY}`;
                 
                 // 🔹 URL을 `url-input`에 설정
