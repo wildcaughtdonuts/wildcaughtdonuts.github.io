@@ -7,23 +7,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlInput = document.getElementById("url-input");
 
     async function fetchApiData(apiUrl) {
-        try {
-            console.log(`🔍 API 요청 실행: ${apiUrl}`);
+        const fixedApiUrl = apiUrl.replace(/&serviceKey=.*?(&|$)/, "&") + 
+                            "serviceKey=imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg==&_type=json";
 
-            const response = await fetch(apiUrl);
+        try {
+            console.log(`🔍 API 요청 실행: ${fixedApiUrl}`);
+            const response = await fetch(fixedApiUrl);
             const text = await response.text();
             console.log("📥 API 응답 원본:", text);
 
-            try {
-                const data = JSON.parse(text);
-                return data;
-            } catch (jsonError) {
-                console.error("❌ JSON 파싱 오류 발생:", jsonError);
-                alert("API 응답이 JSON 형식이 아닙니다. API Key 또는 요청 파라미터를 확인하세요.");
-                return null;
-            }
+            const data = JSON.parse(text);
+            return data;
         } catch (error) {
-            console.error("❌ API 요청 중 오류 발생:", error);
+            console.error("❌ API 요청 오류:", error);
+            alert("API 요청 실패: API Key 또는 요청 형식을 확인하세요.");
             return null;
         }
     }

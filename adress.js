@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const mapResultDiv = document.getElementById("mapResult");
     const urlInput = document.getElementById("url-input");
 
-    // ✅ API 기본 정보 (인코딩하지 않은 API 키 사용)
+    // ✅ API Key 직접 입력
     const API_KEY = "imXssiU8dEJ91x2cVSMl3TSW97VrK7cZpGXX5k9pEWgXyzuqmIAwpi9WTa29qcJek2OvrRClAXw0HrzKAlxIhg==";
     const BASE_URL = "https://apis.data.go.kr/1613000/BldRgstHubService";
 
